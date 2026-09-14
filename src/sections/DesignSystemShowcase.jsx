@@ -1,7 +1,7 @@
 import Reveal from '../components/Reveal';
 import Logo, { LogoMark } from '../components/Logo';
 import PosterMarquee from '../components/PosterMarquee';
-import { DESIGN_SYSTEM, VERTICALS, POSTERS } from '../data/brand';
+import { DESIGN_SYSTEM, VERTICALS, POSTERS, GRAPHIC } from '../data/brand';
 import { asset } from '../lib/asset';
 
 // One row per brand, in order: Existence · Time Creationism · Time Creation Project
@@ -25,6 +25,18 @@ const POSTER_BG = {
   'time-creation-project': asset('/assets/posters/ds-bg/time-creation-project.jpg'),
 };
 const wordOf = (v) => (v.id === 'existence' ? 'existence' : v.name);
+
+// The four system elements per brand. Color System and Circular Language are
+// shared across all three; the signature graphic element and the grid layer
+// are each brand's own (Time Block / Creation Color / Enlightenment Glare, and
+// Grid / Fabric / Foundation of Time).
+const stripThe = (s) => s.replace(/^The /, '');
+const elementsOf = (v) => [
+  { name: 'Color System', shared: true },
+  { name: stripThe(GRAPHIC[v.id].element), shared: false },
+  { name: stripThe(v.gridName), shared: false },
+  { name: 'Circular Language', shared: true },
+];
 
 export default function DesignSystemShowcase() {
   return (
@@ -51,9 +63,10 @@ export default function DesignSystemShowcase() {
             </div>
             <Logo word={wordOf(v)} markSize={24} fontSize="1.05rem" wordScale={v.id === 'existence' ? 1.5 : 1} />
             <div className="ds__elements">
-              {DESIGN_SYSTEM.elements.map((el) => (
+              {elementsOf(v).map((el) => (
                 <div className="ds__el" key={el.name}>
                   <span className="k">{el.name}</span>
+                  {el.shared && <span className="ds__el-tag">shared</span>}
                 </div>
               ))}
             </div>

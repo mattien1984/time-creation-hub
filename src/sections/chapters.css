@@ -166,6 +166,7 @@
 .ds__elements { display: flex; flex-direction: column; gap: 12px; }
 .ds__el { display: flex; align-items: baseline; gap: 10px; font-size: 0.85rem; color: var(--muted); }
 .ds__el .k { font-family: var(--serif); color: #fff; font-size: 0.95rem; min-width: 9ch; }
+.ds__el-tag { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); }
 .ds__culmination { margin-top: clamp(60px, 9vh, 110px); }
 .ds__marquee-row { margin-bottom: clamp(20px, 3vh, 34px); }
 .ds__rowlabel { margin-bottom: 12px; }
