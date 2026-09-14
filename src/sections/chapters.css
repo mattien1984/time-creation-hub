@@ -50,7 +50,10 @@
 .pal__sw { cursor: pointer; text-align: left; background: none; border: 0; padding: 0; }
 .pal__chip { aspect-ratio: 1/1; border-radius: 5px; border: 1px solid var(--line); transition: transform 0.3s; }
 .pal__sw:hover .pal__chip { transform: translateY(-3px); }
-.pal__hex { margin-top: 7px; font-size: 0.68rem; color: var(--muted); display: flex; justify-content: space-between; gap: 6px; }
+/* Stacked two-line label (name over hex) so every cell is the same height —
+   side-by-side wrapped on the long names (Deep Teal / Deep Green). */
+.pal__hex { margin-top: 7px; font-size: 0.68rem; color: var(--muted); display: flex; flex-direction: column; gap: 2px; white-space: nowrap; }
+.pal__hex > span:last-child { color: var(--faint); }
 .pal__hex .copied { color: var(--gold); }
 
 .weights { margin-top: clamp(40px, 6vh, 70px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); }
