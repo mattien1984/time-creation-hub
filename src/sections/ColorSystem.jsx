@@ -19,7 +19,7 @@ export default function ColorSystem() {
         <div>
           <p className="eyebrow">Shared foundation</p>
           <h2 className="display" style={{ fontSize: 'clamp(2.2rem,5vw,4rem)', marginTop: 16 }}>
-            Sunset Color System
+            Sunrise Color System
           </h2>
         </div>
         <p className="body" style={{ maxWidth: '40ch' }}>

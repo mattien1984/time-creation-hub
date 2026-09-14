@@ -71,7 +71,7 @@ export default function Matrix() {
               {VERTICALS.map((v) => (
                 <div className="cell cell--logo" key={v.id}>
                   <GridField className="grid-mini" kind={v.gridKind} color="rgba(255,255,255,0.12)" />
-                  <img src={v.logo} alt={`${v.name} logo`} />
+                  <img src={v.logo} alt={`${v.name} logo`} style={v.logoScale && v.logoScale !== 1 ? { maxHeight: Math.round(46 * v.logoScale) } : undefined} />
                   <DL label={`Download ${v.name} logo`} onClick={() => downloadFile(v.logo, v.logo.split('/').pop())} />
                 </div>
               ))}
@@ -150,8 +150,8 @@ export default function Matrix() {
               ))}
             </Row>
 
-            {/* SHARED — Sunset palette */}
-            <Row id="palette" label="Sunset palette" tag="Shared" shared>
+            {/* SHARED — Sunrise palette */}
+            <Row id="palette" label="Sunrise palette" tag="Shared" shared>
               <div className="cell-full">
                 <p className="cell__note" style={{ marginBottom: 20, maxWidth: '60ch' }}>
                   One palette across all three verticals — each re-weights it (see the Color weighting row). Click a swatch to copy, or download any as SVG below.

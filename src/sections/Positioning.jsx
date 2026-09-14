@@ -5,11 +5,12 @@ import { VERTICALS } from '../data/brand';
 
 const wordOf = (v) => (v.id === 'existence' ? 'existence' : v.name);
 
-// per-brand logo sizing: enlarge lowercase "existence", shrink the long Project lockup
+// per-brand logo sizing: the ring mark renders at the SAME size for all three;
+// only the wordmark treatment differs (lowercase "existence" runs larger).
 const LOGO = {
   'existence': { markSize: 30, fontSize: '1.25rem', wordScale: 1.75 },
   'time-creationism': { markSize: 30, fontSize: '1.25rem', wordScale: 1 },
-  'time-creation-project': { markSize: 21, fontSize: '0.9rem', wordScale: 1 },
+  'time-creation-project': { markSize: 30, fontSize: '1.25rem', wordScale: 1 },
 };
 const PHOTO = {
   'time-creation-project': { transform: 'scale(1.6)', transformOrigin: 'center 38%' },

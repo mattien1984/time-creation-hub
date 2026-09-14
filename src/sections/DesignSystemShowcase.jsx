@@ -16,6 +16,14 @@ const ARCH_GRID = {
   'time-creationism': asset('/assets/grids/arch-fabric.svg'),
   'time-creation-project': asset('/assets/grids/arch-foundation.svg'),
 };
+
+// Optional per-brand poster backgrounds — drop images at these paths and they
+// render automatically beneath the grid/glow/ring stack (missing files no-op).
+const POSTER_BG = {
+  'existence': asset('/assets/posters/ds-bg/existence.jpg'),
+  'time-creationism': asset('/assets/posters/ds-bg/time-creationism.jpg'),
+  'time-creation-project': asset('/assets/posters/ds-bg/time-creation-project.jpg'),
+};
 const wordOf = (v) => (v.id === 'existence' ? 'existence' : v.name);
 
 export default function DesignSystemShowcase() {
@@ -34,6 +42,7 @@ export default function DesignSystemShowcase() {
         {VERTICALS.map((v) => (
           <div className="ds__col" key={v.id}>
             <div className="ds__poster">
+              <img src={POSTER_BG[v.id]} alt="" onError={(e) => { e.currentTarget.hidden = true; }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
               <img src={ARCH_GRID[v.id]} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
               <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(60% 50% at 50% 42%, ${v.accent}33, transparent 70%)` }} />
               <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>

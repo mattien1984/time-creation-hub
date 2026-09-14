@@ -24,7 +24,12 @@ export default function VerticalSection({ v, index }) {
               <span className="pip" style={{ background: v.accent }} />
               <span>{v.role}</span>
             </div>
-            <img className="vert__logo" src={v.logo} alt={`${v.name} logo`} />
+            <img
+              className="vert__logo"
+              src={v.logo}
+              alt={`${v.name} logo`}
+              style={v.logoScale && v.logoScale !== 1 ? { height: `calc(clamp(34px, 4vw, 50px) * ${v.logoScale})` } : undefined}
+            />
             <h2 className="display vert__name">{v.name}</h2>
             <p className="lead vert__statement">{v.statement}</p>
             <div className="vert__facts">

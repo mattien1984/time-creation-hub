@@ -6,6 +6,8 @@
 import { asset } from '../lib/asset';
 
 export const PALETTE = [
+  { hex: '#123A7E', name: 'Navy', role: 'Dawn' },
+  { hex: '#2F6FD0', name: 'Blue', role: 'Dawn' },
   { hex: '#249EA1', name: 'Teal', role: 'Mind' },
   { hex: '#008083', name: 'Deep Teal', role: 'Mind' },
   { hex: '#005F61', name: 'Deep Green', role: 'Mind' },
@@ -23,8 +25,8 @@ export const UMBRELLA = {
     'One principle expressed three ways — a belief, an instrument, and a foundation. Same coordinates, same palette, same mark; each layer registered to the others, each carrying its own weight of the idea that time is not spent or found, but made.',
 };
 
-// Per-vertical usage weighting of the shared Sunset palette (0–1),
-// recreated from the "USAGE LEVEL" bar charts in the Figma file.
+// Per-vertical usage weighting of the shared Sunrise palette (0–1),
+// recreated from the "USAGE LEVEL" bar charts (updated with the two blues).
 export const VERTICALS = [
   {
     id: 'existence',
@@ -46,9 +48,10 @@ export const VERTICALS = [
       'The clock is the most iconic symbol of time — measuring the rhythm of our lives in a never-ending loop.',
     colorNote:
       "Existence weights the palette for the lived moment — the place where time is felt and authored. Orange to Gold runs highest, the sun's arc from the spark of sunrise to the glow of golden hour. Black rises with it: the surface a life is authored on. Teal and white sit in support — thought held in the background, feeling carried to the front.",
-    // weighting per palette index (teal,deepteal,deepgreen, sunrise,orange,gold, white, black)
-    // measured from the Figma USAGE LEVEL chart (rank: black>teal>…>white)
-    weights: [0.91, 0.83, 0.76, 0.67, 0.6, 0.51, 0.42, 1.0],
+    // weighting per palette index (navy,blue, teal,deepteal,deepgreen, sunrise,orange,gold, white, black)
+    // rank: black > teals > blues > oranges > white
+    weights: [0.73, 0.7, 0.91, 0.83, 0.76, 0.67, 0.6, 0.51, 0.42, 1.0],
+    logoScale: 1,
   },
   {
     id: 'time-creationism',
@@ -70,8 +73,9 @@ export const VERTICALS = [
       'The moon cycles through phases, marking months and emotional tides.',
     colorNote:
       'As the parent philosophy, Time Creationism carries the whole palette at equal weight — no phase favored, Mind and Energy held in balance across the full cycle of time. White and black appear less often: the neutral ground that lets the living colors speak. This is time as a living system — not measured, but made.',
-    // measured from Figma: six living colors equal/full, white & black low
-    weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.35, 0.35],
+    // eight living colors equal/full, white & black low
+    weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.35, 0.35],
+    logoScale: 1,
   },
   {
     id: 'time-creation-project',
@@ -93,8 +97,11 @@ export const VERTICALS = [
       'The sun rises and sets in a daily arc, governing our circadian rhythm and the passage of days.',
     colorNote:
       'The Time Creation Project weights the palette for study and clarity — the bedrock beneath the practice, running cool and clear. Teal to Deep Green leads, the colors of the Mind: studied, evolving thought. White rises with them — the open page where principles are set down. Orange, Gold, and black are kept in reserve, quiet and rigorous.',
-    // measured from Figma chart (rank: white>sunrise>orange>gold>teal>…>black)
-    weights: [0.67, 0.6, 0.51, 0.91, 0.83, 0.76, 1.0, 0.42],
+    // rank: white > oranges > teals > blues > black
+    weights: [0.49, 0.45, 0.67, 0.6, 0.55, 0.91, 0.83, 0.76, 1.0, 0.42],
+    // The TCP lockup SVG is 219 units tall for the same 154.5-unit ring the
+    // other two carry in a 155-unit canvas — scale up so all rings render equal.
+    logoScale: 219 / 155,
   },
 ];
 

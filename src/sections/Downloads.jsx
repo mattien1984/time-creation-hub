@@ -59,7 +59,7 @@ export default function Downloads() {
         </h2>
         <p className="body">
           Every shared and vertical-specific asset, ready to use. Logos as transparent
-          vectors, the full Sunset palette, and the grid language at all three densities.
+          vectors, the full Sunrise palette, and the grid language at all three densities.
         </p>
       </Reveal>
 
@@ -84,7 +84,7 @@ export default function Downloads() {
       <div className="lib__group">
         <Reveal className="lib__group-title">
           <h3>Color</h3>
-          <span>Sunset palette · per-swatch & full sets</span>
+          <span>Sunrise palette · per-swatch & full sets</span>
         </Reveal>
         <Reveal className="cards" delay={60}>
           {PALETTE.map((c) => (
@@ -107,10 +107,10 @@ export default function Downloads() {
           ))}
         </Reveal>
         <Reveal className="palette-dl" delay={80}>
-          <button className="btn" onClick={() => downloadBlob(paletteCSS(), 'sunset-palette.css', 'text/css')}>
+          <button className="btn" onClick={() => downloadBlob(paletteCSS(), 'sunrise-palette.css', 'text/css')}>
             <DownloadIcon /> palette.css
           </button>
-          <button className="btn" onClick={() => downloadBlob(paletteJSON(), 'sunset-palette.json', 'application/json')}>
+          <button className="btn" onClick={() => downloadBlob(paletteJSON(), 'sunrise-palette.json', 'application/json')}>
             <DownloadIcon /> palette.json
           </button>
         </Reveal>

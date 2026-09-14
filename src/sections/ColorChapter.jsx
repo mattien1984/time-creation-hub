@@ -21,7 +21,7 @@ export default function ColorChapter() {
 
       <div className="color__top">
         <Reveal>
-          <h2 className="ch__title">The Sunset palette.</h2>
+          <h2 className="ch__title">The Sunrise palette.</h2>
           <p className="ch__lede"><span className="ch__shared">Shared across all three</span> — drawn from the sky, the sun's arc, and the living world. One palette; each vertical disperses it differently.</p>
         </Reveal>
         <Reveal delay={120}>
