@@ -42,8 +42,8 @@ export default function CinematicIntro() {
           </div>
         </div>
       </div>
-      <a href="#system" className="scroll-cue">
-        <span>The system</span>
+      <a href="#story" className="scroll-cue">
+        <span>The story</span>
         <span className="line" />
       </a>
     </header>

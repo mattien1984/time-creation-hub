@@ -1,18 +1,25 @@
 import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 
 import Nav from './components/Nav';
-import CinematicIntro from './sections/CinematicIntro';
-import Positioning from './sections/Positioning';
-import ColorChapter from './sections/ColorChapter';
-import ArchitectureScene from './sections/ArchitectureScene';
-import ShapeChapter from './sections/ShapeChapter';
-import GraphicElement from './sections/GraphicElement';
-import DesignSystemShowcase from './sections/DesignSystemShowcase';
-import Footer from './sections/Footer';
+import Story from './pages/Story';
+import System from './pages/System';
+import BrandHub from './pages/BrandHub';
+import Glossary from './pages/Glossary';
+import Library from './pages/Library';
 
 import './sections/sections.css';
 import './sections/chapters.css';
+import './pages/pages.css';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
   useEffect(() => {
@@ -33,19 +40,19 @@ export default function App() {
 
   return (
     <>
+      <ScrollToTop />
       <Nav />
-      <main>
-        <CinematicIntro />
-        <Positioning />
-        <ColorChapter />
-        <ArchitectureScene />
-        <ShapeChapter />
-        <GraphicElement vid="existence" num="05" />
-        <GraphicElement vid="time-creationism" num="06" />
-        <GraphicElement vid="time-creation-project" num="07" />
-        <DesignSystemShowcase />
-      </main>
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Story />} />
+        <Route path="/system" element={<System />} />
+        <Route path="/existence" element={<BrandHub slug="existence" />} />
+        <Route path="/time-creationism" element={<BrandHub slug="time-creationism" />} />
+        <Route path="/time-creation-project" element={<BrandHub slug="time-creation-project" />} />
+        <Route path="/tcp" element={<Navigate to="/time-creation-project" replace />} />
+        <Route path="/glossary" element={<Glossary />} />
+        <Route path="/library" element={<Library />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </>
   );
 }
