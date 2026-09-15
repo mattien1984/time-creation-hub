@@ -1,9 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { LogoMark } from './Logo';
 
 const link = ({ isActive }) => (isActive ? 'is-active' : undefined);
 
 export default function Nav() {
+  // The homepage is the film — it plays chromeless (no mark, no links);
+  // the doorways at the end are its navigation.
+  const { pathname } = useLocation();
+  if (pathname === '/') return null;
   return (
     <nav className="nav">
       <NavLink to="/" className="nav__mark">

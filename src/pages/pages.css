@@ -23,13 +23,26 @@
 .film {
   position: relative;
   height: 900vh;
+  height: 900svh; /* stable on iOS while the toolbar collapses */
 }
 .film__stage {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   pointer-events: none; /* purely visual — never trap clicks or selection */
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 .film__grid,
 .film__video,
@@ -64,6 +77,12 @@
   top: 50%;
   will-change: transform;
 }
+@keyframes filmRingPulse {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.15)); }
+  50% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.45)); }
+}
+.film__ring--pulse { animation: filmRingPulse 3.4s ease-in-out infinite; }
+.film__churn { opacity: 0.65; }
 .film__ring-label {
   position: absolute;
   left: 50%;
@@ -82,11 +101,11 @@
 }
 @media (max-width: 700px) {
   .film__ring-word {
-    font-size: 0.92rem;
+    font-size: 0.8rem;
     white-space: normal;
-    max-width: 15ch;
+    max-width: 11ch;
   }
-  .film__ring-role { font-size: 0.6rem; }
+  .film__ring-role { font-size: 0.56rem; letter-spacing: 0.16em; }
 }
 .film__ring-role {
   font-size: 0.7rem;
@@ -96,7 +115,7 @@
 .film__line {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 58%;
   transform: translate(-50%, -50%);
   width: min(88vw, 920px);
   margin: 0;
@@ -104,10 +123,11 @@
   font-family: var(--serif);
   font-size: clamp(1.4rem, 3vw, 2.5rem);
   line-height: 1.35;
+  white-space: pre-line;
   text-wrap: balance;
 }
 .film__line--universe {
-  top: 24vh;
+  top: 20vh;
   transform: translate(-50%, 0);
   font-size: clamp(1.15rem, 2.3vw, 1.9rem);
   color: rgba(255, 255, 255, 0.92);

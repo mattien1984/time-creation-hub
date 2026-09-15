@@ -5,7 +5,7 @@
 // and Rob's closer lands before the page releases into the doorways.
 // All lines are sourced from story.js (the beat headlines) — one data source.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import GridField from '../components/GridField';
 import { BEATS, DOORWAYS_BEAT } from '../data/story';
 import { HUBS } from '../data/hubs';
@@ -16,27 +16,35 @@ const seg = (p, a, b) => clamp01((p - a) / (b - a));
 const ease = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
 // ---- decoder text ----
+// Classic decode: locked prefix, a small churning window of ~6 characters at
+// the lock point, and the untyped remainder held invisible (real characters at
+// opacity 0) so the line never reflows while it decodes.
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—/<>*#+';
-function scramble(text, lock) {
+const SCRAMBLE_WINDOW = 6;
+function ScrambleText({ text, lock }) {
   const n = text.length;
   const locked = Math.round(lock * n);
-  let out = '';
-  for (let i = 0; i < n; i += 1) {
+  const windowEnd = Math.min(locked + SCRAMBLE_WINDOW, n);
+  let churn = '';
+  for (let i = locked; i < windowEnd; i += 1) {
     const ch = text[i];
-    out += i < locked || ch === ' ' ? ch : CHARS[(Math.random() * CHARS.length) | 0];
+    churn += ch === ' ' || ch === '\n' ? ch : CHARS[(Math.random() * CHARS.length) | 0];
   }
-  return out;
+  return (
+    <>
+      {text.slice(0, locked)}
+      <span className="film__churn">{churn}</span>
+      <span style={{ opacity: 0 }}>{text.slice(windowEnd)}</span>
+    </>
+  );
 }
 
-// lock/opacity curve for one decoder beat: scramble in → hold clean → unwind
+// lock/opacity curve for one decoder beat: quick decode → long clean hold → fade
 function beatState(p, [a, b]) {
   const u = seg(p, a, b);
   if (u <= 0 || u >= 1) return { on: false, lock: 0, opacity: 0 };
-  let lock;
-  if (u < 0.45) lock = u / 0.45;
-  else if (u < 0.8) lock = 1;
-  else lock = 1 - (u - 0.8) / 0.2;
-  const opacity = clamp01(Math.min(u / 0.05, (1 - u) / 0.05, 1));
+  const lock = u < 0.28 ? u / 0.28 : 1;
+  const opacity = clamp01(Math.min(u / 0.05, (1 - u) / 0.08, 1));
   return { on: true, lock: clamp01(lock), opacity, scrambling: lock < 1 };
 }
 
@@ -49,14 +57,23 @@ const T = {
     [0.27, 0.41],
     [0.42, 0.56],
   ],
+  markDrop: [0.555, 0.585], // mark settles to center before the universe line opens
   separate: [0.58, 0.7],
+  universe: [0.585, 0.77],
   labels: [0.64, 0.7],
   labelsOut: [0.71, 0.75],
   reunite: [0.74, 0.84],
   same: [0.78, 0.88],
-  sameOut: [0.87, 0.9],
+  sameOut: [0.87, 0.9], // fully out before the closer opens at 0.90
   closer: [0.9, 0.96],
 };
+const SCRAMBLE_WINDOWS = [...T.beats, T.universe];
+
+const videoOpacityAt = (p) =>
+  0.35 *
+  ease(seg(p, ...T.video)) *
+  (1 - 0.68 * (ease(seg(p, 0.56, 0.64)) - ease(seg(p, 0.76, 0.84)))) *
+  (1 - 0.5 * seg(p, 0.92, 0.99));
 
 // The mark's exact ring geometry (viewBox 41.4, center 20.70 / 20.92).
 const MARK_SIZE = 164;
@@ -89,10 +106,23 @@ function StaticIntro({ lines }) {
 
 export default function IntroFilm() {
   const ref = useRef(null);
-  const [reduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const stageRef = useRef(null);
+  const videoRef = useRef(null);
+  const activeRef = useRef(true);
+  const [reduced, setReduced] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
   const [, setFrame] = useState(0);
   const pRef = useRef(0);
   const [vw, setVw] = useState(() => window.innerWidth);
+
+  // Track the OS reduced-motion setting live.
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (e) => setReduced(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
     if (reduced) return undefined;
@@ -103,20 +133,30 @@ export default function IntroFilm() {
       // so states can be screenshot-tested without scrolling.
       if (import.meta.env.DEV && typeof window.__filmP === 'number') return window.__filmP;
       const el = ref.current;
-      if (!el) return pRef.current;
+      const stage = stageRef.current;
+      if (!el || !stage) return pRef.current;
       const rect = el.getBoundingClientRect();
-      const run = rect.height - window.innerHeight;
+      // Measure the run in the same CSS units the section is sized in (svh)
+      // so iOS toolbar collapse doesn't re-map progress mid-scroll.
+      const run = rect.height - stage.getBoundingClientRect().height;
       return clamp01(run > 0 ? -rect.top / run : 0);
     };
     const update = (now) => {
       const p = readP();
       const moved = Math.abs(p - pRef.current) > 0.0004;
       const scrambling =
-        T.beats.some((w) => beatState(p, w).scrambling) && now - lastTick > 45;
+        SCRAMBLE_WINDOWS.some((w) => beatState(p, w).scrambling) && now - lastTick > 45;
       if (moved || scrambling) {
         pRef.current = p;
         lastTick = now;
         setFrame((f) => f + 1);
+      }
+      // Keep the video paused whenever it is invisible.
+      const vid = videoRef.current;
+      if (vid) {
+        const visible = activeRef.current && videoOpacityAt(p) > 0.02;
+        if (visible && vid.paused) vid.play().catch(() => {});
+        else if (!visible && !vid.paused) vid.pause();
       }
     };
     // Native scroll events keep the film scrubbed even where rAF is throttled
@@ -124,27 +164,40 @@ export default function IntroFilm() {
     const onScroll = () => update(performance.now());
     const loop = (now) => {
       raf = requestAnimationFrame(loop);
-      update(now);
+      if (activeRef.current) update(now);
     };
     raf = requestAnimationFrame(loop);
     window.addEventListener('scroll', onScroll, { passive: true });
     const onResize = () => setVw(window.innerWidth);
     window.addEventListener('resize', onResize);
+    // Skip all per-frame work once the film is scrolled out of view.
+    const io = new IntersectionObserver(([entry]) => {
+      activeRef.current = entry.isIntersecting;
+      update(performance.now());
+    });
+    if (ref.current) io.observe(ref.current);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
+      io.disconnect();
     };
   }, [reduced]);
 
   const lines = [
-    BEATS[0].headline,
+    // Beat 1 breaks between its two sentences.
+    BEATS[0].headline.replace('time. ', 'time.\n'),
     BEATS[1].headline,
     BEATS[2].headline,
     BEATS[3].headline,
     BEATS[4].headline,
     DOORWAYS_BEAT.headline,
   ];
+  // Constant props — never re-render the full-viewport pattern per frame.
+  const gridField = useMemo(
+    () => <GridField kind="fabric" color="rgba(255,255,255,0.4)" />,
+    []
+  );
   if (reduced) return <StaticIntro lines={lines} />;
 
   const p = pRef.current;
@@ -157,28 +210,31 @@ export default function IntroFilm() {
   // When separated, rings must fit three-abreast: cap the separated scale so
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
   const sepScale = Math.min(1.12, (S * 0.42) / (17.68 * UNIT));
-  const markYvh = -14 * (1 - ease(seg(p, 0.56, 0.62))) - 8 * ease(seg(p, ...T.reunite));
+  const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop))) - 8 * ease(seg(p, ...T.reunite));
   const glow = (1 - spread) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.94, 1));
-  const video =
-    0.35 *
-    ease(seg(p, ...T.video)) *
-    (1 - 0.68 * (ease(seg(p, 0.56, 0.64)) - ease(seg(p, 0.76, 0.84)))) *
-    (1 - 0.5 * seg(p, 0.92, 0.99));
+  const video = videoOpacityAt(p);
   const labels = ease(seg(p, ...T.labels)) * (1 - seg(p, ...T.labelsOut));
-  const universe = beatState(p, [T.separate[0] - 0.02, T.labelsOut[1] + 0.02]);
-  const same = ease(seg(p, ...T.same)) * (1 - seg(p, T.sameOut[0], T.sameOut[1] + 0.02));
+  const universe = beatState(p, T.universe);
+  const same = ease(seg(p, ...T.same)) * (1 - seg(p, ...T.sameOut));
   const wordmark = ease(seg(p, 0.8, 0.86));
   const closer = ease(seg(p, ...T.closer));
   const cue = 1 - seg(p, 0.005, 0.03);
 
   return (
     <section className="film" ref={ref} id="top">
-      <div className="film__stage">
-        <div className="film__grid">
-          <GridField kind="fabric" color="rgba(255,255,255,0.4)" opacity={0.16 * (1 - 0.5 * video / 0.35)} />
+      {/* The narrative as plain text for assistive tech; the stage is visual. */}
+      <div className="sr-only">
+        {lines.map((l) => (
+          <p key={l}>{l}</p>
+        ))}
+      </div>
+      <div className="film__stage" ref={stageRef} aria-hidden="true">
+        <div className="film__grid" style={{ opacity: 0.16 * (1 - 0.5 * (video / 0.35)) }}>
+          {gridField}
         </div>
 
         <video
+          ref={videoRef}
           className="film__video"
           style={{ opacity: video }}
           src={asset('/assets/video/intro-temp.mp4')}
@@ -187,7 +243,6 @@ export default function IntroFilm() {
           autoPlay
           playsInline
           preload="auto"
-          aria-hidden="true"
         />
         <div className="film__veil" />
 
@@ -201,24 +256,28 @@ export default function IntroFilm() {
         />
 
         {/* the three rings of the mark */}
-        {RINGS.map((r, i) => {
+        {RINGS.map((r) => {
           const hub = HUBS[r.brand];
           const x = r.dx * (1 - spread) + r.spread * S * spread;
           const yPx = r.dy * (1 - spread);
           const yVh = markYvh * (1 - spread);
           const tinted = spread > 0.55 && p > 0.2;
+          const pulsing = p < 0.06; // the opening rings breathe with a soft white glow
           return (
             <svg
               key={r.brand}
-              className="film__ring"
+              className={`film__ring${pulsing ? ' film__ring--pulse' : ''}`}
               width={MARK_SIZE}
               height={MARK_SIZE}
               viewBox="0 0 41.4 41.4"
               style={{
                 transform: `translate(calc(-50% + ${x}px), calc(-50% + ${yPx}px + ${yVh}vh)) scale(${1 + (sepScale - 1) * spread})`,
-                filter: glow > 0.02 ? `drop-shadow(0 0 ${14 * glow}px rgba(250,171,53,${0.55 * glow}))` : 'none',
+                filter: pulsing
+                  ? undefined
+                  : glow > 0.02
+                    ? `drop-shadow(0 0 ${14 * glow}px rgba(250,171,53,${0.55 * glow}))`
+                    : 'none',
               }}
-              aria-hidden="true"
             >
               <circle
                 cx="20.7"
@@ -233,7 +292,7 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* labels under the separated rings */}
+        {/* labels under the separated rings — tracking the rings' animated x */}
         {RINGS.map((r) => {
           const hub = HUBS[r.brand];
           return (
@@ -242,7 +301,7 @@ export default function IntroFilm() {
               className="film__ring-label"
               style={{
                 opacity: labels,
-                transform: `translate(calc(-50% + ${r.spread * S}px), ${(MARK_SIZE / 2) * sepScale + 30}px)`,
+                transform: `translate(calc(-50% + ${r.spread * S * spread}px), ${(MARK_SIZE / 2) * sepScale + 30}px)`,
               }}
             >
               <span className="film__ring-word">{wordFor(r.brand)}</span>
@@ -259,7 +318,7 @@ export default function IntroFilm() {
           if (!b.on) return null;
           return (
             <p key={i} className="film__line" style={{ opacity: b.opacity }}>
-              {scramble(lines[i], b.lock)}
+              <ScrambleText text={lines[i]} lock={b.lock} />
             </p>
           );
         })}
@@ -267,7 +326,7 @@ export default function IntroFilm() {
         {/* 04 — the universe headline, above the separated rings */}
         {universe.on && (
           <p className="film__line film__line--universe" style={{ opacity: universe.opacity }}>
-            {scramble(lines[3], universe.lock)}
+            <ScrambleText text={lines[3]} lock={universe.lock} />
           </p>
         )}
 
