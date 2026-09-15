@@ -18,6 +18,156 @@
 }
 .nav__links a.is-active { color: var(--fg); }
 
+/* ---------- intro film ---------- */
+
+.film {
+  position: relative;
+  height: 900vh;
+}
+.film__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none; /* purely visual — never trap clicks or selection */
+}
+.film__grid,
+.film__video,
+.film__veil {
+  position: absolute;
+  inset: 0;
+}
+.film__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: opacity;
+}
+.film__veil {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.28) 42%, rgba(0, 0, 0, 0.62));
+  pointer-events: none;
+}
+.film__glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(250, 171, 53, 0.3) 0%, rgba(250, 171, 53, 0.1) 34%, transparent 64%);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+.film__ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  will-change: transform;
+}
+.film__ring-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  will-change: opacity, transform;
+}
+.film__ring-word {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .film__ring-word {
+    font-size: 0.92rem;
+    white-space: normal;
+    max-width: 15ch;
+  }
+  .film__ring-role { font-size: 0.6rem; }
+}
+.film__ring-role {
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.film__line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(88vw, 920px);
+  margin: 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.film__line--universe {
+  top: 24vh;
+  transform: translate(-50%, 0);
+  font-size: clamp(1.15rem, 2.3vw, 1.9rem);
+  color: rgba(255, 255, 255, 0.92);
+}
+.film__line--quiet {
+  top: calc(50% + 132px);
+  transform: translate(-50%, 0);
+  font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.9);
+}
+.film__line--closer {
+  top: calc(50% + 128px);
+  transform: translate(-50%, 0);
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.7vw, 2.2rem);
+  color: var(--gold);
+}
+.film__lockup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.film__cue {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.film__cue-line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(180deg, var(--fg), transparent);
+}
+.film--static {
+  height: auto;
+  padding: 22vh 0 10vh;
+}
+.film--static .wrap {
+  display: grid;
+  gap: 34px;
+}
+.film__static-line {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.6vw, 2.1rem);
+  max-width: 26ch;
+  margin: 0;
+}
+
 /* ---------- story beats + doorways ---------- */
 
 .story-beats { display: grid; gap: clamp(48px, 8vh, 96px); }
@@ -83,6 +233,12 @@
 }
 .door--shared .door__role { color: var(--muted); }
 .door__name { font-family: var(--serif); font-size: 1.5rem; }
+.door__logo {
+  height: calc(42px * var(--logo-scale, 1));
+  width: auto;
+  align-self: flex-start;
+  margin: 4px 0 2px;
+}
 .door__tag { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
 
 /* ---------- brand hub ---------- */

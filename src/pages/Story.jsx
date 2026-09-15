@@ -1,48 +1,18 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
-import CinematicIntro from '../sections/CinematicIntro';
+import IntroFilm from '../sections/IntroFilm';
 import Footer from '../sections/Footer';
-import { BEATS, DOORWAYS_BEAT } from '../data/story';
+import { DOORWAYS_BEAT } from '../data/story';
 import { HUBS, HUB_ORDER } from '../data/hubs';
-
-function Beat({ beat }) {
-  return (
-    <Reveal className="beat">
-      <div className="beat__num">{beat.num}</div>
-      <div className="beat__body">
-        <p className="eyebrow">{beat.title}</p>
-        <h2 className="beat__headline">{beat.headline}</h2>
-        <p className="body">{beat.body}</p>
-        {beat.flywheel && (
-          <div className="beat__flywheel">
-            <ol>
-              {beat.flywheel.steps.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ol>
-            <p className="beat__flywheel-caption">{beat.flywheel.caption}</p>
-          </div>
-        )}
-      </div>
-    </Reveal>
-  );
-}
 
 export default function Story() {
   return (
     <main>
-      <CinematicIntro />
-
-      <section className="ch wrap story-beats" id="story">
-        {BEATS.map((b) => (
-          <Beat key={b.num} beat={b} />
-        ))}
-      </section>
+      <IntroFilm />
 
       <section className="ch wrap doorways" id="doorways">
         <Reveal>
           <p className="eyebrow">{DOORWAYS_BEAT.num} · {DOORWAYS_BEAT.title}</p>
-          <h2 className="beat__headline">{DOORWAYS_BEAT.headline}</h2>
           <p className="body">{DOORWAYS_BEAT.body}</p>
         </Reveal>
         <div className="doorways__grid">
@@ -56,7 +26,12 @@ export default function Story() {
                   style={{ '--door-accent': h.accent }}
                 >
                   <span className="door__role">{h.roleLabel}</span>
-                  <span className="door__name">{h.identity.name}</span>
+                  <img
+                    className="door__logo"
+                    src={h.identity.logo}
+                    alt={h.identity.name}
+                    style={{ '--logo-scale': h.identity.logoScale }}
+                  />
                   <span className="door__tag">{h.tagline}</span>
                 </Link>
               </Reveal>
