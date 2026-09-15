@@ -5,10 +5,6 @@ import { HUBS, HUB_ORDER } from '../data/hubs';
 import { glossaryForBrand, slugifyTerm } from '../data/glossary';
 import { DOWNLOADS, POSTERS } from '../data/brand';
 
-function Pending({ note }) {
-  return <p className="hub__pending">{note || 'Being written from the source properties — landing shortly.'}</p>;
-}
-
 function Section({ id, kicker, title, children }) {
   return (
     <section className="hub__section wrap" id={id}>
@@ -48,17 +44,10 @@ export default function BrandHub({ slug }) {
       </header>
 
       {/* Story */}
-      <Section id="story" kicker="Story" title={hub.story.pending ? null : hub.story.headline}>
-        {hub.story.pending ? (
-          <>
-            <Reveal><p className="body hub__statement">{v.statement}</p></Reveal>
-            <Pending note="The full story — origin, narrative, and role — is being drawn from the source sites." />
-          </>
-        ) : (
-          hub.story.paragraphs.map((p, i) => (
-            <Reveal key={i} delay={i * 40}><p className="body">{p}</p></Reveal>
-          ))
-        )}
+      <Section id="story" kicker="Story" title={hub.story.headline}>
+        {hub.story.paragraphs.map((p, i) => (
+          <Reveal key={i} delay={i * 40}><p className="body hub__statement">{p}</p></Reveal>
+        ))}
       </Section>
 
       {/* Role in the universe — "you are here" */}
@@ -84,37 +73,29 @@ export default function BrandHub({ slug }) {
 
       {/* Audience & persona */}
       <Section id="persona" kicker="Audience & persona">
-        {hub.persona.pending ? <Pending /> : <Reveal><p className="body">{hub.persona.body}</p></Reveal>}
+        <Reveal><p className="body">{hub.persona.body}</p></Reveal>
       </Section>
 
       {/* Voice & tone */}
       <Section id="voice" kicker="Voice & tone">
-        {hub.voice.pending ? (
-          <Pending />
-        ) : (
-          <Reveal>
-            <ul className="hub__voice">
-              {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
-            </ul>
-            {hub.voice.examples.length > 0 && (
-              <div className="hub__voice-examples">
-                {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}
-              </div>
-            )}
-          </Reveal>
-        )}
+        <Reveal>
+          <ul className="hub__voice">
+            {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
+          </ul>
+          {hub.voice.examples.length > 0 && (
+            <div className="hub__voice-examples">
+              {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}
+            </div>
+          )}
+        </Reveal>
       </Section>
 
       {/* Positioning & messaging */}
       <Section id="positioning" kicker="Positioning & messaging">
-        {hub.positioning.pending ? (
-          <Pending />
-        ) : (
-          <Reveal>
-            <p className="hub__oneliner">{hub.positioning.oneLiner}</p>
-            <p className="body">{hub.positioning.boilerplate}</p>
-          </Reveal>
-        )}
+        <Reveal>
+          <p className="hub__oneliner">{hub.positioning.oneLiner}</p>
+          <p className="body">{hub.positioning.boilerplate}</p>
+        </Reveal>
       </Section>
 
       {/* Visual identity capsule */}

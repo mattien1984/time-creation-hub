@@ -11,7 +11,9 @@ const FILTERS = [
   { id: 'existence', label: 'Existence' },
 ];
 
-const accentFor = (brand) => HUBS[brand]?.accent || '#FAAB35';
+// Umbrella terms get neutral white — no single brand owns them (TCP's gold
+// would otherwise imply ownership of the shared vocabulary).
+const accentFor = (brand) => HUBS[brand]?.accent || '#FFFFFF';
 
 export default function Glossary() {
   const [filter, setFilter] = useState('all');

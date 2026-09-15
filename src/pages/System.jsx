@@ -21,9 +21,9 @@ export default function System() {
       <ColorChapter />
       <ArchitectureScene />
       <ShapeChapter />
-      <GraphicElement vid="existence" num="05" />
-      <GraphicElement vid="time-creationism" num="06" />
-      <GraphicElement vid="time-creation-project" num="07" />
+      <GraphicElement vid="existence" />
+      <GraphicElement vid="time-creationism" />
+      <GraphicElement vid="time-creation-project" />
       <DesignSystemShowcase />
       <Footer />
     </main>

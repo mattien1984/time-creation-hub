@@ -52,12 +52,6 @@
   font-family: var(--serif);
   font-size: 1.02rem;
 }
-.hub__pending {
-  color: var(--faint);
-  font-style: italic;
-  margin-top: 10px;
-  max-width: 48ch;
-}
 
 .doorways { padding-bottom: 12vh; }
 .doorways__grid {

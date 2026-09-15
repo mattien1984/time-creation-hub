@@ -18,7 +18,7 @@ export const HUBS = {
     roleLabel: 'The Instrument',
     tagline: 'Time, authored.',
     identity: vertical('existence'),
-    accent: '#FD5900',
+    accent: vertical('existence').accent,
     story: {
       headline: 'The instrument of time creation',
       paragraphs: [
@@ -37,7 +37,7 @@ export const HUBS = {
       principles: [
         'Second-person imperative built on the three verbs: Design the person you want to be. Account for who you actually are. Optimize what your time reveals. Identity words (Real You, Ideal You, intention) carry serif-italic emphasis.',
         'Antithesis does the persuading — "not a place to schedule your days, but a place to author your life"; "the week you actually lived, not the one you planned." No hype, no exclamation points; conviction through parallelism and repetition.',
-        'Cause-and-effect chains compound like the practice itself: "The more completely you account, the clearer the record becomes. The clearer the record, the more precise your next Design."',
+        'Cause-and-effect chains compound like the practice itself: "The more completely you account for your time, the clearer the record becomes." "The clearer the record, the more precise your next Design."',
         'Proprietary nouns are capitalized mid-sentence and do the branding work: Time Block, Time Creation Cycle, Time Alignment Score, Time Intelligence, Real You, the record.',
         'Gospel copy is verbatim-only — narrative lines from the Time Creation Cycle gospel text are never paraphrased; even a one-word adaptation needs approval.',
         'The villain is the unchanged calendar grid — never a competitor brand. Avoid: "make time for what matters," life-in-weeks math, "take back your time," countdowns, fake scarcity.',
@@ -45,9 +45,10 @@ export const HUBS = {
       examples: [
         'Design the person you want to be. Account for who you actually are. Optimize what your time reveals to continuously realize your potential.',
         'Together, your Time Blocks reveal the Real You.',
-        'Every week, the record deepens — the Real You becomes clearer. Your next Design becomes more precise.',
+        'Every week, the record deepens.',
+        'The clearer the record, the more precise your next Design.',
         'Welcome. You’re one of the first.',
-        'what you stamp is what you live — Rob Dyrdek, on Account',
+        'what you stamp is what you live — Rob Dyrdek, internal directive',
       ],
     },
     positioning: {
@@ -63,7 +64,7 @@ export const HUBS = {
     roleLabel: 'The Belief',
     tagline: 'Time isn’t spent. It’s created.',
     identity: vertical('time-creationism'),
-    accent: '#249EA1',
+    accent: vertical('time-creationism').accent,
     story: {
       headline: 'A life is not spent or found, but made.',
       paragraphs: [
@@ -108,7 +109,7 @@ export const HUBS = {
     roleLabel: 'The Foundation',
     tagline: 'You live in time. We help you learn to create it.',
     identity: vertical('time-creation-project'),
-    accent: '#FAAB35',
+    accent: vertical('time-creation-project').accent,
     // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
     story: {
       headline: 'The Time Creation Project exists to establish Time Creation as a foundational life skill.',
