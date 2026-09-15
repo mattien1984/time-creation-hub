@@ -12,9 +12,7 @@ const LOGO = {
   'time-creationism': { markSize: 30, fontSize: '1.25rem', wordScale: 1 },
   'time-creation-project': { markSize: 30, fontSize: '1.25rem', wordScale: 1 },
 };
-const PHOTO = {
-  'time-creation-project': { transform: 'scale(1.6)', transformOrigin: 'center 38%' },
-};
+const PHOTO = {};
 
 export default function Positioning() {
   return (
