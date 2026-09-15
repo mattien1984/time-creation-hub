@@ -1,11 +1,18 @@
 import Reveal from '../components/Reveal';
 import { LogoMark } from '../components/Logo';
 import { UMBRELLA } from '../data/brand';
+import { CREATOR } from '../data/story';
 
 export default function Footer() {
   return (
     <footer className="foot">
       <div className="wrap">
+        <Reveal className="foot__creator">
+          <p className="eyebrow">Created by</p>
+          <p className="foot__creator-name">{CREATOR.name}</p>
+          <p className="foot__creator-title">{CREATOR.headline}</p>
+          <p className="foot__creator-bio">{CREATOR.body}</p>
+        </Reveal>
         <Reveal className="foot__top">
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24 }}>
             <LogoMark size={52} stroke={1.4} />

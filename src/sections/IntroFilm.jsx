@@ -1,8 +1,10 @@
 // The homepage intro film — a scroll-scrubbed cinematic sequence.
 // The logo's three rings open the story: they converge and glow (a full-bleed
-// video fades in behind), three statements decode themselves letter by letter,
+// video fades in behind), two statements decode themselves letter by letter,
 // the rings separate into the three brands, re-form the Time Creation lockup,
 // and Rob's closer lands before the page releases into the doorways.
+// Ring stroke 1.45 (viewBox units) measured off the real lockup exports
+// (5.45u in the 155u mark box); the creator credit lives in the Footer.
 // All lines are sourced from story.js (the beat headlines) — one data source.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -49,31 +51,31 @@ function beatState(p, [a, b]) {
 }
 
 // ---- timeline (progress 0..1 over the film's scroll run) ----
+// Two decoder beats (the creator credit lives in the footer now).
 const T = {
   glow: [0.045, 0.1],
   video: [0.07, 0.14],
   beats: [
-    [0.12, 0.26],
-    [0.27, 0.41],
-    [0.42, 0.56],
+    [0.12, 0.28],
+    [0.3, 0.46],
   ],
-  markDrop: [0.555, 0.585], // mark settles to center before the universe line opens
-  separate: [0.58, 0.7],
-  universe: [0.585, 0.77],
-  labels: [0.64, 0.7],
-  labelsOut: [0.71, 0.75],
-  reunite: [0.74, 0.84],
-  same: [0.78, 0.88],
-  sameOut: [0.87, 0.9], // fully out before the closer opens at 0.90
-  closer: [0.9, 0.96],
+  markDrop: [0.465, 0.495], // mark settles to center before the universe line opens
+  separate: [0.49, 0.62],
+  universe: [0.495, 0.68],
+  labels: [0.555, 0.62],
+  labelsOut: [0.63, 0.67],
+  reunite: [0.66, 0.76],
+  same: [0.7, 0.8],
+  sameOut: [0.79, 0.82], // fully out before the closer opens
+  closer: [0.82, 0.92],
 };
 const SCRAMBLE_WINDOWS = [...T.beats, T.universe];
 
 const videoOpacityAt = (p) =>
   0.35 *
   ease(seg(p, ...T.video)) *
-  (1 - 0.68 * (ease(seg(p, 0.56, 0.64)) - ease(seg(p, 0.76, 0.84)))) *
-  (1 - 0.5 * seg(p, 0.92, 0.99));
+  (1 - 0.68 * (ease(seg(p, 0.49, 0.56)) - ease(seg(p, 0.68, 0.76)))) *
+  (1 - 0.5 * seg(p, 0.9, 0.97));
 
 // The mark's exact ring geometry (viewBox 41.4, center 20.70 / 20.92).
 const MARK_SIZE = 164;
@@ -93,7 +95,7 @@ function StaticIntro({ lines }) {
       <div className="wrap">
         <svg width={MARK_SIZE / 1.6} height={MARK_SIZE / 1.6} viewBox="0 0 41.4 41.4" aria-hidden="true">
           {RINGS.map((r, i) => (
-            <circle key={i} cx={20.7 + r.dx / UNIT} cy={20.92 + r.dy / UNIT} r={17.68} fill="none" stroke="#fff" strokeWidth={0.7} />
+            <circle key={i} cx={20.7 + r.dx / UNIT} cy={20.92 + r.dy / UNIT} r={17.68} fill="none" stroke="#fff" strokeWidth={1.45} />
           ))}
         </svg>
         {lines.map((l) => (
@@ -188,10 +190,9 @@ export default function IntroFilm() {
     // Beat 1 breaks between its two sentences.
     BEATS[0].headline.replace('time. ', 'time.\n'),
     BEATS[1].headline,
-    BEATS[2].headline,
-    BEATS[3].headline,
-    BEATS[4].headline,
-    DOORWAYS_BEAT.headline,
+    BEATS[2].headline, // the universe
+    BEATS[3].headline, // same coordinates
+    DOORWAYS_BEAT.headline, // the closer
   ];
   // Constant props — never re-render the full-viewport pattern per frame.
   const gridField = useMemo(
@@ -211,12 +212,12 @@ export default function IntroFilm() {
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
   const sepScale = Math.min(1.12, (S * 0.42) / (17.68 * UNIT));
   const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop))) - 8 * ease(seg(p, ...T.reunite));
-  const glow = (1 - spread) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.94, 1));
+  const glow = (1 - spread) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.92, 1));
   const video = videoOpacityAt(p);
   const labels = ease(seg(p, ...T.labels)) * (1 - seg(p, ...T.labelsOut));
   const universe = beatState(p, T.universe);
   const same = ease(seg(p, ...T.same)) * (1 - seg(p, ...T.sameOut));
-  const wordmark = ease(seg(p, 0.8, 0.86));
+  const wordmark = ease(seg(p, 0.72, 0.78));
   const closer = ease(seg(p, ...T.closer));
   const cue = 1 - seg(p, 0.005, 0.03);
 
@@ -285,7 +286,7 @@ export default function IntroFilm() {
                 r="17.68"
                 fill="none"
                 stroke={tinted ? hub.accent : '#ffffff'}
-                strokeWidth="0.55"
+                strokeWidth="1.45"
                 style={{ transition: 'stroke 0.45s ease' }}
               />
             </svg>
@@ -323,14 +324,14 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* 04 — the universe headline, above the separated rings */}
+        {/* 03 — the universe headline, above the separated rings */}
         {universe.on && (
           <p className="film__line film__line--universe" style={{ opacity: universe.opacity }}>
-            <ScrambleText text={lines[3]} lock={universe.lock} />
+            <ScrambleText text={lines[2]} lock={universe.lock} />
           </p>
         )}
 
-        {/* 05 — reunion: wordmark + "Same coordinates..." */}
+        {/* 04 — reunion: wordmark + "Same coordinates..." */}
         <div
           className="film__lockup"
           style={{ opacity: wordmark, transform: `translate(-50%, calc(${markYvh}vh + ${MARK_SIZE / 2 + 22}px))` }}
@@ -338,12 +339,12 @@ export default function IntroFilm() {
           Time Creation
         </div>
         <p className="film__line film__line--quiet" style={{ opacity: same }}>
-          {lines[4]}
+          {lines[3]}
         </p>
 
-        {/* 06 — the closer */}
+        {/* 05 — the closer */}
         <p className="film__line film__line--closer" style={{ opacity: closer }}>
-          {lines[5]}
+          {lines[4]}
         </p>
 
         <div className="film__cue" style={{ opacity: cue }}>

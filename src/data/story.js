@@ -1,11 +1,11 @@
-// The homepage narrative — six beats, the film that ends in doorways.
+// The homepage narrative — the film's beats plus the footer creator credit.
 // Assembled from the real properties (research pass, Sep 2026):
 // - Beat 01: verbatim from THE GAP (time-creation-project/index-daylight.html)
 // - Beat 02: Rob's SACRED foundation copy, verbatim (index-foundation.html)
-// - Beat 03: verbatim from the About overlay on robdyrdek.com (spotlight.html)
-// - Beat 04: brand.js statements + Rob's sacred establishing line
-// - Beat 05: UMBRELLA.intro + architecture copy; flywheel synthesized
-// - Beat 06: Rob's sacred closer + mined doorway copy
+// - Beat 03: brand.js statements + Rob's sacred establishing line
+// - Beat 04: UMBRELLA.intro + architecture copy; flywheel synthesized
+// - Beat 05 (doorways): Rob's sacred closer + mined doorway copy
+// - CREATOR (footer credit): verbatim from the robdyrdek.com About overlay
 // Sacred lines (Rob's own words) must never be paraphrased.
 
 export const BEATS = [
@@ -25,20 +25,13 @@ export const BEATS = [
   },
   {
     num: '03',
-    id: 'creator',
-    title: 'The Creator',
-    headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationism.',
-    body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationism.",
-  },
-  {
-    num: '04',
     id: 'universe',
     title: 'The Universe',
     headline: 'One principle expressed three ways — a belief, an instrument, and a foundation.',
     body: 'Time Creationism is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
   },
   {
-    num: '05',
+    num: '04',
     id: 'together',
     title: 'Coming Together',
     headline: 'Same coordinates, same palette, same mark.',
@@ -55,9 +48,17 @@ export const BEATS = [
   },
 ];
 
-// Beat 06 — rendered as the doorways section itself.
+// The creator credit — relegated from the film to the footer (Sep 15 note).
+// Verbatim from the About overlay shipped on robdyrdek.com.
+export const CREATOR = {
+  name: 'Rob Dyrdek',
+  headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationism.',
+  body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationism.",
+};
+
+// Final beat — rendered as the doorways section itself.
 export const DOORWAYS_BEAT = {
-  num: '06',
+  num: '05',
   title: 'The Doorways',
   headline: 'Every person creates their life through the way they create their time.',
   body: 'Choose an endeavor. Put Time Creation into practice with Existence, the instrument. Enter the belief behind the practice — time isn’t spent, it’s created. Or stand on the foundation bringing Time Creation to the world. Wherever you begin, it is the same idea: a life is not spent or found, but made.',

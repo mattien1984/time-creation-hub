@@ -22,8 +22,8 @@
 
 .film {
   position: relative;
-  height: 900vh;
-  height: 900svh; /* stable on iOS while the toolbar collapses */
+  height: 800vh; /* one decoder beat fewer */
+  height: 800svh; /* stable on iOS while the toolbar collapses */
 }
 .film__stage {
   position: sticky;
@@ -440,6 +440,30 @@
 }
 .hub__cross-card:hover { background: rgba(255, 255, 255, 0.05); }
 .hub__cross-card--up { border-top-color: transparent; opacity: 0.85; }
+
+/* ---------- footer creator credit ---------- */
+
+.foot__creator {
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 40px;
+  margin-bottom: 44px;
+}
+.foot__creator-name {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin: 12px 0 6px;
+}
+.foot__creator-title {
+  color: var(--gold);
+  font-size: 0.95rem;
+  margin: 0 0 14px;
+}
+.foot__creator-bio {
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 64ch;
+  margin: 0;
+}
 
 /* ---------- glossary page ---------- */
 
