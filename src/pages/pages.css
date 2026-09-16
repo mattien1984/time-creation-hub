@@ -941,12 +941,13 @@ body.film-end .nav--film {
   width: min(1300px, 120vw);
   height: 110%;
   transform: translateX(-50%);
-  background: radial-gradient(
-    ellipse 50% 58% at 50% 100%,
-    rgba(250, 171, 53, 0.38),
-    rgba(253, 89, 0, 0.14) 46%,
-    transparent 74%
-  );
+  /* the Sunrise palette mixed along the bottom: Mind teal left, Dawn blue
+     right, the Energy arc holding the center */
+  background:
+    radial-gradient(ellipse 40% 55% at 20% 100%, rgba(36, 158, 161, 0.3), transparent 68%),
+    radial-gradient(ellipse 38% 52% at 80% 100%, rgba(47, 111, 208, 0.24), transparent 66%),
+    radial-gradient(ellipse 44% 56% at 52% 104%, rgba(253, 89, 0, 0.2), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 48% 100%, rgba(250, 171, 53, 0.3), transparent 72%);
   filter: blur(52px);
   pointer-events: none;
 }
