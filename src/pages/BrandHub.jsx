@@ -329,7 +329,7 @@ export default function BrandHub({ slug }) {
         </Link>
       </section>
 
-      <Footer />
+      <Footer gridKind={v.gridKind} />
     </main>
   );
 }

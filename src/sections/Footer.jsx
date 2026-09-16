@@ -1,10 +1,17 @@
 import Reveal from '../components/Reveal';
 import { LogoMark } from '../components/Logo';
+import GridField from '../components/GridField';
 import { CREATOR } from '../data/story';
 
-export default function Footer() {
+// gridKind: the brand's grid language rises from the footer's bottom edge —
+// hub pages pass theirs (block/fabric/foundation); default is the umbrella
+// fabric.
+export default function Footer({ gridKind = 'fabric' }) {
   return (
     <footer className="foot">
+      <div className="foot__gridfield" aria-hidden="true">
+        <GridField kind={gridKind} color="rgba(255,255,255,0.4)" />
+      </div>
       <div className="wrap">
         <div className="foot__grid">
           <Reveal className="foot__col">
