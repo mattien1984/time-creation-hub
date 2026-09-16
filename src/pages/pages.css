@@ -614,8 +614,7 @@ body.film-end .nav--film {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.9);
-  margin-top: clamp(28px, 6vh, 64px);
-  margin-bottom: 26px;
+  margin-bottom: clamp(40px, 7vh, 72px); /* the eyebrow sits up, away from the logo */
 }
 .hub--light .hub__role { color: rgba(14, 23, 22, 0.9); }
 .hub__logo img {
