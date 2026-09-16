@@ -274,10 +274,19 @@ body.film-end .nav--film {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 480px;
-  height: 480px;
+  width: 760px;
+  height: 760px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(250, 171, 53, 0.3) 0%, rgba(250, 171, 53, 0.1) 34%, transparent 64%);
+  /* long, eased falloff + blur so the bloom has no visible outer edge */
+  background: radial-gradient(
+    circle,
+    rgba(250, 171, 53, 0.26) 0%,
+    rgba(250, 171, 53, 0.13) 22%,
+    rgba(250, 171, 53, 0.055) 42%,
+    rgba(250, 171, 53, 0.02) 62%,
+    transparent 88%
+  );
+  filter: blur(34px);
   pointer-events: none;
   will-change: opacity, transform;
 }
