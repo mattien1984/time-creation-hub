@@ -10,7 +10,6 @@ export default function System() {
   return (
     <main>
       <header className="page-head wrap">
-        <p className="eyebrow">Shared</p>
         <h1 className="display">The Design System</h1>
         <p className="lead">Same coordinates, same palette, same mark.</p>
         <p className="body">

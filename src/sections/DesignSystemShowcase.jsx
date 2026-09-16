@@ -85,11 +85,6 @@ export default function DesignSystemShowcase() {
           </div>
         ))}
       </div>
-
-      <Reveal className="ds__final">
-        <p className="eyebrow" style={{ marginBottom: 18 }}>Time Creation</p>
-        <h3 className="display">A life is not spent or found, but made.</h3>
-      </Reveal>
     </section>
   );
 }
