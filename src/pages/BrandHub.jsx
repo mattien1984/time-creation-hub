@@ -236,8 +236,8 @@ export default function BrandHub({ slug }) {
           rendered procedurally (TC layers its wave wash beneath the fabric) */}
       <header className="hub__hero">
         <div className="hub__hero-field" aria-hidden="true">
-          {v.id === 'time-creationism' && (
-            <img className="hub__hero-wave" src={asset('/assets/photography/tc-wave.jpg')} alt="" />
+          {hub.theme.heroPhoto && (
+            <img className="hub__hero-photo" src={v.photo} alt="" />
           )}
           <GridField
             kind={v.gridKind}
@@ -245,7 +245,7 @@ export default function BrandHub({ slug }) {
             opacity={light ? 0.2 : 0.3}
           />
         </div>
-        <div className="wrap">
+        <div className="wrap hub__hero-row">
           <Reveal>
             <p className="hub__role">{hub.roleLabel}</p>
             <div className="hub__logo">
@@ -253,6 +253,13 @@ export default function BrandHub({ slug }) {
             </div>
             <p className="hub__tagline">{hub.tagline}</p>
           </Reveal>
+          {/* right-side art slot — e.g. the software on a monitor (asset TBD):
+              set heroArt on the hub in hubs.js and it renders here */}
+          {hub.heroArt && (
+            <Reveal delay={80} className="hub__hero-art">
+              <img src={hub.heroArt} alt="" />
+            </Reveal>
+          )}
         </div>
       </header>
 

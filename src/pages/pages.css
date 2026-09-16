@@ -534,20 +534,28 @@ body.film-end .nav--film {
   inset: 0;
   pointer-events: none;
 }
-.hub__hero-wave {
+/* hero photo — affixed to the top at low opacity, fading out at the bottom */
+.hub__hero-photo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.32;
+  object-position: center top;
+  opacity: 0.15;
+  -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
 }
-/* the wave fades toward the content below */
-.hub--time-creationism .hub__hero-field::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.85) 92%);
+.hub__hero-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.hub__hero-art img {
+  max-width: min(420px, 38vw);
+  height: auto;
 }
 /* TCP daylight: an Enlightenment Glare bloom behind the hero */
 .hub--light .hub__hero-field::after {
