@@ -27,7 +27,7 @@ export const BEATS = [
     num: '03',
     id: 'universe',
     title: 'The Universe',
-    headline: 'One principle expressed three ways — a belief, an instrument, and a foundation.',
+    headline: 'One principle expressed three ways — a tool, a philosophy, and a foundation.',
     body: 'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
   },
   {

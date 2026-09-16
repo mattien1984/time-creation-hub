@@ -181,6 +181,9 @@ export default function IntroFilm() {
   );
   const [, setFrame] = useState(0);
   const pRef = useRef(0);
+  // 0..1 idle settle: parked mid-decode, this ramps up and resolves the
+  // churn window to the real characters; scrubbing decays it back to 0.
+  const idleLockRef = useRef(0);
   const [vp, setVp] = useState(() => ({ w: window.innerWidth, h: window.innerHeight }));
   const vw = vp.w;
   const vh = vp.h;
@@ -197,6 +200,8 @@ export default function IntroFilm() {
     if (reduced) return undefined;
     let raf;
     let lastTick = 0;
+    let lastMove = 0;
+    let lastNow = 0;
     const readP = () => {
       // DEV escape hatch: window.__filmP freezes the film at a progress value
       // so states can be screenshot-tested without scrolling.
@@ -212,11 +217,25 @@ export default function IntroFilm() {
     };
     const update = (now) => {
       const p = readP();
+      const dt = Math.min(64, now - lastNow || 16);
+      lastNow = now;
       const moved = Math.abs(p - pRef.current) > 0.0004;
-      const scrambling =
-        (SCRAMBLE_WINDOWS.some((w) => beatState(p, w).scrambling) ||
-          (p > T.universeIn[0] && p < T.universeLock[1])) &&
-        now - lastTick > 45;
+      if (moved) lastMove = now;
+      const inChurnWindow =
+        SCRAMBLE_WINDOWS.some((w) => beatState(p, w).scrambling) ||
+        (p > T.universeIn[0] && p < T.universeLock[1]);
+      // The digit churn is scrub-driven: it re-rolls only while the user is
+      // actually moving. Parked mid-decode, the idle lock ramps in (after a
+      // short grace) and the line settles onto its real characters instead
+      // of jittering forever; new movement hands control back to the scrub.
+      if (moved) {
+        idleLockRef.current = Math.max(0, idleLockRef.current - dt / 160);
+      } else if (inChurnWindow && now - lastMove > 220) {
+        idleLockRef.current = Math.min(1, idleLockRef.current + dt / 550);
+      }
+      const churning =
+        inChurnWindow && (now - lastMove <= 220 || idleLockRef.current < 1);
+      const scrambling = churning && now - lastTick > 45;
       if (moved || scrambling) {
         pRef.current = p;
         lastTick = now;
@@ -338,6 +357,8 @@ export default function IntroFilm() {
     entityMarkX[slug] = cx - (LOCKUPS[slug].wu * lockupH) / 2 + (78.5 / 155) * lockupH;
   });
   const cue = 1 - seg(p, 0.005, 0.03);
+  // Parked mid-decode → the churn settles onto the real characters.
+  const idleE = ease(idleLockRef.current);
 
   return (
     <section className="film" ref={ref} id="top">
@@ -532,7 +553,7 @@ export default function IntroFilm() {
           if (!b.on) return null;
           return (
             <p key={i} className="film__line" style={{ opacity: b.opacity }}>
-              <ScrambleText text={lines[i]} lock={b.lock} />
+              <ScrambleText text={lines[i]} lock={b.lock + (1 - b.lock) * idleE} />
             </p>
           );
         })}
@@ -540,7 +561,7 @@ export default function IntroFilm() {
         {/* 03 — the universe headline, above the brands */}
         {universeOp > 0.001 && (
           <p className="film__line film__line--universe" style={{ opacity: universeOp }}>
-            <ScrambleText text={lines[2]} lock={universeLock} />
+            <ScrambleText text={lines[2]} lock={universeLock + (1 - universeLock) * idleE} />
           </p>
         )}
 
