@@ -944,7 +944,7 @@ body.film-end .nav--film {
 }
 .foot__creator-name {
   font-family: var(--serif);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1rem, 2vw, 1.47rem);
   color: var(--fg);
   margin: 0;
 }
