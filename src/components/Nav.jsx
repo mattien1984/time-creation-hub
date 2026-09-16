@@ -45,7 +45,7 @@ export default function Nav() {
           );
         })}
         <span className="nav__sep" aria-hidden="true" />
-        <NavLink to="/system" className={link}>System</NavLink>
+        <NavLink to="/system" className={link}>Design System</NavLink>
         <NavLink to="/glossary" className={link}>Glossary</NavLink>
         <NavLink to="/library" className={link}>Library</NavLink>
       </div>
