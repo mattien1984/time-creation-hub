@@ -539,7 +539,7 @@ body.film-end .nav--film {
   margin-bottom: 26px;
 }
 .hub__logo img {
-  height: calc(clamp(72px, 12vw, 120px) * var(--logo-scale, 1));
+  height: calc(clamp(36px, 6vw, 60px) * var(--logo-scale, 1));
   width: auto;
 }
 .hub__tagline {
