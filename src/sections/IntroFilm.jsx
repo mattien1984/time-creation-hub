@@ -52,6 +52,10 @@ function beatState(p, [a, b]) {
 
 // ---- timeline (progress 0..1 over the film's scroll run) ----
 // Two decoder beats (the creator credit lives in the footer now).
+// Separation act: rings break apart horizontally, then glide into three
+// stacked rows where each crossfades into its brand's FULL lockup (the
+// traveling ring lands exactly on the lockup's own ring mark), holds, and
+// returns to re-form the umbrella mark.
 const T = {
   glow: [0.045, 0.1],
   video: [0.07, 0.14],
@@ -60,22 +64,23 @@ const T = {
     [0.3, 0.46],
   ],
   markDrop: [0.465, 0.495], // mark settles to center before the universe line opens
-  separate: [0.49, 0.62],
-  universe: [0.495, 0.68],
-  labels: [0.555, 0.62],
-  labelsOut: [0.63, 0.67],
-  reunite: [0.66, 0.76],
-  same: [0.7, 0.8],
-  sameOut: [0.79, 0.82], // fully out before the closer opens
-  closer: [0.82, 0.92],
+  separate: [0.49, 0.6],
+  toRows: [0.615, 0.665], // rings glide from ±S into the stacked logo rows
+  logosIn: [0.655, 0.69], // ring ↔ full-lockup crossfade
+  logosOut: [0.75, 0.785],
+  universe: [0.495, 0.75],
+  reunite: [0.78, 0.87],
+  same: [0.8, 0.88],
+  sameOut: [0.87, 0.895], // fully out before the closer opens
+  closer: [0.895, 0.965],
 };
 const SCRAMBLE_WINDOWS = [...T.beats, T.universe];
 
 const videoOpacityAt = (p) =>
   0.35 *
   ease(seg(p, ...T.video)) *
-  (1 - 0.68 * (ease(seg(p, 0.49, 0.56)) - ease(seg(p, 0.68, 0.76)))) *
-  (1 - 0.5 * seg(p, 0.9, 0.97));
+  (1 - 0.68 * (ease(seg(p, 0.49, 0.56)) - ease(seg(p, 0.78, 0.85)))) *
+  (1 - 0.5 * seg(p, 0.93, 0.985));
 
 // The mark's exact ring geometry (viewBox 41.4, center 20.70 / 20.92).
 const MARK_SIZE = 164;
@@ -86,7 +91,16 @@ const RINGS = [
   { dx: (18.39 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creationism', spread: -1 },
   { dx: (23.01 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creation-project', spread: 1 },
 ];
-const wordFor = (slug) => (slug === 'existence' ? 'existence' : HUBS[slug].identity.name);
+// Full lockup geometry, measured off the SVG exports (canvas alpha-scan):
+// every mark is a 157×154 composite; cx/cy = mark center in svg units.
+// Row order follows the narrative: belief / instrument / foundation.
+const LOCKUPS = {
+  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77, row: -1 },
+  existence: { W: 832, H: 155, cx: 78.5, cy: 77, row: 0 },
+  'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, row: 1 },
+};
+// Ring outer diameter is 140 units of a 155-unit lockup height.
+const LOCKUP_RING_RATIO = 140 / 155;
 
 // Static fallback for prefers-reduced-motion: the lines, plainly.
 function StaticIntro({ lines }) {
@@ -204,20 +218,28 @@ export default function IntroFilm() {
   const p = pRef.current;
 
   // ---- derived state ----
-  const spread = clamp01(
+  const sepAmount = clamp01(
     1 - ease(seg(p, 0, 0.07)) + ease(seg(p, ...T.separate)) - ease(seg(p, ...T.reunite))
   );
+  // One-way glide from the ±S row into the stacked logo rows; the reunion
+  // pulls straight home from the rows (sepAmount → 0), no backtracking.
+  const rowT = ease(seg(p, ...T.toRows));
   const S = Math.min(vw * 0.3, 330); // separation distance
-  // When separated, rings must fit three-abreast: cap the separated scale so
+  // In the ±S row, rings must fit three-abreast: cap the separated scale so
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
   const sepScale = Math.min(1.12, (S * 0.42) / (17.68 * UNIT));
+  // Stacked-row lockups: TC (1201u, the widest) sets the centered block width.
+  const lockupH = Math.min(60, 0.119 * vw); // rendered height of a 155u-tall lockup
+  const rowGap = Math.max(108, lockupH * 1.95);
+  const markX = (lockupH * (78.5 - 1201 / 2)) / 155; // all marks left-aligned in the block
+  const rowScale = (lockupH * LOCKUP_RING_RATIO) / ((2 * 17.68 + 1.45) * UNIT);
+  const ringHide = ease(seg(p, ...T.logosIn)) - ease(seg(p, ...T.logosOut));
   const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop))) - 8 * ease(seg(p, ...T.reunite));
-  const glow = (1 - spread) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.92, 1));
+  const glow = (1 - sepAmount) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.93, 1));
   const video = videoOpacityAt(p);
-  const labels = ease(seg(p, ...T.labels)) * (1 - seg(p, ...T.labelsOut));
   const universe = beatState(p, T.universe);
   const same = ease(seg(p, ...T.same)) * (1 - seg(p, ...T.sameOut));
-  const wordmark = ease(seg(p, 0.72, 0.78));
+  const wordmark = ease(seg(p, 0.82, 0.87));
   const closer = ease(seg(p, ...T.closer));
   const cue = 1 - seg(p, 0.005, 0.03);
 
@@ -259,10 +281,15 @@ export default function IntroFilm() {
         {/* the three rings of the mark */}
         {RINGS.map((r) => {
           const hub = HUBS[r.brand];
-          const x = r.dx * (1 - spread) + r.spread * S * spread;
-          const yPx = r.dy * (1 - spread);
-          const yVh = markYvh * (1 - spread);
-          const tinted = spread > 0.55 && p > 0.2;
+          const lk = LOCKUPS[r.brand];
+          // Phase-2 target: from the ±S row into this brand's stacked-row mark.
+          const p2x = r.spread * S * (1 - rowT) + markX * rowT;
+          const p2y = lk.row * rowGap * rowT;
+          const x = r.dx * (1 - sepAmount) + p2x * sepAmount;
+          const yPx = r.dy * (1 - sepAmount) + p2y * sepAmount;
+          const yVh = markYvh * (1 - sepAmount);
+          const scale = 1 + (sepScale + (rowScale - sepScale) * rowT - 1) * sepAmount;
+          const tinted = sepAmount > 0.55 && p > 0.2;
           const pulsing = p < 0.06; // the opening rings breathe with a soft white glow
           return (
             <svg
@@ -272,7 +299,8 @@ export default function IntroFilm() {
               height={MARK_SIZE}
               viewBox="0 0 41.4 41.4"
               style={{
-                transform: `translate(calc(-50% + ${x}px), calc(-50% + ${yPx}px + ${yVh}vh)) scale(${1 + (sepScale - 1) * spread})`,
+                opacity: 1 - ringHide,
+                transform: `translate(calc(-50% + ${x}px), calc(-50% + ${yPx}px + ${yVh}vh)) scale(${scale})`,
                 filter: pulsing
                   ? undefined
                   : glow > 0.02
@@ -293,25 +321,24 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* labels under the separated rings — tracking the rings' animated x */}
-        {RINGS.map((r) => {
-          const hub = HUBS[r.brand];
-          return (
-            <div
-              key={`label-${r.brand}`}
-              className="film__ring-label"
-              style={{
-                opacity: labels,
-                transform: `translate(calc(-50% + ${r.spread * S * spread}px), ${(MARK_SIZE / 2) * sepScale + 30}px)`,
-              }}
-            >
-              <span className="film__ring-word">{wordFor(r.brand)}</span>
-              <span className="film__ring-role" style={{ color: hub.accent }}>
-                {hub.roleLabel}
-              </span>
-            </div>
-          );
-        })}
+        {/* the full brand lockups — each mark lands exactly where its ring is */}
+        {ringHide > 0.001 &&
+          RINGS.map((r) => {
+            const lk = LOCKUPS[r.brand];
+            return (
+              <img
+                key={`lockup-${r.brand}`}
+                className="film__logo-img"
+                src={HUBS[r.brand].identity.logo}
+                alt=""
+                style={{
+                  height: (lockupH * lk.H) / 155,
+                  opacity: ringHide,
+                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markX}px), calc(${(-(lk.cy / lk.H) * 100).toFixed(2)}% + ${lk.row * rowGap}px))`,
+                }}
+              />
+            );
+          })}
 
         {/* decoder beats 01–03 */}
         {T.beats.map((w, i) => {

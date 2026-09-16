@@ -83,34 +83,13 @@
 }
 .film__ring--pulse { animation: filmRingPulse 3.4s ease-in-out infinite; }
 .film__churn { opacity: 0.65; }
-.film__ring-label {
+.film__logo-img {
   position: absolute;
   left: 50%;
   top: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 7px;
-  text-align: center;
-  will-change: opacity, transform;
-}
-.film__ring-word {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 2vw, 1.4rem);
-  white-space: nowrap;
-}
-@media (max-width: 700px) {
-  .film__ring-word {
-    font-size: 0.8rem;
-    white-space: normal;
-    max-width: 11ch;
-  }
-  .film__ring-role { font-size: 0.56rem; letter-spacing: 0.16em; }
-}
-.film__ring-role {
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  width: auto;
+  max-width: none; /* escape the global img clamp — sized by height */
+  will-change: transform, opacity;
 }
 .film__line {
   position: absolute;
