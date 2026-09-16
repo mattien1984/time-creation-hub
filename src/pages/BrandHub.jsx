@@ -236,6 +236,9 @@ export default function BrandHub({ slug }) {
           rendered procedurally (TC layers its wave wash beneath the fabric) */}
       <header className="hub__hero">
         <div className="hub__hero-field" aria-hidden="true">
+          {hub.theme.heroWave && (
+            <img className="hub__hero-wave" src={asset('/assets/photography/tc-wave.jpg')} alt="" />
+          )}
           {hub.theme.heroPhoto && (
             <img className="hub__hero-photo" src={v.photo} alt="" />
           )}
@@ -278,9 +281,11 @@ export default function BrandHub({ slug }) {
       </div>
 
       {/* full-bleed photography band — the brand's world, treated per theme */}
-      <div className="hub__band" aria-hidden="true">
-        <img src={v.photo} alt="" loading="lazy" />
-      </div>
+      {hub.theme.band !== false && (
+        <div className="hub__band" aria-hidden="true">
+          <img src={v.photo} alt="" loading="lazy" />
+        </div>
+      )}
 
       {/* Cross-links — the sibling brands as photo cards (home-intro style),
           plus a flat card back to the universe's end state */}

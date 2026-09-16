@@ -82,9 +82,10 @@ export const HUBS = {
       'Time Creationist is a philosophy for intentionally creating your life through time, showing how every action, thought, and feeling shapes who you become.',
     identity: vertical('time-creationism'),
     accent: '#FAAB35', // Sunrise Gold — shared hub highlight
-    // The belief in living color: fabric hairlines, serif italic,
-    // Creation Color toggles (hero wave removed per Sep 16 note).
-    theme: { mode: 'dark' },
+    // The belief in living color: wave wash hero (restored — it was the
+    // BOTTOM band image that should go), fabric hairlines, serif italic,
+    // Creation Color toggles. No photography band on this page.
+    theme: { mode: 'dark', heroWave: true, band: false },
     whatItIs: {
       headline: 'A life is not spent or found, but made.',
       paragraphs: [
