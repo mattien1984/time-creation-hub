@@ -34,11 +34,7 @@ export default function Glossary() {
   return (
     <main>
       <header className="page-head wrap">
-        <p className="eyebrow">Shared</p>
         <h1 className="display">Glossary</h1>
-        <p className="body">
-          The language of the universe — every term, defined once, linkable forever.
-        </p>
         <div className="glossary__filters">
           {FILTERS.map((f) => (
             <button
