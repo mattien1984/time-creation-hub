@@ -1,27 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import Footer from '../sections/Footer';
-import { GLOSSARY, slugifyTerm } from '../data/glossary';
-import { HUBS } from '../data/hubs';
-
-// Scope note (Sep 15): the glossary ships with Existence + Time Creationist
-// terms; whether TC keeps its set is still open — dropping it is a data-only
-// change (remove the time-creationism-tagged entries in glossary.js).
-const FILTERS = [
-  { id: 'all', label: 'All' },
-  { id: 'umbrella', label: 'Time Creation' },
-  { id: 'existence', label: 'Existence' },
-  { id: 'time-creationism', label: 'Creationist' },
-];
-
-// Umbrella terms get neutral white — no single brand owns them (TCP's gold
-// would otherwise imply ownership of the shared vocabulary).
-const accentFor = (brand) => HUBS[brand]?.accent || '#FFFFFF';
+import { GLOSSARY, LIVE_BRANDS, slugifyTerm } from '../data/glossary';
 
 export default function Glossary() {
-  const [filter, setFilter] = useState('all');
+  // Existence-only for now (LIVE_BRANDS in glossary.js); no filter tabs
+  // until more brands' terms go live.
   const terms = GLOSSARY
-    .filter((t) => filter === 'all' || t.brand === filter)
+    .filter((t) => LIVE_BRANDS.includes(t.brand))
     .sort((a, b) => a.term.localeCompare(b.term));
 
   // Honor #term deep links once content is on the page.
@@ -35,17 +21,6 @@ export default function Glossary() {
     <main>
       <header className="page-head wrap">
         <h1 className="display">Glossary</h1>
-        <div className="glossary__filters">
-          {FILTERS.map((f) => (
-            <button
-              key={f.id}
-              className={`glossary__filter${filter === f.id ? ' is-active' : ''}`}
-              onClick={() => setFilter(f.id)}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
       </header>
 
       <section className="wrap glossary">
@@ -55,9 +30,6 @@ export default function Glossary() {
               <dt id={slugifyTerm(t.term)}>
                 <a href={`#${slugifyTerm(t.term)}`} className="glossary__anchor" aria-label={`Link to ${t.term}`}>#</a>
                 {t.term}
-                <span className="glossary__brand" style={{ '--term-accent': accentFor(t.brand) }}>
-                  {t.brand === 'umbrella' ? 'Time Creation' : HUBS[t.brand]?.identity.name}
-                </span>
               </dt>
               <dd>{t.definition}</dd>
             </Reveal>

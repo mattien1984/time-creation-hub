@@ -210,4 +210,9 @@ export const GLOSSARY = [
   },
 ];
 
-export const glossaryForBrand = (brand) => GLOSSARY.filter((t) => t.brand === brand);
+// Scope ruling (Sep 15): the glossary is Existence-only for now. Umbrella and
+// Time Creationist terms stay in the data above, ungated by flipping this.
+export const LIVE_BRANDS = ['existence'];
+
+export const glossaryForBrand = (brand) =>
+  LIVE_BRANDS.includes(brand) ? GLOSSARY.filter((t) => t.brand === brand) : [];
