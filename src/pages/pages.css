@@ -350,6 +350,7 @@ body.film-end .nav--film {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* clips the gradient blooms */
   border: 1px solid var(--line);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.02);
@@ -770,7 +771,8 @@ body.film-end .nav--film {
   transition: background 0.25s ease, border-color 0.25s ease;
 }
 /* a soft white gradient mix — three blurred blooms drifting slowly */
-.hub__cross-photo--flat::before {
+.hub__cross-photo--flat::before,
+.film__shared-btn::before {
   content: '';
   position: absolute;
   inset: -30%;
@@ -787,7 +789,8 @@ body.film-end .nav--film {
   to { transform: translate(2.5%, 3%) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hub__cross-photo--flat::before { animation: none; }
+  .hub__cross-photo--flat::before,
+  .film__shared-btn::before { animation: none; }
 }
 /* the three-ring mark, oversized past full bleed, masked by the card */
 .hub__cross-mark {
