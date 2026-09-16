@@ -82,9 +82,9 @@ const T = {
 };
 const SCRAMBLE_WINDOWS = T.beats;
 const SHARED_LINKS = [
-  { label: 'Design', to: '/system' },
-  { label: 'Glossary', to: '/glossary' },
-  { label: 'Assets', to: '/library' },
+  { label: 'Design System', to: '/system' },
+  { label: 'Glossary of Terms', to: '/glossary' },
+  { label: 'Brand Assets', to: '/library' },
 ];
 
 const videoOpacityAt = (p) =>
