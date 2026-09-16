@@ -614,6 +614,7 @@ body.film-end .nav--film {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.9);
+  margin-top: clamp(28px, 6vh, 64px);
   margin-bottom: 26px;
 }
 .hub--light .hub__role { color: rgba(14, 23, 22, 0.9); }
