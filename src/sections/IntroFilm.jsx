@@ -12,7 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GridField from '../components/GridField';
-import { BEATS } from '../data/story';
+import { BEATS, DOORWAYS_BEAT } from '../data/story';
 import { HUBS } from '../data/hubs';
 import { asset } from '../lib/asset';
 
@@ -70,11 +70,23 @@ const T = {
   markDrop: [0.53, 0.565], // mark settles to center before the universe line opens
   separate: [0.56, 0.68],
   split: [0.7, 0.76], // single ring → the brand's three-ring mark, in place
-  word: [0.77, 0.83], // wordmark reveal beside the formed mark — the end state
+  word: [0.77, 0.83], // wordmark reveal beside the formed mark
   universeIn: [0.565, 0.61],
   universeLock: [0.585, 0.66],
+  // Final act: the universe line hands off to short nav copy, the logos
+  // glide onto their centered photography cards (the buttons), and the
+  // shared row — Design · Glossary · Assets — appears beneath.
+  universeOut: [0.85, 0.89],
+  entities: [0.87, 0.94],
+  navCopy: [0.9, 0.95],
+  buttons: [0.92, 0.97],
 };
 const SCRAMBLE_WINDOWS = T.beats;
+const SHARED_LINKS = [
+  { label: 'Design', to: '/system' },
+  { label: 'Glossary', to: '/glossary' },
+  { label: 'Assets', to: '/library' },
+];
 
 const videoOpacityAt = (p) =>
   0.35 * ease(seg(p, ...T.video)) * (1 - 0.68 * ease(seg(p, 0.56, 0.64)));
@@ -254,10 +266,26 @@ export default function IntroFilm() {
   const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop)));
   const glow = (1 - sepAmount) * ease(seg(p, ...T.glow));
   const video = videoOpacityAt(p);
-  // The universe line persists over the formed logos through the film's end.
-  const universeOp = seg(p, ...T.universeIn);
+  // The universe line hands off to the nav copy for the final act.
+  const universeOp = seg(p, ...T.universeIn) * (1 - seg(p, ...T.universeOut));
   const universeLock = ease(seg(p, ...T.universeLock));
-  const live = wordT > 0.9; // the formed logos are clickable at the end state
+  const navOp = seg(p, ...T.navCopy);
+  const entT = ease(seg(p, ...T.entities));
+  const btnOp = seg(p, ...T.buttons);
+  const live = wordT > 0.9; // the formed logos are clickable from formation on
+  // Entity-card geometry: three centered photography cards, the logos land on them.
+  const cardW = Math.min(0.28 * vw, 400);
+  const cardH = cardW * 0.62;
+  const cardGap = Math.max(14, 0.018 * vw);
+  const cardY = Math.max(-56, Math.min(-30, -0.04 * vw));
+  const btnH = Math.max(44, cardW * 0.15);
+  const btnY = cardY + cardH / 2 + 18 + btnH / 2;
+  // Where each lockup's mark center lands when centered on its card.
+  const entityMarkX = {};
+  LOCKUP_ROW.forEach((slug, i) => {
+    const cx = (i - 1) * (cardW + cardGap);
+    entityMarkX[slug] = cx - (LOCKUPS[slug].wu * lockupH) / 2 + (78.5 / 155) * lockupH;
+  });
   const cue = 1 - seg(p, 0.005, 0.03);
 
   return (
@@ -298,10 +326,12 @@ export default function IntroFilm() {
         {/* the three rings of the mark — each splits into its brand's own
             three-ring mark, in place, when the split window opens */}
         {RINGS.map((r) => {
-          // ±S grid while separated; glides to the composed row as it splits.
-          const xSep = r.spread * S * (1 - splitT) + markXs[r.brand] * splitT;
+          // ±S grid while separated; glides to the composed row as it splits,
+          // then onto its entity card in the final act.
+          const xRow = r.spread * S * (1 - splitT) + markXs[r.brand] * splitT;
+          const xSep = xRow * (1 - entT) + entityMarkX[r.brand] * entT;
           const x = r.dx * (1 - sepAmount) + xSep * sepAmount;
-          const yPx = r.dy * (1 - sepAmount);
+          const yPx = r.dy * (1 - sepAmount) + cardY * entT * sepAmount;
           const yVh = markYvh * (1 - sepAmount);
           const scale = 1 + (sepScale + (lockScale - sepScale) * splitT - 1) * sepAmount;
           const pulsing = p < 0.06; // the opening rings breathe with a soft white glow
@@ -336,6 +366,52 @@ export default function IntroFilm() {
           );
         })}
 
+        {/* final act — the three entity cards (photography buttons) the
+            logos land on, plus the shared row beneath */}
+        {entT > 0.001 &&
+          LOCKUP_ROW.map((slug, i) => {
+            const hub = HUBS[slug];
+            const cx = (i - 1) * (cardW + cardGap);
+            return (
+              <Link
+                key={`card-${slug}`}
+                className={`film__entity${entT > 0.5 ? ' is-live' : ''}`}
+                to={hub.route}
+                aria-label={hub.identity.name}
+                tabIndex={entT > 0.5 ? 0 : -1}
+                style={{
+                  width: cardW,
+                  height: cardH,
+                  opacity: entT,
+                  transform: `translate(calc(-50% + ${cx}px), calc(-50% + ${cardY}px))`,
+                }}
+              >
+                <img src={hub.identity.photo} alt="" loading="lazy" />
+                <span className="film__entity-role">{hub.roleLabel}</span>
+              </Link>
+            );
+          })}
+        {btnOp > 0.001 &&
+          SHARED_LINKS.map((s, i) => {
+            const cx = (i - 1) * (cardW + cardGap);
+            return (
+              <Link
+                key={s.label}
+                className={`film__shared-btn${btnOp > 0.5 ? ' is-live' : ''}`}
+                to={s.to}
+                tabIndex={btnOp > 0.5 ? 0 : -1}
+                style={{
+                  width: cardW,
+                  height: btnH,
+                  opacity: btnOp,
+                  transform: `translate(calc(-50% + ${cx}px), calc(-50% + ${btnY}px))`,
+                }}
+              >
+                {s.label}
+              </Link>
+            );
+          })}
+
         {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
             beside each freshly formed three-ring mark. At the end state each
             one is a live link into its brand's page. */}
@@ -353,7 +429,7 @@ export default function IntroFilm() {
                 style={{
                   height: (lockupH * lk.H) / 155,
                   opacity: wordT,
-                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand]}px), ${(-(lk.cy / lk.H) * 100).toFixed(2)}%)`,
+                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand] * (1 - entT) + entityMarkX[r.brand] * entT}px), calc(${(-(lk.cy / lk.H) * 100).toFixed(2)}% + ${cardY * entT}px))`,
                 }}
               >
                 <img
@@ -376,10 +452,16 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* 03 — the universe headline, above the brands; stays to the end */}
+        {/* 03 — the universe headline, above the brands */}
         {universeOp > 0.001 && (
           <p className="film__line film__line--universe" style={{ opacity: universeOp }}>
             <ScrambleText text={lines[2]} lock={universeLock} />
+          </p>
+        )}
+        {/* final act — the nav copy the universe line dissolves into */}
+        {navOp > 0.001 && (
+          <p className="film__line film__line--universe" style={{ opacity: navOp }}>
+            {DOORWAYS_BEAT.headline}
           </p>
         )}
 
