@@ -855,6 +855,15 @@ body.film-end .nav--film {
   animation: crossGlowDrift 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
+/* the Universe card mixes the Sunrise palette into its blooms:
+   Mind teals top-left, Dawn blues right, Energy orange-to-gold below */
+.hub__cross-photo--flat::before {
+  background:
+    radial-gradient(45% 55% at 14% 10%, rgba(36, 158, 161, 0.24), transparent 62%),
+    radial-gradient(48% 58% at 88% 24%, rgba(47, 111, 208, 0.18), transparent 65%),
+    radial-gradient(50% 62% at 80% 102%, rgba(253, 89, 0, 0.15), transparent 68%),
+    radial-gradient(56% 64% at 28% 106%, rgba(250, 171, 53, 0.2), transparent 70%);
+}
 @keyframes crossGlowDrift {
   from { transform: translate(-2.5%, -2%) scale(1); }
   to { transform: translate(2.5%, 3%) scale(1.08); }
