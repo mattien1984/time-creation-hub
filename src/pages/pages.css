@@ -148,18 +148,6 @@ body.film-end .nav--film {
   filter: brightness(0.72);
   transform: scale(1.03);
 }
-.film__entity-role {
-  /* centered, same voice as the Design/Glossary/Assets buttons */
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, 14px);
-  font-size: clamp(0.72rem, 1.1vw, 0.92rem);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--fg);
-}
 .film__shared-btn {
   position: absolute;
   left: 50%;

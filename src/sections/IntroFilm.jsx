@@ -297,9 +297,8 @@ export default function IntroFilm() {
   const cardY = blockCenter - rowSplit;
   const btnH = cardH; // same size as the image buttons
   const btnY = blockCenter + rowSplit;
-  // The lockup lands slightly above the card's center so the centered role
-  // label sits beneath it.
-  const landY = cardY - cardH * 0.09;
+  // The lockup lands dead-center on its card.
+  const landY = cardY;
   // Where each lockup's mark center lands when centered on its card.
   const entityMarkX = {};
   LOCKUP_ROW.forEach((slug, i) => {
@@ -407,7 +406,6 @@ export default function IntroFilm() {
                 }}
               >
                 <img src={hub.identity.photo} alt="" loading="lazy" />
-                <span className="film__entity-role">{hub.roleLabel}</span>
               </Link>
             );
           })}
