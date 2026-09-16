@@ -937,17 +937,17 @@ body.film-end .nav--film {
   content: '';
   position: absolute;
   left: 50%;
-  bottom: -45%;
-  width: min(1100px, 110vw);
-  height: 85%;
+  bottom: -25%;
+  width: min(1300px, 120vw);
+  height: 110%;
   transform: translateX(-50%);
   background: radial-gradient(
-    ellipse 50% 55% at 50% 100%,
-    rgba(250, 171, 53, 0.22),
-    rgba(253, 89, 0, 0.08) 48%,
-    transparent 72%
+    ellipse 50% 58% at 50% 100%,
+    rgba(250, 171, 53, 0.38),
+    rgba(253, 89, 0, 0.14) 46%,
+    transparent 74%
   );
-  filter: blur(48px);
+  filter: blur(52px);
   pointer-events: none;
 }
 .foot > .wrap {
