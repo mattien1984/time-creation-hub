@@ -789,7 +789,7 @@ body.film-end .nav--film {
   top: 50%;
   width: 88%;
   transform: translate(-50%, -50%);
-  opacity: 0.08;
+  opacity: 0.05;
   pointer-events: none;
 }
 .hub__cross-mark svg {
