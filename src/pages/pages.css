@@ -23,17 +23,38 @@ body.film-end .nav--film {
 
 /* Glass frame around the nav link list */
 .nav__links {
+  position: relative;
   align-items: center;
   padding: 11px 22px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
-  border: 1px solid rgba(255, 255, 255, 0.09);
   backdrop-filter: blur(22px) saturate(1.4);
   -webkit-backdrop-filter: blur(22px) saturate(1.4);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   pointer-events: auto;
+}
+/* Hairline gradient stroke: bright at the top edge, falling away, a faint
+   return at the bottom — drawn with a masked pseudo-element ring. */
+.glass-stroke::before,
+.nav__links::before,
+.nav__menu-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 0.5px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.38),
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.14)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* Minimal per-brand section dropdowns */
@@ -75,16 +96,14 @@ body.film-end .nav--film {
 }
 .nav__menu-panel {
   /* frosted glass */
+  position: relative;
   min-width: 244px;
   padding: 10px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 18px;
   backdrop-filter: blur(26px) saturate(1.5);
   -webkit-backdrop-filter: blur(26px) saturate(1.5);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 24px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 .nav__menu-panel a {
   display: block;
