@@ -12,7 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GridField from '../components/GridField';
-import { BEATS, DOORWAYS_BEAT } from '../data/story';
+import { BEATS } from '../data/story';
 import { HUBS } from '../data/hubs';
 import { asset } from '../lib/asset';
 
@@ -78,7 +78,6 @@ const T = {
   // shared row — Design · Glossary · Assets — appears beneath.
   universeOut: [0.85, 0.89],
   entities: [0.87, 0.94],
-  navCopy: [0.9, 0.95],
   buttons: [0.92, 0.97],
 };
 const SCRAMBLE_WINDOWS = T.beats;
@@ -282,7 +281,6 @@ export default function IntroFilm() {
   // The universe line hands off to the nav copy for the final act.
   const universeOp = seg(p, ...T.universeIn) * (1 - seg(p, ...T.universeOut));
   const universeLock = ease(seg(p, ...T.universeLock));
-  const navOp = seg(p, ...T.navCopy);
   const entT = ease(seg(p, ...T.entities));
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
@@ -474,12 +472,6 @@ export default function IntroFilm() {
         {universeOp > 0.001 && (
           <p className="film__line film__line--universe" style={{ opacity: universeOp }}>
             <ScrambleText text={lines[2]} lock={universeLock} />
-          </p>
-        )}
-        {/* final act — the nav copy the universe line dissolves into */}
-        {navOp > 0.001 && (
-          <p className="film__line film__line--universe" style={{ opacity: navOp }}>
-            {DOORWAYS_BEAT.headline}
           </p>
         )}
 

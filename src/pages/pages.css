@@ -21,6 +21,55 @@ body.film-end .nav--film {
   pointer-events: auto;
 }
 
+/* Minimal per-brand section dropdowns */
+.nav__item {
+  position: relative;
+  display: inline-flex;
+}
+.nav__menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 4px);
+  padding-top: 12px; /* hover bridge between trigger and panel */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 40;
+}
+.nav__item:hover .nav__menu,
+.nav__item:focus-within .nav__menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.nav__menu-panel {
+  min-width: 230px;
+  padding: 8px;
+  background: rgba(8, 8, 8, 0.94);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.nav__menu-panel a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.nav__menu-panel a:hover {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+}
+.hub__section { scroll-margin-top: 84px; }
+
 .nav__sep {
   width: 1px;
   height: 16px;

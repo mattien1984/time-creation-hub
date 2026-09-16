@@ -1,14 +1,11 @@
 import Reveal from '../components/Reveal';
 import { LogoMark } from '../components/Logo';
-import { CREATOR, CLOSER } from '../data/story';
+import { CREATOR } from '../data/story';
 
 export default function Footer() {
   return (
     <footer className="foot">
       <div className="wrap">
-        <Reveal>
-          <p className="foot__closer">{CLOSER}</p>
-        </Reveal>
         <Reveal className="foot__creator">
           <p className="eyebrow">Created by</p>
           <p className="foot__creator-name">{CREATOR.name}</p>

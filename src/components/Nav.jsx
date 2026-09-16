@@ -1,7 +1,18 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { LogoMark } from './Logo';
+import { HUBS, HUB_ORDER } from '../data/hubs';
 
 const link = ({ isActive }) => (isActive ? 'is-active' : undefined);
+
+// Charlie's outline sections, in page order; the Who label is per-brand.
+const sectionsFor = (hub) => [
+  ['What It Is', 'what-it-is'],
+  ['What It Believes', 'beliefs'],
+  [hub.who.label, 'who'],
+  ['How It Sounds', 'sounds'],
+  ['How It Looks', 'looks'],
+  ['Its Role in the Universe', 'universe'],
+];
 
 export default function Nav() {
   // The homepage plays the film chromeless; the nav bar (links only, upper
@@ -18,9 +29,21 @@ export default function Nav() {
         </NavLink>
       )}
       <div className="nav__links">
-        <NavLink to="/existence" className={link}>Existence</NavLink>
-        <NavLink to="/time-creationist" className={link}>Time Creationist</NavLink>
-        <NavLink to="/time-creation-project" className={link}>Time Creation Project</NavLink>
+        {HUB_ORDER.map((slug) => {
+          const hub = HUBS[slug];
+          return (
+            <div className="nav__item" key={slug}>
+              <NavLink to={hub.route} className={link}>{hub.identity.name}</NavLink>
+              <div className="nav__menu">
+                <div className="nav__menu-panel">
+                  {sectionsFor(hub).map(([label, id]) => (
+                    <Link key={id} to={`${hub.route}#${id}`}>{label}</Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
         <span className="nav__sep" aria-hidden="true" />
         <NavLink to="/system" className={link}>System</NavLink>
         <NavLink to="/glossary" className={link}>Glossary</NavLink>
