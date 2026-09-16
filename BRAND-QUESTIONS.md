@@ -1,5 +1,12 @@
 # Brand Questions — open decisions surfaced by the Sep 2026 research pass
 
+## RULINGS (Sep 15, from Matt)
+- **NAMING RULED: "Time Creationist."** Site renamed throughout (route /time-creationist, nav, lockup swapped to the Aug-17 rebrand SVG; internal ids/filenames keep the legacy time-creationism slug). NOTE: Rob's About bio was updated to "Founder of Time Creationist" to match — his live robdyrdek.com About still says Creationism; verify wording with Rob.
+- **Structure**: Charlie's outline adopted (What It Is / Role in TCU / What It Believes / Who / How It Sounds / How It Looks; role-in-the-whole at page bottom with the Layers visual). Film ends on the three clickable logos; closer moved to the footer; "Same coordinates..." moved to /system.
+- **TC core beliefs**: 8 drafted from verbatim source copy, sacred-marked, PENDING ROB'S SIGN-OFF (rendered on /time-creationist with a draft note).
+- **Glossary**: exists; scope open — Existence-only vs Existence + Time Creationist (TC set ships for now; dropping it is a data-only change in glossary.js).
+
+
 Compiled while unifying the brand site. Each item needs a ruling (most from Rob)
 before the corresponding copy can be considered locked.
 

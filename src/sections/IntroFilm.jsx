@@ -1,15 +1,18 @@
 // The homepage intro film — a scroll-scrubbed cinematic sequence.
 // The logo's three rings open the story: they converge and glow (a full-bleed
 // video fades in behind), two statements decode themselves letter by letter,
-// the rings separate into the three brands, re-form the Time Creation lockup,
-// and Rob's closer lands before the page releases into the doorways.
+// then the rings separate into the three brands and split into their FULL
+// logos — where the film ends. The three logos are the doorways: clickable,
+// linking out to each brand's page (per Charlie's structure — the visual
+// "lands with them splitting off into the three sections you can click on").
 // Ring stroke 1.45 (viewBox units) measured off the real lockup exports
-// (5.45u in the 155u mark box); the creator credit lives in the Footer.
-// All lines are sourced from story.js (the beat headlines) — one data source.
+// (5.45u in the 155u mark box); the creator credit + closer live in the
+// Footer. All lines are sourced from story.js — one data source.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import GridField from '../components/GridField';
-import { BEATS, DOORWAYS_BEAT } from '../data/story';
+import { BEATS } from '../data/story';
 import { HUBS } from '../data/hubs';
 import { asset } from '../lib/asset';
 
@@ -58,38 +61,30 @@ function beatState(p, [a, b]) {
 // side by side. The reunion merges each mark back to a single ring and
 // pulls them home to re-form the umbrella mark.
 const T = {
-  glow: [0.045, 0.1],
-  video: [0.07, 0.14],
+  glow: [0.05, 0.11],
+  video: [0.08, 0.16],
   beats: [
-    [0.12, 0.28],
-    [0.3, 0.46],
+    [0.14, 0.32],
+    [0.34, 0.52],
   ],
-  markDrop: [0.465, 0.495], // mark settles to center before the universe line opens
-  separate: [0.49, 0.6],
-  split: [0.615, 0.655], // single ring → the brand's three-ring mark, in place
-  splitBack: [0.755, 0.785],
-  word: [0.66, 0.695], // wordmark reveal beside the formed mark
-  wordOut: [0.745, 0.775],
-  universe: [0.495, 0.75],
-  reunite: [0.78, 0.87],
-  same: [0.8, 0.88],
-  sameOut: [0.87, 0.895], // fully out before the closer opens
-  closer: [0.895, 0.965],
+  markDrop: [0.53, 0.565], // mark settles to center before the universe line opens
+  separate: [0.56, 0.68],
+  split: [0.7, 0.76], // single ring → the brand's three-ring mark, in place
+  word: [0.77, 0.83], // wordmark reveal beside the formed mark — the end state
+  universeIn: [0.565, 0.61],
+  universeLock: [0.585, 0.66],
 };
-const SCRAMBLE_WINDOWS = [...T.beats, T.universe];
+const SCRAMBLE_WINDOWS = T.beats;
 
 const videoOpacityAt = (p) =>
-  0.35 *
-  ease(seg(p, ...T.video)) *
-  (1 - 0.68 * (ease(seg(p, 0.49, 0.56)) - ease(seg(p, 0.78, 0.85)))) *
-  (1 - 0.5 * seg(p, 0.93, 0.985));
+  0.35 * ease(seg(p, ...T.video)) * (1 - 0.68 * ease(seg(p, 0.56, 0.64)));
 
 // The mark's exact ring geometry (viewBox 41.4, center 20.70 / 20.92).
 const MARK_SIZE = 164;
 const UNIT = MARK_SIZE / 41.4;
 const RINGS = [
   // ring index → converged offset (px) and brand when separated.
-  // Separated order (left → right): existence, Time Creationism, TCP.
+  // Separated order (left → right): existence, Time Creationist, TCP.
   { dx: 0, dy: (18.39 - 20.92) * UNIT, brand: 'existence', spread: -1 },
   { dx: (18.39 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creationism', spread: 0 },
   { dx: (23.01 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creation-project', spread: 1 },
@@ -102,7 +97,8 @@ const RINGS = [
 // TCP's width normalizes to /155 too despite its taller 219u box).
 const LOCKUPS = {
   existence: { W: 832, H: 155, cx: 78.5, cy: 77, wu: 832 / 155 },
-  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77, wu: 1201 / 155 },
+  // the Time Creationist lockup (1135×155) — same mark path as the others
+  'time-creationism': { W: 1135, H: 155, cx: 78.5, cy: 77, wu: 1135 / 155 },
   'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, wu: 891 / 155 },
 };
 const LOCKUP_ROW = ['existence', 'time-creationism', 'time-creation-project'];
@@ -175,7 +171,9 @@ export default function IntroFilm() {
       const p = readP();
       const moved = Math.abs(p - pRef.current) > 0.0004;
       const scrambling =
-        SCRAMBLE_WINDOWS.some((w) => beatState(p, w).scrambling) && now - lastTick > 45;
+        (SCRAMBLE_WINDOWS.some((w) => beatState(p, w).scrambling) ||
+          (p > T.universeIn[0] && p < T.universeLock[1])) &&
+        now - lastTick > 45;
       if (moved || scrambling) {
         pRef.current = p;
         lastTick = now;
@@ -219,8 +217,6 @@ export default function IntroFilm() {
     BEATS[0].headline.replace('time. ', 'time.\n'),
     BEATS[1].headline,
     BEATS[2].headline, // the universe
-    BEATS[3].headline, // same coordinates
-    DOORWAYS_BEAT.headline, // the closer
   ];
   // Constant props — never re-render the full-viewport pattern per frame.
   const gridField = useMemo(
@@ -232,9 +228,7 @@ export default function IntroFilm() {
   const p = pRef.current;
 
   // ---- derived state ----
-  const sepAmount = clamp01(
-    1 - ease(seg(p, 0, 0.07)) + ease(seg(p, ...T.separate)) - ease(seg(p, ...T.reunite))
-  );
+  const sepAmount = clamp01(1 - ease(seg(p, 0, 0.07)) + ease(seg(p, ...T.separate)));
   const S = Math.min(vw * 0.3, 330); // separation distance
   // In the ±S row, rings must fit three-abreast: cap the separated scale so
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
@@ -255,15 +249,15 @@ export default function IntroFilm() {
     });
   }
   const lockScale = (lockupH * LOCKUP_RING_RATIO) / ((2 * 17.68 + 1.45) * UNIT);
-  const splitT = ease(seg(p, ...T.split)) - ease(seg(p, ...T.splitBack));
-  const wordT = ease(seg(p, ...T.word)) * (1 - seg(p, ...T.wordOut));
-  const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop))) - 8 * ease(seg(p, ...T.reunite));
-  const glow = (1 - sepAmount) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.93, 1));
+  const splitT = ease(seg(p, ...T.split));
+  const wordT = ease(seg(p, ...T.word));
+  const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop)));
+  const glow = (1 - sepAmount) * ease(seg(p, ...T.glow));
   const video = videoOpacityAt(p);
-  const universe = beatState(p, T.universe);
-  const same = ease(seg(p, ...T.same)) * (1 - seg(p, ...T.sameOut));
-  const wordmark = ease(seg(p, 0.82, 0.87));
-  const closer = ease(seg(p, ...T.closer));
+  // The universe line persists over the formed logos through the film's end.
+  const universeOp = seg(p, ...T.universeIn);
+  const universeLock = ease(seg(p, ...T.universeLock));
+  const live = wordT > 0.9; // the formed logos are clickable at the end state
   const cue = 1 - seg(p, 0.005, 0.03);
 
   return (
@@ -343,27 +337,35 @@ export default function IntroFilm() {
         })}
 
         {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
-            beside each freshly formed three-ring mark */}
+            beside each freshly formed three-ring mark. At the end state each
+            one is a live link into its brand's page. */}
         {wordT > 0.001 &&
           RINGS.map((r) => {
             const lk = LOCKUPS[r.brand];
+            const hub = HUBS[r.brand];
             return (
-              <img
+              <Link
                 key={`word-${r.brand}`}
-                className="film__logo-img"
-                src={HUBS[r.brand].identity.logo}
-                alt=""
+                className={`film__logo-link${live ? ' is-live' : ''}`}
+                to={hub.route}
+                aria-label={hub.identity.name}
+                tabIndex={live ? 0 : -1}
                 style={{
                   height: (lockupH * lk.H) / 155,
                   opacity: wordT,
-                  clipPath: `inset(0 0 0 ${((160 / lk.W) * 100).toFixed(2)}%)`,
                   transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand]}px), ${(-(lk.cy / lk.H) * 100).toFixed(2)}%)`,
                 }}
-              />
+              >
+                <img
+                  src={hub.identity.logo}
+                  alt=""
+                  style={{ clipPath: `inset(0 0 0 ${((160 / lk.W) * 100).toFixed(2)}%)` }}
+                />
+              </Link>
             );
           })}
 
-        {/* decoder beats 01–03 */}
+        {/* decoder beats 01–02 */}
         {T.beats.map((w, i) => {
           const b = beatState(p, w);
           if (!b.on) return null;
@@ -374,28 +376,12 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* 03 — the universe headline, above the separated rings */}
-        {universe.on && (
-          <p className="film__line film__line--universe" style={{ opacity: universe.opacity }}>
-            <ScrambleText text={lines[2]} lock={universe.lock} />
+        {/* 03 — the universe headline, above the brands; stays to the end */}
+        {universeOp > 0.001 && (
+          <p className="film__line film__line--universe" style={{ opacity: universeOp }}>
+            <ScrambleText text={lines[2]} lock={universeLock} />
           </p>
         )}
-
-        {/* 04 — reunion: wordmark + "Same coordinates..." */}
-        <div
-          className="film__lockup"
-          style={{ opacity: wordmark, transform: `translate(-50%, calc(${markYvh}vh + ${MARK_SIZE / 2 + 22}px))` }}
-        >
-          Time Creation
-        </div>
-        <p className="film__line film__line--quiet" style={{ opacity: same }}>
-          {lines[3]}
-        </p>
-
-        {/* 05 — the closer */}
-        <p className="film__line film__line--closer" style={{ opacity: closer }}>
-          {lines[4]}
-        </p>
 
         <div className="film__cue" style={{ opacity: cue }}>
           <span>The story</span>

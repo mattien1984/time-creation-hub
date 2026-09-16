@@ -71,7 +71,8 @@ export default function App() {
         <Route path="/" element={<Story />} />
         <Route path="/system" element={<System />} />
         <Route path="/existence" element={<BrandHub key="existence" slug="existence" />} />
-        <Route path="/time-creationism" element={<BrandHub key="time-creationism" slug="time-creationism" />} />
+        <Route path="/time-creationist" element={<BrandHub key="time-creationist" slug="time-creationism" />} />
+        <Route path="/time-creationism" element={<Navigate to="/time-creationist" replace />} />
         <Route path="/time-creation-project" element={<BrandHub key="time-creation-project" slug="time-creation-project" />} />
         <Route path="/tcp" element={<Navigate to="/time-creation-project" replace />} />
         <Route path="/glossary" element={<Glossary />} />

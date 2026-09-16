@@ -4,11 +4,14 @@ import Footer from '../sections/Footer';
 import { GLOSSARY, slugifyTerm } from '../data/glossary';
 import { HUBS } from '../data/hubs';
 
+// Scope note (Sep 15): the glossary ships with Existence + Time Creationist
+// terms; whether TC keeps its set is still open — dropping it is a data-only
+// change (remove the time-creationism-tagged entries in glossary.js).
 const FILTERS = [
   { id: 'all', label: 'All' },
   { id: 'umbrella', label: 'Time Creation' },
-  { id: 'time-creationism', label: 'Creationism' },
   { id: 'existence', label: 'Existence' },
+  { id: 'time-creationism', label: 'Creationist' },
 ];
 
 // Umbrella terms get neutral white — no single brand owns them (TCP's gold

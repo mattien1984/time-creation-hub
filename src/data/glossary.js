@@ -16,7 +16,7 @@ export const GLOSSARY = [
     term: 'Time Creation',
     brand: 'umbrella',
     definition:
-      'The foundational life skill the whole universe exists to establish: time is not spent or found, but made — expressed three ways, as a belief (Time Creationism), an instrument (Existence), and a foundation (Time Creation Project).',
+      'The foundational life skill the whole universe exists to establish: time is not spent or found, but made — expressed three ways, as a belief (Time Creationist), an instrument (Existence), and a foundation (Time Creation Project).',
   },
   {
     term: 'Sunrise Palette',
@@ -28,12 +28,12 @@ export const GLOSSARY = [
     term: 'The Layers of Time',
     brand: 'umbrella',
     definition:
-      'The brand architecture made visible as an exploded grid — three planes registered to the same coordinates: the Existence Grid (top), the Fabric of Time (middle, Time Creationism), and the Foundation of Time (bottom, Time Creation Project).',
+      'The brand architecture made visible as an exploded grid — three planes registered to the same coordinates: the Existence Grid (top), the Fabric of Time (middle, Time Creationist), and the Foundation of Time (bottom, Time Creation Project).',
   },
 
-  // ---- Time Creationism ----
+  // ---- Time Creationist ----
   {
-    term: 'Time Creationism',
+    term: 'Time Creationist',
     brand: 'time-creationism',
     definition:
       'The belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation.',

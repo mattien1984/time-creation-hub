@@ -2,7 +2,7 @@ import Reveal from '../components/Reveal';
 import GridField from '../components/GridField';
 import { ARCHITECTURE } from '../data/brand';
 
-const KINDS = { Existence: 'block', 'Time Creationism': 'fabric', 'Time Creation Project': 'foundation' };
+const KINDS = { Existence: 'block', 'Time Creationist': 'fabric', 'Time Creation Project': 'foundation' };
 
 export default function Architecture() {
   return (

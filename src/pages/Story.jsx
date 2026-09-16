@@ -13,6 +13,7 @@ export default function Story() {
       <section className="ch wrap doorways" id="doorways">
         <Reveal>
           <p className="eyebrow">{DOORWAYS_BEAT.num} · {DOORWAYS_BEAT.title}</p>
+          <h2 className="beat__headline">{DOORWAYS_BEAT.headline}</h2>
           <p className="body">{DOORWAYS_BEAT.body}</p>
         </Reveal>
         <div className="doorways__grid">
@@ -21,7 +22,7 @@ export default function Story() {
             return (
               <Reveal key={slug}>
                 <Link
-                  to={`/${slug}`}
+                  to={h.route}
                   className="door"
                   style={{ '--door-accent': h.accent }}
                 >

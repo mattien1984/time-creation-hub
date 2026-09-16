@@ -28,17 +28,17 @@ export const BEATS = [
     id: 'universe',
     title: 'The Universe',
     headline: 'One principle expressed three ways — a belief, an instrument, and a foundation.',
-    body: 'Time Creationism is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
+    body: 'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
   },
   {
     num: '04',
     id: 'together',
     title: 'Coming Together',
     headline: 'Same coordinates, same palette, same mark.',
-    body: 'Each layer is registered to the others, each carrying its own weight of the idea that time is not spent or found, but made. The belief gives the instrument its form; the instrument turns conviction into a weekly practice; the foundation turns Time Creationism from a conviction into a system anyone can build on — and what it studies feeds back into the belief. One ring mark, one Sunrise palette, one grid at three densities: the Time Block, the Time Fabric, the Foundation of Time.',
+    body: 'Each layer is registered to the others, each carrying its own weight of the idea that time is not spent or found, but made. The belief gives the instrument its form; the instrument turns conviction into a weekly practice; the foundation turns Time Creationist from a conviction into a system anyone can build on — and what it studies feeds back into the belief. One ring mark, one Sunrise palette, one grid at three densities: the Time Block, the Time Fabric, the Foundation of Time.',
     flywheel: {
       steps: [
-        'The belief shapes the instrument — Time Creationism gives Existence its form: the conviction that time is not spent or found, but made.',
+        'The belief shapes the instrument — Time Creationist gives Existence its form: the conviction that time is not spent or found, but made.',
         'The instrument turns belief into daily practice — Existence renders the philosophy as a weekly cycle: Design. Account. Optimize.',
         'The foundation researches and legitimizes — the Time Creation Project turns conviction into frameworks, tools, education, research, and partnerships anyone can build on.',
         'The proof feeds back into the belief — every studied week deepens the philosophy, and the cycle turns again.',
@@ -52,14 +52,20 @@ export const BEATS = [
 // Verbatim from the About overlay shipped on robdyrdek.com.
 export const CREATOR = {
   name: 'Rob Dyrdek',
-  headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationism.',
-  body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationism.",
+  headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationist.',
+  body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationist.",
 };
 
-// Final beat — rendered as the doorways section itself.
+// Rob's sacred closer — now the footer's opening line, above the creator
+// credit, on every page. Never paraphrase.
+export const CLOSER = 'Every person creates their life through the way they create their time.';
+
+// The three entities — the section after the film releases (Charlie's TCU
+// outline: short description and link out). Headline is the gateway hint
+// from Rob's own site; body assembled from mined doorway copy.
 export const DOORWAYS_BEAT = {
-  num: '05',
-  title: 'The Doorways',
-  headline: 'Every person creates their life through the way they create their time.',
-  body: 'Choose an endeavor. Put Time Creation into practice with Existence, the instrument. Enter the belief behind the practice — time isn’t spent, it’s created. Or stand on the foundation bringing Time Creation to the world. Wherever you begin, it is the same idea: a life is not spent or found, but made.',
+  num: '03',
+  title: 'The Three Entities',
+  headline: 'Choose an endeavor.',
+  body: 'Put Time Creation into practice with Existence, the instrument. Enter the belief behind the practice — time isn’t spent, it’s created. Or stand on the foundation bringing Time Creation to the world. Wherever you begin, it is the same idea: a life is not spent or found, but made.',
 };
