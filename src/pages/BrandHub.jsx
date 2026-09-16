@@ -245,7 +245,16 @@ export default function BrandHub({ slug }) {
           <GridField
             kind={v.gridKind}
             color={light ? 'rgba(14, 23, 22, 0.55)' : 'rgba(255, 255, 255, 0.4)'}
-            opacity={light ? 0.2 : 0.3}
+            opacity={light ? 0.2 : v.id === 'existence' ? 0.18 : 0.3}
+            style={
+              v.id === 'existence'
+                ? {
+                    // fades out at the bottom, matching the hero photo
+                    WebkitMaskImage: 'linear-gradient(180deg, #000 35%, transparent 100%)',
+                    maskImage: 'linear-gradient(180deg, #000 35%, transparent 100%)',
+                  }
+                : undefined
+            }
           />
         </div>
         <div className="wrap hub__hero-row">
