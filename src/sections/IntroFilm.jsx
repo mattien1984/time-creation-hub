@@ -242,7 +242,7 @@ export default function IntroFilm() {
   // The formed logos compose as a true row: measured lockup widths, equal
   // gutters (1.5×h), the whole row centered on its total ink width. Rings
   // glide from the ±S grid to these mark positions as they split.
-  const lockupH = Math.max(12, Math.min(64, 0.0421 * vw));
+  const lockupH = Math.max(10, Math.min(32, 0.021 * vw));
   const gutter = 1.5 * lockupH;
   const rowWidths = LOCKUP_ROW.map((slug) => LOCKUPS[slug].wu * lockupH);
   const rowTotal = rowWidths[0] + rowWidths[1] + rowWidths[2] + 2 * gutter;
