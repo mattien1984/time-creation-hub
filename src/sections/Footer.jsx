@@ -1,6 +1,5 @@
 import Reveal from '../components/Reveal';
 import { LogoMark } from '../components/Logo';
-import { UMBRELLA } from '../data/brand';
 import { CREATOR, CLOSER } from '../data/story';
 
 export default function Footer() {
@@ -17,13 +16,7 @@ export default function Footer() {
           <p className="foot__creator-bio">{CREATOR.body}</p>
         </Reveal>
         <Reveal className="foot__top">
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24 }}>
-            <LogoMark size={52} stroke={1.4} />
-            <div>
-              <div className="foot__big">Time Creation</div>
-            </div>
-          </div>
-          <p className="foot__mission">{UMBRELLA.mission}</p>
+          <LogoMark size={52} stroke={1.4} />
         </Reveal>
         <div className="foot__bottom">
           <span>Unified Brand System · Internal use only</span>
