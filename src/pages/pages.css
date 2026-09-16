@@ -988,14 +988,14 @@ body.film-end .nav--film {
 /* Creation Color: the toggle is the brand's orange-dot language —
    dim potential when closed, illuminated when the section is live */
 .hub--time-creationism .acc__toggle {
-  border-color: rgba(247, 129, 5, 0.35);
+  border-color: rgba(250, 171, 53, 0.35);
 }
 .hub--time-creationism .acc__head:hover .acc__toggle {
-  border-color: #f78105;
+  border-color: #faab35;
 }
 .hub--time-creationism .acc.is-open .acc__toggle {
-  background: #f78105;
-  border-color: #f78105;
+  background: #faab35;
+  border-color: #faab35;
 }
 .hub--time-creationism .acc.is-open .acc__plus { color: #0a0a0a; }
 
