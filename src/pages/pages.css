@@ -768,6 +768,34 @@ body.film-end .nav--film {
 
 /* ---------- footer: mark left, credit right, tops + bottoms aligned ---------- */
 
+/* A soft light rising from the bottom center — the Sunrise arc under
+   everything. Heavily blurred, content stays above it. */
+.foot {
+  position: relative;
+  overflow: hidden;
+}
+.foot::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -45%;
+  width: min(1100px, 110vw);
+  height: 85%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse 50% 55% at 50% 100%,
+    rgba(250, 171, 53, 0.22),
+    rgba(253, 89, 0, 0.08) 48%,
+    transparent 72%
+  );
+  filter: blur(48px);
+  pointer-events: none;
+}
+.foot > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
 .foot__grid {
   display: flex;
   justify-content: space-between;
