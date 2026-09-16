@@ -26,6 +26,19 @@ body.film-end .nav--film {
   position: relative;
   display: inline-flex;
 }
+/* While one brand's dropdown is open, dim everything else in the bar so
+   the menu's owner is unmistakable. */
+.nav__links > * {
+  transition: opacity 0.2s ease;
+}
+.nav__links:has(.nav__item:hover) > *:not(.nav__item:hover),
+.nav__links:has(.nav__item:focus-within) > *:not(.nav__item:focus-within) {
+  opacity: 0.3;
+}
+.nav__item:hover > a,
+.nav__item:focus-within > a {
+  color: var(--fg);
+}
 .nav__menu {
   position: absolute;
   top: 100%;
