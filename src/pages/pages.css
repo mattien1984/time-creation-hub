@@ -117,10 +117,13 @@ body.film-end .nav--film {
 .film__logo-link.is-live:hover img {
   filter: brightness(1.35);
 }
+.film__ring { z-index: 2; }
+.film__logo-link { z-index: 2; }
 .film__entity {
   position: absolute;
   left: 50%;
   top: 50%;
+  z-index: 1; /* the traveling rings/wordmarks paint above the photo */
   display: block;
   overflow: hidden;
   border-radius: 10px;
@@ -146,12 +149,15 @@ body.film-end .nav--film {
   transform: scale(1.03);
 }
 .film__entity-role {
+  /* centered, same voice as the Design/Glossary/Assets buttons */
   position: absolute;
-  left: 16px;
-  bottom: 11px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 14px);
+  font-size: clamp(0.72rem, 1.1vw, 0.92rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--fg);
 }
 .film__shared-btn {

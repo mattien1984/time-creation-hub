@@ -297,6 +297,9 @@ export default function IntroFilm() {
   const cardY = blockCenter - rowSplit;
   const btnH = cardH; // same size as the image buttons
   const btnY = blockCenter + rowSplit;
+  // The lockup lands slightly above the card's center so the centered role
+  // label sits beneath it.
+  const landY = cardY - cardH * 0.09;
   // Where each lockup's mark center lands when centered on its card.
   const entityMarkX = {};
   LOCKUP_ROW.forEach((slug, i) => {
@@ -348,7 +351,7 @@ export default function IntroFilm() {
           const xRow = r.spread * S * (1 - splitT) + markXs[r.brand] * splitT;
           const xSep = xRow * (1 - entT) + entityMarkX[r.brand] * entT;
           const x = r.dx * (1 - sepAmount) + xSep * sepAmount;
-          const yPx = r.dy * (1 - sepAmount) + cardY * entT * sepAmount;
+          const yPx = r.dy * (1 - sepAmount) + landY * entT * sepAmount;
           const yVh = markYvh * (1 - sepAmount);
           const scale = 1 + (sepScale + (lockScale - sepScale) * splitT - 1) * sepAmount;
           const pulsing = p < 0.06; // the opening rings breathe with a soft white glow
@@ -446,7 +449,7 @@ export default function IntroFilm() {
                 style={{
                   height: (lockupH * lk.H) / 155,
                   opacity: wordT,
-                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand] * (1 - entT) + entityMarkX[r.brand] * entT}px), calc(${(-(lk.cy / lk.H) * 100).toFixed(2)}% + ${cardY * entT}px))`,
+                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand] * (1 - entT) + entityMarkX[r.brand] * entT}px), calc(${(-(lk.cy / lk.H) * 100).toFixed(2)}% + ${landY * entT}px))`,
                 }}
               >
                 <img
