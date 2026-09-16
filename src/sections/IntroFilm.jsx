@@ -52,10 +52,11 @@ function beatState(p, [a, b]) {
 
 // ---- timeline (progress 0..1 over the film's scroll run) ----
 // Two decoder beats (the creator credit lives in the footer now).
-// Separation act: rings break apart horizontally, then glide into three
-// stacked rows where each crossfades into its brand's FULL lockup (the
-// traveling ring lands exactly on the lockup's own ring mark), holds, and
-// returns to re-form the umbrella mark.
+// Separation act: the mark's rings break apart horizontally to ±S, then IN
+// PLACE each single ring splits into its brand's three-ring mark (shrinking
+// to lockup scale) and the wordmark fades in beside it — the full logos,
+// side by side. The reunion merges each mark back to a single ring and
+// pulls them home to re-form the umbrella mark.
 const T = {
   glow: [0.045, 0.1],
   video: [0.07, 0.14],
@@ -65,9 +66,10 @@ const T = {
   ],
   markDrop: [0.465, 0.495], // mark settles to center before the universe line opens
   separate: [0.49, 0.6],
-  toRows: [0.615, 0.665], // rings glide from ±S into the stacked logo rows
-  logosIn: [0.655, 0.69], // ring ↔ full-lockup crossfade
-  logosOut: [0.75, 0.785],
+  split: [0.615, 0.655], // single ring → the brand's three-ring mark, in place
+  splitBack: [0.755, 0.785],
+  word: [0.66, 0.695], // wordmark reveal beside the formed mark
+  wordOut: [0.745, 0.775],
   universe: [0.495, 0.75],
   reunite: [0.78, 0.87],
   same: [0.8, 0.88],
@@ -92,15 +94,23 @@ const RINGS = [
   { dx: (23.01 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creation-project', spread: 1 },
 ];
 // Full lockup geometry, measured off the SVG exports (canvas alpha-scan):
-// every mark is a 157×154 composite; cx/cy = mark center in svg units.
-// Row order follows the narrative: belief / instrument / foundation.
+// every mark is a 157×154 composite ending at x=157; cx/cy = mark center in
+// svg units. The film draws the mark itself (three circles splitting apart),
+// so the lockup image is clipped to show ONLY the wordmark (x > 160).
 const LOCKUPS = {
-  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77, row: -1 },
-  existence: { W: 832, H: 155, cx: 78.5, cy: 77, row: 0 },
-  'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, row: 1 },
+  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77 },
+  existence: { W: 832, H: 155, cx: 78.5, cy: 77 },
+  'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88 },
 };
 // Ring outer diameter is 140 units of a 155-unit lockup height.
 const LOCKUP_RING_RATIO = 140 / 155;
+// The mark's ring offsets from its own center, in viewBox units — each
+// brand's single ring splits along these into the three-ring mark.
+const SPLIT_OFFSETS = [
+  [0, 18.39 - 20.92],
+  [18.39 - 20.7, 22.19 - 20.92],
+  [23.01 - 20.7, 22.19 - 20.92],
+];
 
 // Static fallback for prefers-reduced-motion: the lines, plainly.
 function StaticIntro({ lines }) {
@@ -221,19 +231,17 @@ export default function IntroFilm() {
   const sepAmount = clamp01(
     1 - ease(seg(p, 0, 0.07)) + ease(seg(p, ...T.separate)) - ease(seg(p, ...T.reunite))
   );
-  // One-way glide from the ±S row into the stacked logo rows; the reunion
-  // pulls straight home from the rows (sepAmount → 0), no backtracking.
-  const rowT = ease(seg(p, ...T.toRows));
   const S = Math.min(vw * 0.3, 330); // separation distance
   // In the ±S row, rings must fit three-abreast: cap the separated scale so
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
   const sepScale = Math.min(1.12, (S * 0.42) / (17.68 * UNIT));
-  // Stacked-row lockups: TC (1201u, the widest) sets the centered block width.
-  const lockupH = Math.min(60, 0.119 * vw); // rendered height of a 155u-tall lockup
-  const rowGap = Math.max(108, lockupH * 1.95);
-  const markX = (lockupH * (78.5 - 1201 / 2)) / 155; // all marks left-aligned in the block
-  const rowScale = (lockupH * LOCKUP_RING_RATIO) / ((2 * 17.68 + 1.45) * UNIT);
-  const ringHide = ease(seg(p, ...T.logosIn)) - ease(seg(p, ...T.logosOut));
+  // Each ring splits into its mark in place; the wordmarks extend rightward,
+  // so TC's lockup (1201u, the widest) must clear the next column: cap the
+  // lockup height by the column spacing.
+  const lockupH = Math.max(12, Math.min(60, (S - 24) / 7.75));
+  const lockScale = (lockupH * LOCKUP_RING_RATIO) / ((2 * 17.68 + 1.45) * UNIT);
+  const splitT = ease(seg(p, ...T.split)) - ease(seg(p, ...T.splitBack));
+  const wordT = ease(seg(p, ...T.word)) * (1 - seg(p, ...T.wordOut));
   const markYvh = -14 * (1 - ease(seg(p, ...T.markDrop))) - 8 * ease(seg(p, ...T.reunite));
   const glow = (1 - sepAmount) * ease(seg(p, ...T.glow)) * (1 - 0.45 * seg(p, 0.93, 1));
   const video = videoOpacityAt(p);
@@ -278,18 +286,13 @@ export default function IntroFilm() {
           }}
         />
 
-        {/* the three rings of the mark */}
+        {/* the three rings of the mark — each splits into its brand's own
+            three-ring mark, in place, when the split window opens */}
         {RINGS.map((r) => {
-          const hub = HUBS[r.brand];
-          const lk = LOCKUPS[r.brand];
-          // Phase-2 target: from the ±S row into this brand's stacked-row mark.
-          const p2x = r.spread * S * (1 - rowT) + markX * rowT;
-          const p2y = lk.row * rowGap * rowT;
-          const x = r.dx * (1 - sepAmount) + p2x * sepAmount;
-          const yPx = r.dy * (1 - sepAmount) + p2y * sepAmount;
+          const x = r.dx * (1 - sepAmount) + r.spread * S * sepAmount;
+          const yPx = r.dy * (1 - sepAmount);
           const yVh = markYvh * (1 - sepAmount);
-          const scale = 1 + (sepScale + (rowScale - sepScale) * rowT - 1) * sepAmount;
-          const tinted = sepAmount > 0.55 && p > 0.2;
+          const scale = 1 + (sepScale + (lockScale - sepScale) * splitT - 1) * sepAmount;
           const pulsing = p < 0.06; // the opening rings breathe with a soft white glow
           return (
             <svg
@@ -299,7 +302,6 @@ export default function IntroFilm() {
               height={MARK_SIZE}
               viewBox="0 0 41.4 41.4"
               style={{
-                opacity: 1 - ringHide,
                 transform: `translate(calc(-50% + ${x}px), calc(-50% + ${yPx}px + ${yVh}vh)) scale(${scale})`,
                 filter: pulsing
                   ? undefined
@@ -308,33 +310,37 @@ export default function IntroFilm() {
                     : 'none',
               }}
             >
-              <circle
-                cx="20.7"
-                cy="20.7"
-                r="17.68"
-                fill="none"
-                stroke={tinted ? hub.accent : '#ffffff'}
-                strokeWidth="1.45"
-                style={{ transition: 'stroke 0.45s ease' }}
-              />
+              {SPLIT_OFFSETS.map(([ox, oy], i) => (
+                <circle
+                  key={i}
+                  cx={20.7 + ox * splitT}
+                  cy={20.7 + oy * splitT}
+                  r="17.68"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="1.45"
+                />
+              ))}
             </svg>
           );
         })}
 
-        {/* the full brand lockups — each mark lands exactly where its ring is */}
-        {ringHide > 0.001 &&
+        {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
+            beside each freshly formed three-ring mark */}
+        {wordT > 0.001 &&
           RINGS.map((r) => {
             const lk = LOCKUPS[r.brand];
             return (
               <img
-                key={`lockup-${r.brand}`}
+                key={`word-${r.brand}`}
                 className="film__logo-img"
                 src={HUBS[r.brand].identity.logo}
                 alt=""
                 style={{
                   height: (lockupH * lk.H) / 155,
-                  opacity: ringHide,
-                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markX}px), calc(${(-(lk.cy / lk.H) * 100).toFixed(2)}% + ${lk.row * rowGap}px))`,
+                  opacity: wordT,
+                  clipPath: `inset(0 0 0 ${((160 / lk.W) * 100).toFixed(2)}%)`,
+                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${r.spread * S}px), ${(-(lk.cy / lk.H) * 100).toFixed(2)}%)`,
                 }}
               />
             );
