@@ -327,7 +327,7 @@ export default function IntroFilm() {
           ref={videoRef}
           className="film__video"
           style={{ opacity: video }}
-          src={asset('/assets/video/intro-dts.mp4')}
+          src={asset('/assets/video/intro-102245707.mp4')}
           muted
           loop
           autoPlay
