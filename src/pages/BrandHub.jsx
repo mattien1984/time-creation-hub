@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Reveal from '../components/Reveal';
+import { LogoMark } from '../components/Logo';
 import Footer from '../sections/Footer';
 import { HUBS, HUB_ORDER } from '../data/hubs';
 import { glossaryForBrand, slugifyTerm } from '../data/glossary';
@@ -270,7 +271,10 @@ export default function BrandHub({ slug }) {
           );
         })}
         <Link to="/#end" className="hub__cross-photo hub__cross-photo--flat">
-          The Universe
+          <span className="hub__cross-mark" aria-hidden="true">
+            <LogoMark size={400} stroke={1.2} />
+          </span>
+          <span className="hub__cross-flat-label">The Universe</span>
         </Link>
       </section>
 

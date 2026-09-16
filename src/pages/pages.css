@@ -761,6 +761,43 @@ body.film-end .nav--film {
   text-transform: uppercase;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
+/* white glow rising from the card's bottom center (footer treatment) */
+.hub__cross-photo--flat::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -45%;
+  width: 130%;
+  height: 95%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse 50% 55% at 50% 100%,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 72%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+}
+/* the three-ring mark, oversized past full bleed, masked by the card */
+.hub__cross-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 135%;
+  transform: translate(-50%, -50%);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.hub__cross-mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hub__cross-flat-label {
+  position: relative;
+  z-index: 1;
+}
 .hub__cross-photo--flat:hover {
   background: rgba(255, 255, 255, 0.07);
   border-color: rgba(255, 255, 255, 0.3);
