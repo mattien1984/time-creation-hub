@@ -75,9 +75,8 @@ const T = {
   universeIn: [0.565, 0.61],
   universeLock: [0.585, 0.66],
   // Final act: the universe line hands off to short nav copy, the logos
-  // glide onto their centered photography cards (the buttons), and a
-  // single end-credit line — Design System · Glossary · Assets — sits
-  // detached beneath. Labels mirror the pill nav exactly.
+  // glide onto their centered photography cards (the buttons), and the
+  // shared row — Design · Glossary · Assets — appears beneath.
   universeOut: [0.85, 0.89],
   entities: [0.87, 0.94],
   buttons: [0.92, 0.97],
@@ -85,8 +84,8 @@ const T = {
 const SCRAMBLE_WINDOWS = T.beats;
 const SHARED_LINKS = [
   { label: 'Design System', to: '/system' },
-  { label: 'Glossary', to: '/glossary' },
-  { label: 'Assets', to: '/library' },
+  { label: 'Glossary of Terms', to: '/glossary' },
+  { label: 'Brand Assets', to: '/library' },
 ];
 
 const videoOpacityAt = (p) =>
@@ -287,18 +286,16 @@ export default function IntroFilm() {
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
   // Entity-card geometry: three centered photography cards the logos land
-  // on, and one intrinsically-sized end-credit line detached beneath — a
-  // single centered object narrower than the row, so it can't be read as
-  // per-brand children.
-  const creditH = 16; // one line of footnote-scale uppercase
-  const creditGap = Math.max(34, 0.05 * vh); // detachment air below the cards
-  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - creditGap - creditH) / 0.62);
+  // on, and a same-sized imageless row beneath — two full rows of cards,
+  // so height also caps the card size (nav copy above needs ~30vh).
+  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18) / 2 / 0.62);
   const cardH = cardW * 0.62;
   const cardGap = Math.max(14, 0.018 * vw);
-  const blockH = cardH + creditGap + creditH;
+  const rowSplit = cardH / 2 + 9; // half the vertical gap between the two rows
   const blockCenter = Math.max(10, 0.055 * vh); // block sits slightly below stage center
-  const cardY = blockCenter - blockH / 2 + cardH / 2;
-  const btnY = cardY + cardH / 2 + creditGap + creditH / 2;
+  const cardY = blockCenter - rowSplit;
+  const btnH = cardH; // same size as the image buttons
+  const btnY = blockCenter + rowSplit;
   // The lockup lands dead-center on its card.
   const landY = cardY;
   // Where each lockup's mark center lands when centered on its card.
@@ -415,24 +412,26 @@ export default function IntroFilm() {
               </Link>
             );
           })}
-        {btnOp > 0.001 && (
-          <div
-            className={`film__credit${btnOp > 0.5 ? ' is-live' : ''}`}
-            style={{
-              opacity: btnOp,
-              transform: `translate(-50%, calc(-50% + ${btnY + (1 - btnOp) * 8}px))`,
-            }}
-          >
-            {SHARED_LINKS.flatMap((s, i) => [
-              i > 0 && (
-                <span key={`sep-${s.label}`} className="film__credit-sep" aria-hidden="true" />
-              ),
-              <Link key={s.label} to={s.to} tabIndex={btnOp > 0.5 ? 0 : -1}>
+        {btnOp > 0.001 &&
+          SHARED_LINKS.map((s, i) => {
+            const cx = (i - 1) * (cardW + cardGap);
+            return (
+              <Link
+                key={s.label}
+                className={`film__shared-btn${btnOp > 0.5 ? ' is-live' : ''}`}
+                to={s.to}
+                tabIndex={btnOp > 0.5 ? 0 : -1}
+                style={{
+                  width: cardW,
+                  height: btnH,
+                  opacity: btnOp,
+                  transform: `translate(calc(-50% + ${cx}px), calc(-50% + ${btnY}px))`,
+                }}
+              >
                 {s.label}
-              </Link>,
-            ])}
-          </div>
-        )}
+              </Link>
+            );
+          })}
 
         {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
             beside each freshly formed three-ring mark. At the end state each
