@@ -484,7 +484,7 @@ export default function IntroFilm() {
         )}
 
         <div className="film__cue" style={{ opacity: cue }}>
-          <span>The story</span>
+          <span>Continue</span>
           <span className="film__cue-line" />
         </div>
       </div>
