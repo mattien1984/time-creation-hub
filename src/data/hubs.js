@@ -19,7 +19,8 @@ export const HUBS = {
     slug: 'existence',
     route: '/existence',
     roleLabel: 'The Instrument',
-    tagline: 'Time, authored.',
+    tagline:
+      'Existence is a Time Intelligence Platform that transforms your created time into the data of the Real You, making who you are actually creating visible and measurable so you can design your time with greater intention and continuously realize your limitless potential.',
     identity: vertical('existence'),
     // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
     // per-brand accents read wrong as highlights (Existence's orange = red).
@@ -73,7 +74,8 @@ export const HUBS = {
     slug: 'time-creationism',
     route: '/time-creationist',
     roleLabel: 'The Belief',
-    tagline: 'Time isn’t spent. It’s created.',
+    tagline:
+      'Time Creationist is a philosophy for intentionally creating your life through time, showing how every action, thought, and feeling shapes who you become.',
     identity: vertical('time-creationism'),
     accent: '#FAAB35', // Sunrise Gold — shared hub highlight
     whatItIs: {
@@ -132,7 +134,8 @@ export const HUBS = {
     slug: 'time-creation-project',
     route: '/time-creation-project',
     roleLabel: 'The Foundation',
-    tagline: 'You live in time. We help you learn to create it.',
+    tagline:
+      'Teaching Time Creation as a foundational life skill that turns possibility into progress',
     identity: vertical('time-creation-project'),
     accent: '#FAAB35', // Sunrise Gold — shared hub highlight
     // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
