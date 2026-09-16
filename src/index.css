@@ -17,6 +17,11 @@
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
+  font-family: 'Roobert Semi Mono';
+  src: url('/fonts/roobert-semi-mono.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
   font-family: 'Roobert';
   src: url('/fonts/roobert-medium.otf') format('opentype');
   font-weight: 500; font-style: normal; font-display: swap;

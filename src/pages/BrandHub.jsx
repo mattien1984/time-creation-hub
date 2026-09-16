@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import { LogoMark } from '../components/Logo';
+import GridField from '../components/GridField';
 import Footer from '../sections/Footer';
 import { HUBS, HUB_ORDER } from '../data/hubs';
 import { glossaryForBrand, slugifyTerm } from '../data/glossary';
@@ -224,10 +225,26 @@ export default function BrandHub({ slug }) {
     },
   ];
 
+  const light = hub.theme.mode === 'light';
+
   return (
-    <main className="hub" style={{ '--hub-accent': hub.accent }}>
-      {/* Hero — the hub wears its own skin */}
-      <header className="hub__hero" style={{ '--hub-grid': `url(${v.grid})` }}>
+    <main
+      className={`hub hub--${v.id}${light ? ' hub--light' : ''}`}
+      style={{ '--hub-accent': hub.accent }}
+    >
+      {/* Hero — the hub wears its own skin: each brand's own grid language
+          rendered procedurally (TC layers its wave wash beneath the fabric) */}
+      <header className="hub__hero">
+        <div className="hub__hero-field" aria-hidden="true">
+          {v.id === 'time-creationism' && (
+            <img className="hub__hero-wave" src={asset('/assets/photography/tc-wave.jpg')} alt="" />
+          )}
+          <GridField
+            kind={v.gridKind}
+            color={light ? 'rgba(14, 23, 22, 0.55)' : 'rgba(255, 255, 255, 0.4)'}
+            opacity={light ? 0.2 : 0.3}
+          />
+        </div>
         <div className="wrap">
           <Reveal>
             <p className="hub__role">{hub.roleLabel}</p>
@@ -251,6 +268,11 @@ export default function BrandHub({ slug }) {
             {s.body}
           </AccordionSection>
         ))}
+      </div>
+
+      {/* full-bleed photography band — the brand's world, treated per theme */}
+      <div className="hub__band" aria-hidden="true">
+        <img src={v.photo} alt="" loading="lazy" />
       </div>
 
       {/* Cross-links — the sibling brands as photo cards (home-intro style),

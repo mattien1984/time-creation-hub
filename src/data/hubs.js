@@ -25,6 +25,8 @@ export const HUBS = {
     // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
     // per-brand accents read wrong as highlights (Existence's orange = red).
     accent: '#FAAB35',
+    // The black instrument: technical grid, mono details, gold live-rows.
+    theme: { mode: 'dark' },
     whatItIs: {
       headline: 'The instrument of time creation',
       paragraphs: [
@@ -78,6 +80,8 @@ export const HUBS = {
       'Time Creationist is a philosophy for intentionally creating your life through time, showing how every action, thought, and feeling shapes who you become.',
     identity: vertical('time-creationism'),
     accent: '#FAAB35', // Sunrise Gold — shared hub highlight
+    // The belief in living color: wave wash, fabric hairlines, serif italic.
+    theme: { mode: 'dark' },
     whatItIs: {
       headline: 'A life is not spent or found, but made.',
       paragraphs: [
@@ -137,7 +141,10 @@ export const HUBS = {
     tagline:
       'Teaching Time Creation as a foundational life skill that turns possibility into progress',
     identity: vertical('time-creation-project'),
-    accent: '#FAAB35', // Sunrise Gold — shared hub highlight
+    // Daylight: TCP is the white-dominant vertical — ink on daylight with
+    // the canon deep-teal accent (gold fails contrast on white).
+    accent: '#008083',
+    theme: { mode: 'light' },
     // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
     whatItIs: {
       headline: 'The Time Creation Project exists to establish Time Creation as a foundational life skill.',

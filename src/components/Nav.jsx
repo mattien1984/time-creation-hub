@@ -20,8 +20,10 @@ export default function Nav() {
   // a `film-end` class on <body>.
   const { pathname } = useLocation();
   const filmPage = pathname === '/';
+  // TCP is the daylight page — the nav inverts to ink on light glass there.
+  const lightPage = pathname === '/time-creation-project';
   return (
-    <nav className={`nav${filmPage ? ' nav--film' : ''}`}>
+    <nav className={`nav${filmPage ? ' nav--film' : ''}${lightPage ? ' nav--light' : ''}`}>
       {!filmPage && (
         <NavLink to="/#end" className="nav__mark" aria-label="Time Creation — home">
           <LogoMark size={22} stroke={2} />
