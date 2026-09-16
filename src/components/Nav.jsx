@@ -23,9 +23,8 @@ export default function Nav() {
   return (
     <nav className={`nav${filmPage ? ' nav--film' : ''}`}>
       {!filmPage && (
-        <NavLink to="/" className="nav__mark">
+        <NavLink to="/" className="nav__mark" aria-label="Time Creation — home">
           <LogoMark size={22} stroke={2} />
-          <span>Time Creation</span>
         </NavLink>
       )}
       <div className="nav__links">
