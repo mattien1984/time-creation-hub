@@ -24,7 +24,8 @@ const ease = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 // Classic decode: locked prefix, a small churning window of ~6 characters at
 // the lock point, and the untyped remainder held invisible (real characters at
 // opacity 0) so the line never reflows while it decodes.
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—/<>*#+';
+// Digits, not letters — it's time the lines resolve out of.
+const CHARS = '0123456789:';
 const SCRAMBLE_WINDOW = 6;
 function ScrambleText({ text, lock }) {
   const n = text.length;
