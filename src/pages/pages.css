@@ -95,11 +95,14 @@ body.film-end .nav--film {
   transform: translate(-50%, 0);
 }
 .nav__menu-panel {
-  /* frosted glass */
+  /* frosted glass over a solid dark base — the sheen stays but content
+     behind can't wreck text contrast */
   position: relative;
   min-width: 244px;
   padding: 10px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03)),
+    rgba(9, 10, 11, 0.88);
   border-radius: 18px;
   backdrop-filter: blur(26px) saturate(1.5);
   -webkit-backdrop-filter: blur(26px) saturate(1.5);
@@ -550,7 +553,7 @@ body.film-end .nav--film {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.32;
+  opacity: 0.42;
 }
 .hub--time-creationism .hub__hero-field::after {
   content: '';
@@ -567,7 +570,7 @@ body.film-end .nav--film {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  opacity: 0.15;
+  opacity: 0.22;
   -webkit-mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 35%, transparent 100%);
 }
@@ -1095,7 +1098,9 @@ body.film-end .nav--film {
 .nav--light .nav__mark svg circle { stroke: #0e1716; }
 .nav--light .nav__sep { background: rgba(14, 23, 22, 0.2); }
 .nav--light .nav__menu-panel {
-  background: linear-gradient(180deg, rgba(250, 250, 248, 0.75), rgba(250, 250, 248, 0.55));
+  background:
+    linear-gradient(180deg, rgba(14, 23, 22, 0.03), rgba(14, 23, 22, 0.01)),
+    rgba(250, 250, 248, 0.92);
   box-shadow: 0 24px 60px rgba(14, 23, 22, 0.18);
 }
 .nav--light .nav__menu-panel::before {
