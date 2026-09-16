@@ -194,12 +194,12 @@ body.film-end .nav--film {
   padding: 4px 0 clamp(32px, 5vh, 52px);
   max-width: 76ch;
 }
-/* section subcopy reads white, not muted */
+/* section subcopy color */
 .acc__content .body,
 .acc__content .hub__glossary dd,
 .acc__content .hub__voice-examples blockquote,
 .acc__content li {
-  color: var(--fg);
+  color: #b3b3b3;
 }
 .acc__lead {
   font-family: var(--serif);
