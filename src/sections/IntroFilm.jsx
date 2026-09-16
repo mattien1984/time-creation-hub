@@ -88,20 +88,24 @@ const videoOpacityAt = (p) =>
 const MARK_SIZE = 164;
 const UNIT = MARK_SIZE / 41.4;
 const RINGS = [
-  // ring index → converged offset (px) and brand when separated
-  { dx: 0, dy: (18.39 - 20.92) * UNIT, brand: 'existence', spread: 0 },
-  { dx: (18.39 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creationism', spread: -1 },
+  // ring index → converged offset (px) and brand when separated.
+  // Separated order (left → right): existence, Time Creationism, TCP.
+  { dx: 0, dy: (18.39 - 20.92) * UNIT, brand: 'existence', spread: -1 },
+  { dx: (18.39 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creationism', spread: 0 },
   { dx: (23.01 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creation-project', spread: 1 },
 ];
 // Full lockup geometry, measured off the SVG exports (canvas alpha-scan):
 // every mark is a 157×154 composite ending at x=157; cx/cy = mark center in
 // svg units. The film draws the mark itself (three circles splitting apart),
 // so the lockup image is clipped to show ONLY the wordmark (x > 160).
+// wu = rendered width per 1px of lockupH (all marks share the 155u ring, so
+// TCP's width normalizes to /155 too despite its taller 219u box).
 const LOCKUPS = {
-  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77 },
-  existence: { W: 832, H: 155, cx: 78.5, cy: 77 },
-  'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88 },
+  existence: { W: 832, H: 155, cx: 78.5, cy: 77, wu: 832 / 155 },
+  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77, wu: 1201 / 155 },
+  'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, wu: 891 / 155 },
 };
+const LOCKUP_ROW = ['existence', 'time-creationism', 'time-creation-project'];
 // Ring outer diameter is 140 units of a 155-unit lockup height.
 const LOCKUP_RING_RATIO = 140 / 155;
 // The mark's ring offsets from its own center, in viewBox units — each
@@ -235,10 +239,21 @@ export default function IntroFilm() {
   // In the ±S row, rings must fit three-abreast: cap the separated scale so
   // a ring's radius stays under ~42% of the spacing (narrow viewports).
   const sepScale = Math.min(1.12, (S * 0.42) / (17.68 * UNIT));
-  // Each ring splits into its mark in place; the wordmarks extend rightward,
-  // so TC's lockup (1201u, the widest) must clear the next column: cap the
-  // lockup height by the column spacing.
-  const lockupH = Math.max(12, Math.min(60, (S - 24) / 7.75));
+  // The formed logos compose as a true row: measured lockup widths, equal
+  // gutters (1.5×h), the whole row centered on its total ink width. Rings
+  // glide from the ±S grid to these mark positions as they split.
+  const lockupH = Math.max(12, Math.min(64, 0.0421 * vw));
+  const gutter = 1.5 * lockupH;
+  const rowWidths = LOCKUP_ROW.map((slug) => LOCKUPS[slug].wu * lockupH);
+  const rowTotal = rowWidths[0] + rowWidths[1] + rowWidths[2] + 2 * gutter;
+  const markXs = {};
+  {
+    let cursor = -rowTotal / 2;
+    LOCKUP_ROW.forEach((slug, i) => {
+      markXs[slug] = cursor + (78.5 / 155) * lockupH; // mark center within its lockup
+      cursor += rowWidths[i] + gutter;
+    });
+  }
   const lockScale = (lockupH * LOCKUP_RING_RATIO) / ((2 * 17.68 + 1.45) * UNIT);
   const splitT = ease(seg(p, ...T.split)) - ease(seg(p, ...T.splitBack));
   const wordT = ease(seg(p, ...T.word)) * (1 - seg(p, ...T.wordOut));
@@ -289,7 +304,9 @@ export default function IntroFilm() {
         {/* the three rings of the mark — each splits into its brand's own
             three-ring mark, in place, when the split window opens */}
         {RINGS.map((r) => {
-          const x = r.dx * (1 - sepAmount) + r.spread * S * sepAmount;
+          // ±S grid while separated; glides to the composed row as it splits.
+          const xSep = r.spread * S * (1 - splitT) + markXs[r.brand] * splitT;
+          const x = r.dx * (1 - sepAmount) + xSep * sepAmount;
           const yPx = r.dy * (1 - sepAmount);
           const yVh = markYvh * (1 - sepAmount);
           const scale = 1 + (sepScale + (lockScale - sepScale) * splitT - 1) * sepAmount;
@@ -340,7 +357,7 @@ export default function IntroFilm() {
                   height: (lockupH * lk.H) / 155,
                   opacity: wordT,
                   clipPath: `inset(0 0 0 ${((160 / lk.W) * 100).toFixed(2)}%)`,
-                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${r.spread * S}px), ${(-(lk.cy / lk.H) * 100).toFixed(2)}%)`,
+                  transform: `translate(calc(${(-(lk.cx / lk.W) * 100).toFixed(2)}% + ${markXs[r.brand]}px), ${(-(lk.cy / lk.H) * 100).toFixed(2)}%)`,
                 }}
               />
             );
