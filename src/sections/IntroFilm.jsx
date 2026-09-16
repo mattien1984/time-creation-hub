@@ -307,6 +307,10 @@ export default function IntroFilm() {
 
   return (
     <section className="film" ref={ref} id="top">
+      {/* Deep-link target for the film's end state (the six cards): sits at
+          the scroll position where progress reaches 1 with the stage still
+          pinned — the nav mark links here. */}
+      <div id="end" className="film__end-anchor" aria-hidden="true" />
       {/* The narrative as plain text for assistive tech; the stage is visual. */}
       <div className="sr-only">
         {lines.map((l) => (

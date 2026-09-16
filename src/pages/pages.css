@@ -25,7 +25,7 @@ body.film-end .nav--film {
 .nav__links {
   align-items: center;
   padding: 11px 22px;
-  border-radius: 999px;
+  border-radius: 12px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025));
   border: 1px solid rgba(255, 255, 255, 0.13);
   backdrop-filter: blur(22px) saturate(1.4);
@@ -118,6 +118,14 @@ body.film-end .nav--film {
   position: relative;
   height: 780vh; /* ends on the entity cards + shared row */
   height: 780svh; /* stable on iOS while the toolbar collapses */
+}
+.film__end-anchor {
+  position: absolute;
+  left: 0;
+  top: calc(100% - 100vh);
+  top: calc(100% - 100svh);
+  width: 1px;
+  height: 1px;
 }
 .film__stage {
   position: sticky;
