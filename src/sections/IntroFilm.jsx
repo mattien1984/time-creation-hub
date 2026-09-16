@@ -368,7 +368,7 @@ export default function IntroFilm() {
                 filter: pulsing
                   ? undefined
                   : glow > 0.02
-                    ? `drop-shadow(0 0 ${14 * glow}px rgba(250,171,53,${0.55 * glow}))`
+                    ? `drop-shadow(0 0 ${14 * glow}px rgba(255,255,255,${0.5 * glow}))`
                     : 'none',
               }}
             >

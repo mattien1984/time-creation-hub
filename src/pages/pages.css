@@ -280,10 +280,10 @@ body.film-end .nav--film {
   /* long, eased falloff + blur so the bloom has no visible outer edge */
   background: radial-gradient(
     circle,
-    rgba(250, 171, 53, 0.26) 0%,
-    rgba(250, 171, 53, 0.13) 22%,
-    rgba(250, 171, 53, 0.055) 42%,
-    rgba(250, 171, 53, 0.02) 62%,
+    rgba(255, 255, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.12) 22%,
+    rgba(255, 255, 255, 0.05) 42%,
+    rgba(255, 255, 255, 0.018) 62%,
     transparent 88%
   );
   filter: blur(34px);
