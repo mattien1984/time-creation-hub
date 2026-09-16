@@ -370,37 +370,41 @@ body.film-end .nav--film {
   filter: brightness(0.72);
   transform: scale(1.03);
 }
-.film__shared-btn {
+.film__shared-bar {
+  /* one bar spanning all three columns — site-level, not per-brand */
   position: absolute;
   left: 50%;
   top: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: clamp(28px, 6vw, 96px);
   overflow: hidden; /* clips the gradient blooms */
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.02);
-  color: var(--fg);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.film__shared-bar a {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
   font-size: clamp(0.72rem, 1.1vw, 0.92rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  pointer-events: none;
-  transition: background 0.25s ease, border-color 0.25s ease;
-  will-change: transform, opacity;
+  padding: 10px 4px;
+  transition: color 0.2s ease;
 }
-.film__shared-btn.is-live {
+.film__shared-bar.is-live {
   pointer-events: auto;
-  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.35s ease;
 }
-.film__shared-btn.is-live {
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.35s ease;
-}
-.film__shared-btn.is-live:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 44px rgba(255, 255, 255, 0.16), 0 0 120px rgba(255, 255, 255, 0.07);
+.film__shared-bar.is-live a:hover { color: #fff; }
+.film__shared-bar.is-live:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 44px rgba(255, 255, 255, 0.1), 0 0 120px rgba(255, 255, 255, 0.05);
 }
 .film__line {
   position: absolute;
@@ -883,7 +887,7 @@ body.film-end .nav--film {
 }
 /* a soft white gradient mix — three blurred blooms drifting slowly */
 .hub__cross-photo--flat::before,
-.film__shared-btn::before {
+.film__shared-bar::before {
   content: '';
   position: absolute;
   inset: -30%;
@@ -911,7 +915,7 @@ body.film-end .nav--film {
 }
 @media (prefers-reduced-motion: reduce) {
   .hub__cross-photo--flat::before,
-  .film__shared-btn::before { animation: none; }
+  .film__shared-bar::before { animation: none; }
 }
 /* the three-ring mark, oversized past full bleed, masked by the card */
 .hub__cross-mark {

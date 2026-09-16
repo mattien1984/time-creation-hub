@@ -286,16 +286,17 @@ export default function IntroFilm() {
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
   // Entity-card geometry: three centered photography cards the logos land
-  // on, and a same-sized imageless row beneath — two full rows of cards,
-  // so height also caps the card size (nav copy above needs ~30vh).
-  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18) / 2 / 0.62);
+  // on, and ONE full-width shared bar beneath — a single object spanning
+  // all three columns so it can't be read as per-brand children.
+  const barH = 62;
+  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18 - barH) / 0.62);
   const cardH = cardW * 0.62;
   const cardGap = Math.max(14, 0.018 * vw);
-  const rowSplit = cardH / 2 + 9; // half the vertical gap between the two rows
+  const barW = 3 * cardW + 2 * cardGap;
+  const blockH = cardH + 18 + barH;
   const blockCenter = Math.max(10, 0.055 * vh); // block sits slightly below stage center
-  const cardY = blockCenter - rowSplit;
-  const btnH = cardH; // same size as the image buttons
-  const btnY = blockCenter + rowSplit;
+  const cardY = blockCenter - blockH / 2 + cardH / 2;
+  const btnY = cardY + cardH / 2 + 18 + barH / 2;
   // The lockup lands dead-center on its card.
   const landY = cardY;
   // Where each lockup's mark center lands when centered on its card.
@@ -327,7 +328,7 @@ export default function IntroFilm() {
           ref={videoRef}
           className="film__video"
           style={{ opacity: video }}
-          src={asset('/assets/video/intro-temp.mp4')}
+          src={asset('/assets/video/intro-dts.mp4')}
           muted
           loop
           autoPlay
@@ -412,26 +413,23 @@ export default function IntroFilm() {
               </Link>
             );
           })}
-        {btnOp > 0.001 &&
-          SHARED_LINKS.map((s, i) => {
-            const cx = (i - 1) * (cardW + cardGap);
-            return (
-              <Link
-                key={s.label}
-                className={`film__shared-btn${btnOp > 0.5 ? ' is-live' : ''}`}
-                to={s.to}
-                tabIndex={btnOp > 0.5 ? 0 : -1}
-                style={{
-                  width: cardW,
-                  height: btnH,
-                  opacity: btnOp,
-                  transform: `translate(calc(-50% + ${cx}px), calc(-50% + ${btnY}px))`,
-                }}
-              >
+        {btnOp > 0.001 && (
+          <div
+            className={`film__shared-bar${btnOp > 0.5 ? ' is-live' : ''}`}
+            style={{
+              width: barW,
+              height: barH,
+              opacity: btnOp,
+              transform: `translate(-50%, calc(-50% + ${btnY}px))`,
+            }}
+          >
+            {SHARED_LINKS.map((s) => (
+              <Link key={s.label} to={s.to} tabIndex={btnOp > 0.5 ? 0 : -1}>
                 {s.label}
               </Link>
-            );
-          })}
+            ))}
+          </div>
+        )}
 
         {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
             beside each freshly formed three-ring mark. At the end state each
