@@ -370,37 +370,101 @@ body.film-end .nav--film {
   filter: brightness(0.72);
   transform: scale(1.03);
 }
-.film__shared-btn {
+/* the end frame's two labeled sections — the "Brands" header over the
+   photo cards, a hairline divider, then the Resources panel: one
+   bordered container (title column + three icon rows) so the shared
+   links read as a single site-level object, not per-brand children */
+.film__section-head {
   position: absolute;
   left: 50%;
   top: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* clips the gradient blooms */
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--fg);
-  text-decoration: none;
-  font-size: clamp(0.72rem, 1.1vw, 0.92rem);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  text-align: left;
   pointer-events: none;
-  transition: background 0.25s ease, border-color 0.25s ease;
   will-change: transform, opacity;
 }
-.film__shared-btn.is-live {
-  pointer-events: auto;
-  cursor: pointer;
+.film__section-head h2,
+.film__resources-head h2 {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+  letter-spacing: 0.02em;
+  color: var(--fg);
 }
-.film__shared-btn.is-live {
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.35s ease;
+.film__section-head p,
+.film__resources-head p {
+  margin: 6px 0 0;
+  font-size: clamp(0.72rem, 0.95vw, 0.85rem);
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.52);
 }
-.film__shared-btn.is-live:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 44px rgba(255, 255, 255, 0.16), 0 0 120px rgba(255, 255, 255, 0.07);
+.film__section-divider {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+  will-change: opacity;
+}
+.film__resources {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  grid-template-columns: minmax(170px, 24%) 1fr;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.film__resources.is-live { pointer-events: auto; }
+.film__resources-head {
+  padding: 24px 28px;
+  border-right: 1px solid var(--line);
+}
+.film__resources-head h2 { font-size: clamp(1.1rem, 1.5vw, 1.5rem); }
+.film__resources-rows {
+  display: flex;
+  flex-direction: column;
+}
+.film__resources-rows a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 30px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: clamp(0.68rem, 0.9vw, 0.82rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: background 0.25s ease;
+}
+.film__resources-rows a + a { border-top: 1px solid var(--line); }
+.film__resources-rows svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  opacity: 0.88;
+}
+.film__resources-arrow {
+  margin-left: auto;
+  font-size: 1.05rem;
+  font-weight: 300;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+}
+.film__resources.is-live a:hover { background: rgba(255, 255, 255, 0.05); }
+.film__resources.is-live a:hover .film__resources-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+@media (max-width: 680px) {
+  .film__resources { grid-template-columns: 1fr; }
+  .film__resources-head { display: none; }
 }
 .film__line {
   position: absolute;
@@ -881,9 +945,9 @@ body.film-end .nav--film {
   text-transform: uppercase;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
-/* a soft white gradient mix — three blurred blooms drifting slowly */
-.hub__cross-photo--flat::before,
-.film__shared-btn::before {
+/* a soft white gradient mix — three blurred blooms drifting slowly
+   (overridden below with the Sunrise palette) */
+.hub__cross-photo--flat::before {
   content: '';
   position: absolute;
   inset: -30%;
@@ -896,8 +960,7 @@ body.film-end .nav--film {
   pointer-events: none;
 }
 /* the Universe card mixes the Sunrise palette into its blooms:
-   Mind teals top-left, Dawn blues right, Energy orange-to-gold below
-   (the film's shared cards keep the white mix) */
+   Mind teals top-left, Dawn blues right, Energy orange-to-gold below */
 .hub__cross-photo--flat::before {
   background:
     radial-gradient(45% 55% at 14% 10%, rgba(36, 158, 161, 0.24), transparent 62%),
@@ -910,8 +973,7 @@ body.film-end .nav--film {
   to { transform: translate(2.5%, 3%) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hub__cross-photo--flat::before,
-  .film__shared-btn::before { animation: none; }
+  .hub__cross-photo--flat::before { animation: none; }
 }
 /* the three-ring mark, oversized past full bleed, masked by the card */
 .hub__cross-mark {

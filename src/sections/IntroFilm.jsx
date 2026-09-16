@@ -74,19 +74,42 @@ const T = {
   word: [0.77, 0.83], // wordmark reveal beside the formed mark
   universeIn: [0.565, 0.61],
   universeLock: [0.585, 0.66],
-  // Final act: the universe line hands off to short nav copy, the logos
-  // glide onto their centered photography cards (the buttons), and the
-  // shared row — Design · Glossary · Assets — appears beneath.
+  // Final act: the logos glide onto their photography cards under a
+  // "Brands" header; a hairline divider hands off to the "Resources"
+  // panel — one bordered container with three icon rows, so the shared
+  // links read as one site-level object, not per-brand children.
   universeOut: [0.85, 0.89],
   entities: [0.87, 0.94],
   buttons: [0.92, 0.97],
 };
 const SCRAMBLE_WINDOWS = T.beats;
 const SHARED_LINKS = [
-  { label: 'Design System', to: '/system' },
-  { label: 'Glossary of Terms', to: '/glossary' },
-  { label: 'Brand Assets', to: '/library' },
+  { label: 'Design System', to: '/system', icon: 'layers' },
+  { label: 'Glossary of Terms', to: '/glossary', icon: 'book' },
+  { label: 'Brand Assets', to: '/library', icon: 'folder' },
 ];
+// Minimal line icons for the Resources rows — stacked layers, open
+// book, folder — in the same thin-stroke voice as the rings.
+const RESOURCE_ICONS = {
+  layers: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 3 3 8l9 5 9-5-9-5Z" />
+      <path d="m3 12.5 9 5 9-5" />
+      <path d="m3 17 9 5 9-5" />
+    </svg>
+  ),
+  book: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 6.2C10.4 4.8 8.3 4 6 4c-1 0-2 .13-3 .4V20c1-.27 2-.4 3-.4 2.3 0 4.4.8 6 2.2 1.6-1.4 3.7-2.2 6-2.2 1 0 2 .13 3 .4V4.4C20 4.13 19 4 18 4c-2.3 0-4.4.8-6 2.2Z" />
+      <path d="M12 6.2v15.6" />
+    </svg>
+  ),
+  folder: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 7a2 2 0 0 1 2-2h4.2l2 2.3H19a2 2 0 0 1 2 2v8.7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" />
+    </svg>
+  ),
+};
 
 const videoOpacityAt = (p) =>
   (0.06 + 0.29 * ease(seg(p, ...T.video))) * (1 - 0.68 * ease(seg(p, 0.56, 0.64)));
@@ -285,17 +308,27 @@ export default function IntroFilm() {
   const entT = ease(seg(p, ...T.entities));
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
-  // Entity-card geometry: three centered photography cards the logos land
-  // on, and a same-sized imageless row beneath — two full rows of cards,
-  // so height also caps the card size (nav copy above needs ~30vh).
-  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18) / 2 / 0.62);
+  // End-frame geometry: a labeled two-section composition — "Brands"
+  // header over the three photo cards, a hairline divider, then the
+  // full-width "Resources" panel. Viewport height caps the card size.
+  const headerH = 56; // "Brands" + subcopy
+  const headerGap = 28;
+  const divGapTop = 40; // cards → divider
+  const divGapBottom = 32; // divider → panel
+  const rowH = 66; // one Resources row
+  const panelH = 3 * rowH;
+  const chromeH = headerH + headerGap + divGapTop + 1 + divGapBottom + panelH;
+  const cardW = Math.max(96, Math.min(0.29 * vw, 430, (0.8 * vh - chromeH) / 0.62));
   const cardH = cardW * 0.62;
   const cardGap = Math.max(14, 0.018 * vw);
-  const rowSplit = cardH / 2 + 9; // half the vertical gap between the two rows
-  const blockCenter = Math.max(10, 0.055 * vh); // block sits slightly below stage center
-  const cardY = blockCenter - rowSplit;
-  const btnH = cardH; // same size as the image buttons
-  const btnY = blockCenter + rowSplit;
+  const rowW = 3 * cardW + 2 * cardGap;
+  const blockH = chromeH + cardH;
+  const blockCenter = Math.max(6, 0.02 * vh); // block sits a touch below stage center
+  const blockTop = blockCenter - blockH / 2;
+  const headerY = blockTop + headerH / 2;
+  const cardY = blockTop + headerH + headerGap + cardH / 2;
+  const dividerY = blockTop + headerH + headerGap + cardH + divGapTop;
+  const panelY = dividerY + 1 + divGapBottom + panelH / 2;
   // The lockup lands dead-center on its card.
   const landY = cardY;
   // Where each lockup's mark center lands when centered on its card.
@@ -388,8 +421,22 @@ export default function IntroFilm() {
           );
         })}
 
-        {/* final act — the three entity cards (photography buttons) the
-            logos land on, plus the shared row beneath */}
+        {/* final act — the "Brands" header, the three entity cards
+            (photography buttons) the logos land on, then the divider and
+            the Resources panel */}
+        {entT > 0.001 && (
+          <div
+            className="film__section-head"
+            style={{
+              width: rowW,
+              opacity: entT,
+              transform: `translate(-50%, calc(-50% + ${headerY}px))`,
+            }}
+          >
+            <h2>Brands</h2>
+            <p>Three perspectives. A shared horizon.</p>
+          </div>
+        )}
         {entT > 0.001 &&
           LOCKUP_ROW.map((slug, i) => {
             const hub = HUBS[slug];
@@ -412,26 +459,43 @@ export default function IntroFilm() {
               </Link>
             );
           })}
-        {btnOp > 0.001 &&
-          SHARED_LINKS.map((s, i) => {
-            const cx = (i - 1) * (cardW + cardGap);
-            return (
-              <Link
-                key={s.label}
-                className={`film__shared-btn${btnOp > 0.5 ? ' is-live' : ''}`}
-                to={s.to}
-                tabIndex={btnOp > 0.5 ? 0 : -1}
-                style={{
-                  width: cardW,
-                  height: btnH,
-                  opacity: btnOp,
-                  transform: `translate(calc(-50% + ${cx}px), calc(-50% + ${btnY}px))`,
-                }}
-              >
-                {s.label}
-              </Link>
-            );
-          })}
+        {btnOp > 0.001 && (
+          <div
+            className="film__section-divider"
+            style={{
+              width: rowW,
+              opacity: btnOp,
+              transform: `translate(-50%, ${dividerY}px)`,
+            }}
+          />
+        )}
+        {btnOp > 0.001 && (
+          <div
+            className={`film__resources${btnOp > 0.5 ? ' is-live' : ''}`}
+            style={{
+              width: rowW,
+              height: panelH,
+              opacity: btnOp,
+              transform: `translate(-50%, calc(-50% + ${panelY}px))`,
+            }}
+          >
+            <div className="film__resources-head">
+              <h2>Resources</h2>
+              <p>Tools and reference.</p>
+            </div>
+            <div className="film__resources-rows">
+              {SHARED_LINKS.map((s) => (
+                <Link key={s.label} to={s.to} tabIndex={btnOp > 0.5 ? 0 : -1}>
+                  {RESOURCE_ICONS[s.icon]}
+                  <span>{s.label}</span>
+                  <span className="film__resources-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* the wordmarks — the lockup SVGs clipped past their mark, revealed
             beside each freshly formed three-ring mark. At the end state each
