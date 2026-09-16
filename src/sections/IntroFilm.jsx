@@ -75,8 +75,9 @@ const T = {
   universeIn: [0.565, 0.61],
   universeLock: [0.585, 0.66],
   // Final act: the universe line hands off to short nav copy, the logos
-  // glide onto their centered photography cards (the buttons), and the
-  // shared row — Design · Glossary · Assets — appears beneath.
+  // glide onto their centered photography cards (the buttons), and a
+  // single end-credit line — Design System · Glossary · Assets — sits
+  // detached beneath. Labels mirror the pill nav exactly.
   universeOut: [0.85, 0.89],
   entities: [0.87, 0.94],
   buttons: [0.92, 0.97],
@@ -84,12 +85,12 @@ const T = {
 const SCRAMBLE_WINDOWS = T.beats;
 const SHARED_LINKS = [
   { label: 'Design System', to: '/system' },
-  { label: 'Glossary of Terms', to: '/glossary' },
-  { label: 'Brand Assets', to: '/library' },
+  { label: 'Glossary', to: '/glossary' },
+  { label: 'Assets', to: '/library' },
 ];
 
 const videoOpacityAt = (p) =>
-  0.35 * ease(seg(p, ...T.video)) * (1 - 0.68 * ease(seg(p, 0.56, 0.64)));
+  (0.06 + 0.29 * ease(seg(p, ...T.video))) * (1 - 0.68 * ease(seg(p, 0.56, 0.64)));
 
 // The mark's exact ring geometry (viewBox 41.4, center 20.70 / 20.92).
 const MARK_SIZE = 164;
@@ -286,17 +287,18 @@ export default function IntroFilm() {
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
   // Entity-card geometry: three centered photography cards the logos land
-  // on, and ONE full-width shared bar beneath — a single object spanning
-  // all three columns so it can't be read as per-brand children.
-  const barH = 62;
-  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18 - barH) / 0.62);
+  // on, and one intrinsically-sized end-credit line detached beneath — a
+  // single centered object narrower than the row, so it can't be read as
+  // per-brand children.
+  const creditH = 16; // one line of footnote-scale uppercase
+  const creditGap = Math.max(34, 0.05 * vh); // detachment air below the cards
+  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - creditGap - creditH) / 0.62);
   const cardH = cardW * 0.62;
   const cardGap = Math.max(14, 0.018 * vw);
-  const barW = 3 * cardW + 2 * cardGap;
-  const blockH = cardH + 18 + barH;
+  const blockH = cardH + creditGap + creditH;
   const blockCenter = Math.max(10, 0.055 * vh); // block sits slightly below stage center
   const cardY = blockCenter - blockH / 2 + cardH / 2;
-  const btnY = cardY + cardH / 2 + 18 + barH / 2;
+  const btnY = cardY + cardH / 2 + creditGap + creditH / 2;
   // The lockup lands dead-center on its card.
   const landY = cardY;
   // Where each lockup's mark center lands when centered on its card.
@@ -415,19 +417,20 @@ export default function IntroFilm() {
           })}
         {btnOp > 0.001 && (
           <div
-            className={`film__shared-bar${btnOp > 0.5 ? ' is-live' : ''}`}
+            className={`film__credit${btnOp > 0.5 ? ' is-live' : ''}`}
             style={{
-              width: barW,
-              height: barH,
               opacity: btnOp,
-              transform: `translate(-50%, calc(-50% + ${btnY}px))`,
+              transform: `translate(-50%, calc(-50% + ${btnY + (1 - btnOp) * 8}px))`,
             }}
           >
-            {SHARED_LINKS.map((s) => (
+            {SHARED_LINKS.flatMap((s, i) => [
+              i > 0 && (
+                <span key={`sep-${s.label}`} className="film__credit-sep" aria-hidden="true" />
+              ),
               <Link key={s.label} to={s.to} tabIndex={btnOp > 0.5 ? 0 : -1}>
                 {s.label}
-              </Link>
-            ))}
+              </Link>,
+            ])}
           </div>
         )}
 

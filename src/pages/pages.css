@@ -370,42 +370,39 @@ body.film-end .nav--film {
   filter: brightness(0.72);
   transform: scale(1.03);
 }
-.film__shared-bar {
-  /* one bar spanning all three columns — site-level, not per-brand */
+/* the shared row reduced to a single end-credit line — typography only,
+   site-level by construction: one intrinsically-sized centered object,
+   detached from the card row by a full air gap. Not a component. */
+.film__credit {
   position: absolute;
   left: 50%;
   top: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: clamp(28px, 6vw, 96px);
-  overflow: hidden; /* clips the gradient blooms */
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
+  gap: clamp(14px, 2.2vw, 30px);
+  white-space: nowrap;
   pointer-events: none;
   will-change: transform, opacity;
 }
-.film__shared-bar a {
-  position: relative;
-  z-index: 1;
-  color: rgba(255, 255, 255, 0.82);
+.film__credit a {
+  color: rgba(255, 255, 255, 0.48);
   text-decoration: none;
-  font-size: clamp(0.72rem, 1.1vw, 0.92rem);
+  font-size: clamp(0.6rem, 1vw, 0.72rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 10px 4px;
+  padding: 12px 4px; /* invisible tap target — the type stays footnote-scale */
   transition: color 0.2s ease;
 }
-.film__shared-bar.is-live {
-  pointer-events: auto;
-  transition: border-color 0.25s ease, box-shadow 0.35s ease;
+.film__credit-sep {
+  flex: none;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
 }
-.film__shared-bar.is-live a:hover { color: #fff; }
-.film__shared-bar.is-live:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 0 44px rgba(255, 255, 255, 0.1), 0 0 120px rgba(255, 255, 255, 0.05);
-}
+.film__credit.is-live { pointer-events: auto; }
+.film__credit.is-live a:hover,
+.film__credit.is-live a:focus-visible { color: #fff; }
 .film__line {
   position: absolute;
   left: 50%;
@@ -885,9 +882,9 @@ body.film-end .nav--film {
   text-transform: uppercase;
   transition: background 0.25s ease, border-color 0.25s ease;
 }
-/* a soft white gradient mix — three blurred blooms drifting slowly */
-.hub__cross-photo--flat::before,
-.film__shared-bar::before {
+/* the Universe card's drifting blooms — geometry, blur and motion here;
+   the Sunrise-palette colors below override the background */
+.hub__cross-photo--flat::before {
   content: '';
   position: absolute;
   inset: -30%;
@@ -900,8 +897,7 @@ body.film-end .nav--film {
   pointer-events: none;
 }
 /* the Universe card mixes the Sunrise palette into its blooms:
-   Mind teals top-left, Dawn blues right, Energy orange-to-gold below
-   (the film's shared cards keep the white mix) */
+   Mind teals top-left, Dawn blues right, Energy orange-to-gold below */
 .hub__cross-photo--flat::before {
   background:
     radial-gradient(45% 55% at 14% 10%, rgba(36, 158, 161, 0.24), transparent 62%),
@@ -914,8 +910,7 @@ body.film-end .nav--film {
   to { transform: translate(2.5%, 3%) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hub__cross-photo--flat::before,
-  .film__shared-bar::before { animation: none; }
+  .hub__cross-photo--flat::before { animation: none; }
 }
 /* the three-ring mark, oversized past full bleed, masked by the card */
 .hub__cross-mark {
