@@ -44,9 +44,17 @@ export default function GridField({
             />
           )}
           {cfg.cross && (
+            /* arm stubs at all four tile corners — the pattern clips at its
+               bounds, so a plus drawn with negative coords loses half its
+               arms; tiling these stubs composes a FULL plus at every
+               grid intersection */
             <path
-              d={`M 0 -7 L 0 7 M -7 0 L 7 0`}
-              transform={`translate(0,0)`}
+              d={[
+                'M 0 0 H 7 M 0 0 V 7',
+                `M ${c} 0 H ${c - 7} M ${c} 0 V 7`,
+                `M 0 ${c} H 7 M 0 ${c} V ${c - 7}`,
+                `M ${c} ${c} H ${c - 7} M ${c} ${c} V ${c - 7}`,
+              ].join(' ')}
               stroke={color}
               strokeWidth={cfg.stroke * 2}
             />

@@ -236,8 +236,8 @@ export default function BrandHub({ slug }) {
           rendered procedurally (TC layers its wave wash beneath the fabric) */}
       <header className="hub__hero">
         <div className="hub__hero-field" aria-hidden="true">
-          {hub.theme.heroWave && (
-            <img className="hub__hero-wave" src={asset('/assets/photography/tc-wave.jpg')} alt="" />
+          {hub.theme.wash && (
+            <img className="hub__hero-wave" src={asset(hub.theme.wash)} alt="" />
           )}
           {hub.theme.heroPhoto && (
             <img className="hub__hero-photo" src={v.photo} alt="" />

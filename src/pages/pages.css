@@ -582,21 +582,32 @@ body.film-end .nav--film {
   max-width: min(420px, 38vw);
   height: auto;
 }
-/* TCP daylight: an Enlightenment Glare bloom behind the hero */
+/* TCP daylight: the site's hero photo washes strong under a white veil
+   that dissolves it into the page, with the glare bloom layered in */
+.hub--light .hub__hero-wave { opacity: 0.9; }
 .hub--light .hub__hero-field::after {
   content: '';
   position: absolute;
-  right: -12%;
-  top: -30%;
-  width: 70%;
-  height: 130%;
-  background: radial-gradient(
-    ellipse 50% 50% at 70% 35%,
-    rgba(250, 171, 53, 0.34),
-    rgba(253, 89, 0, 0.1) 48%,
-    transparent 72%
-  );
-  filter: blur(52px);
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 45% 55% at 76% 18%,
+      rgba(250, 171, 53, 0.28),
+      rgba(253, 89, 0, 0.07) 48%,
+      transparent 70%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(250, 250, 248, 0.85),
+      rgba(250, 250, 248, 0.3) 52%,
+      transparent 75%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(250, 250, 248, 0.4),
+      rgba(250, 250, 248, 0.15) 45%,
+      #fafaf8 96%
+    );
 }
 .hub__role {
   font-size: 0.78rem;
