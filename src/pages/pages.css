@@ -125,7 +125,9 @@ body.film-end .nav--film {
 /* ---------- hub accordion ---------- */
 
 .hub__accordion {
-  padding: clamp(24px, 5vh, 56px) 0 clamp(40px, 7vh, 80px);
+  /* padding-block only — the .wrap side gutters must survive so the rows
+     share the hero's left edge */
+  padding-block: clamp(24px, 5vh, 56px) clamp(40px, 7vh, 80px);
   border-bottom: 1px solid var(--line-soft);
 }
 .acc {
@@ -718,7 +720,7 @@ body.film-end .nav--film {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  padding: clamp(40px, 7vh, 80px) 0;
+  padding-block: clamp(40px, 7vh, 80px); /* keep the .wrap side gutters */
   border-top: 1px solid var(--line-soft);
 }
 .hub__cross-photo {
