@@ -329,6 +329,11 @@ body.film-end .nav--film {
 .film__entity.is-live {
   pointer-events: auto;
   cursor: pointer;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.film__entity.is-live:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 44px rgba(255, 255, 255, 0.16), 0 0 120px rgba(255, 255, 255, 0.07);
 }
 .film__entity img {
   display: block;
@@ -367,9 +372,13 @@ body.film-end .nav--film {
   pointer-events: auto;
   cursor: pointer;
 }
+.film__shared-btn.is-live {
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.35s ease;
+}
 .film__shared-btn.is-live:hover {
   background: rgba(255, 255, 255, 0.07);
   border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 44px rgba(255, 255, 255, 0.16), 0 0 120px rgba(255, 255, 255, 0.07);
 }
 .film__line {
   position: absolute;
