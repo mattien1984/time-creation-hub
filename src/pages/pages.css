@@ -784,9 +784,9 @@ body.film-end .nav--film {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 135%;
+  width: 88%;
   transform: translate(-50%, -50%);
-  opacity: 0.15;
+  opacity: 0.08;
   pointer-events: none;
 }
 .hub__cross-mark svg {
