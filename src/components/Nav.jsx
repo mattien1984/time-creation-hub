@@ -4,16 +4,19 @@ import { LogoMark } from './Logo';
 const link = ({ isActive }) => (isActive ? 'is-active' : undefined);
 
 export default function Nav() {
-  // The homepage is the film — it plays chromeless (no mark, no links);
-  // the doorways at the end are its navigation.
+  // The homepage plays the film chromeless; the nav bar (links only, upper
+  // right) fades in once the film reaches its end state — the film toggles
+  // a `film-end` class on <body>.
   const { pathname } = useLocation();
-  if (pathname === '/') return null;
+  const filmPage = pathname === '/';
   return (
-    <nav className="nav">
-      <NavLink to="/" className="nav__mark">
-        <LogoMark size={22} stroke={2} />
-        <span>Time Creation</span>
-      </NavLink>
+    <nav className={`nav${filmPage ? ' nav--film' : ''}`}>
+      {!filmPage && (
+        <NavLink to="/" className="nav__mark">
+          <LogoMark size={22} stroke={2} />
+          <span>Time Creation</span>
+        </NavLink>
+      )}
       <div className="nav__links">
         <NavLink to="/existence" className={link}>Existence</NavLink>
         <NavLink to="/time-creationist" className={link}>Creationist</NavLink>

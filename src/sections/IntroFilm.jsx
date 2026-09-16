@@ -126,6 +126,12 @@ const SPLIT_OFFSETS = [
 
 // Static fallback for prefers-reduced-motion: the lines, plainly.
 function StaticIntro({ lines }) {
+  // The homepage nav gates on the film reaching its end; with the static
+  // fallback there is no film, so the nav is simply on.
+  useEffect(() => {
+    document.body.classList.add('film-end');
+    return () => document.body.classList.remove('film-end');
+  }, []);
   return (
     <section className="film film--static">
       <div className="wrap">
@@ -152,7 +158,9 @@ export default function IntroFilm() {
   );
   const [, setFrame] = useState(0);
   const pRef = useRef(0);
-  const [vw, setVw] = useState(() => window.innerWidth);
+  const [vp, setVp] = useState(() => ({ w: window.innerWidth, h: window.innerHeight }));
+  const vw = vp.w;
+  const vh = vp.h;
 
   // Track the OS reduced-motion setting live.
   useEffect(() => {
@@ -198,6 +206,10 @@ export default function IntroFilm() {
         if (visible && vid.paused) vid.play().catch(() => {});
         else if (!visible && !vid.paused) vid.pause();
       }
+      // The site nav appears once the film reaches its end state
+      // (hysteresis so it doesn't flicker at the threshold).
+      if (p >= 0.9) document.body.classList.add('film-end');
+      else if (p < 0.88) document.body.classList.remove('film-end');
     };
     // Native scroll events keep the film scrubbed even where rAF is throttled
     // (hidden/background tabs); the rAF loop keeps the decoder churning.
@@ -208,7 +220,7 @@ export default function IntroFilm() {
     };
     raf = requestAnimationFrame(loop);
     window.addEventListener('scroll', onScroll, { passive: true });
-    const onResize = () => setVw(window.innerWidth);
+    const onResize = () => setVp({ w: window.innerWidth, h: window.innerHeight });
     window.addEventListener('resize', onResize);
     // Skip all per-frame work once the film is scrolled out of view.
     const io = new IntersectionObserver(([entry]) => {
@@ -221,6 +233,7 @@ export default function IntroFilm() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       io.disconnect();
+      document.body.classList.remove('film-end');
     };
   }, [reduced]);
 
@@ -273,13 +286,17 @@ export default function IntroFilm() {
   const entT = ease(seg(p, ...T.entities));
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on
-  // Entity-card geometry: three centered photography cards, the logos land on them.
-  const cardW = Math.min(0.28 * vw, 400);
+  // Entity-card geometry: three centered photography cards the logos land
+  // on, and a same-sized imageless row beneath — two full rows of cards,
+  // so height also caps the card size (nav copy above needs ~30vh).
+  const cardW = Math.min(0.28 * vw, 400, (0.58 * vh - 18) / 2 / 0.62);
   const cardH = cardW * 0.62;
   const cardGap = Math.max(14, 0.018 * vw);
-  const cardY = Math.max(-56, Math.min(-30, -0.04 * vw));
-  const btnH = Math.max(44, cardW * 0.15);
-  const btnY = cardY + cardH / 2 + 18 + btnH / 2;
+  const rowSplit = cardH / 2 + 9; // half the vertical gap between the two rows
+  const blockCenter = Math.max(10, 0.055 * vh); // block sits slightly below stage center
+  const cardY = blockCenter - rowSplit;
+  const btnH = cardH; // same size as the image buttons
+  const btnY = blockCenter + rowSplit;
   // Where each lockup's mark center lands when centered on its card.
   const entityMarkX = {};
   LOCKUP_ROW.forEach((slug, i) => {
