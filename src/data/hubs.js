@@ -21,7 +21,9 @@ export const HUBS = {
     roleLabel: 'The Instrument',
     tagline: 'Time, authored.',
     identity: vertical('existence'),
-    accent: vertical('existence').accent,
+    // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
+    // per-brand accents read wrong as highlights (Existence's orange = red).
+    accent: '#FAAB35',
     whatItIs: {
       headline: 'The instrument of time creation',
       paragraphs: [
@@ -73,7 +75,7 @@ export const HUBS = {
     roleLabel: 'The Belief',
     tagline: 'Time isn’t spent. It’s created.',
     identity: vertical('time-creationism'),
-    accent: vertical('time-creationism').accent,
+    accent: '#FAAB35', // Sunrise Gold — shared hub highlight
     whatItIs: {
       headline: 'A life is not spent or found, but made.',
       paragraphs: [
@@ -132,7 +134,7 @@ export const HUBS = {
     roleLabel: 'The Foundation',
     tagline: 'You live in time. We help you learn to create it.',
     identity: vertical('time-creation-project'),
-    accent: vertical('time-creation-project').accent,
+    accent: '#FAAB35', // Sunrise Gold — shared hub highlight
     // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
     whatItIs: {
       headline: 'The Time Creation Project exists to establish Time Creation as a foundational life skill.',
