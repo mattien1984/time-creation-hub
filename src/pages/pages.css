@@ -1066,11 +1066,13 @@ body.film-end .nav--film {
   background: rgba(14, 23, 22, 0.03);
   color: var(--fg);
 }
+/* on daylight the low alphas wash out — run the palette mix stronger */
 .hub--light .hub__cross-photo--flat::before {
   background:
-    radial-gradient(42% 52% at 16% 10%, rgba(0, 128, 131, 0.14), transparent 62%),
-    radial-gradient(50% 60% at 88% 34%, rgba(14, 23, 22, 0.07), transparent 65%),
-    radial-gradient(56% 64% at 50% 108%, rgba(250, 171, 53, 0.16), transparent 70%);
+    radial-gradient(45% 55% at 14% 10%, rgba(36, 158, 161, 0.38), transparent 62%),
+    radial-gradient(48% 58% at 88% 24%, rgba(47, 111, 208, 0.26), transparent 65%),
+    radial-gradient(50% 62% at 80% 102%, rgba(253, 89, 0, 0.24), transparent 68%),
+    radial-gradient(56% 64% at 28% 106%, rgba(250, 171, 53, 0.38), transparent 70%);
 }
 
 /* the footer stays a dark band on every theme */
