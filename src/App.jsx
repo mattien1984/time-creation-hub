@@ -34,6 +34,9 @@ function ScrollToTop() {
     const target = hash ? document.getElementById(hash.slice(1)) : null;
     if (isFirst && !target) return;
     if (lenisInstance) {
+      // The new route's page height isn't in Lenis's cache yet — without a
+      // resize, scrollTo clamps to the PREVIOUS page's scroll limit.
+      lenisInstance.resize();
       lenisInstance.scrollTo(target ?? 0, { immediate: true });
     } else if (target) {
       target.scrollIntoView();
