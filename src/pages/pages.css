@@ -578,9 +578,17 @@ body.film-end .nav--film {
   gap: 40px;
   flex-wrap: wrap;
 }
-.hub__hero-art img {
-  max-width: min(420px, 38vw);
-  height: auto;
+.hub__hero-art video {
+  display: block;
+  width: min(460px, 38vw);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+.hub--light .hub__hero-art video {
+  box-shadow: 0 24px 60px rgba(14, 23, 22, 0.22);
 }
 /* TCP daylight: the site's hero photo washes strong under a white veil
    that dissolves it into the page, with the glare bloom layered in */

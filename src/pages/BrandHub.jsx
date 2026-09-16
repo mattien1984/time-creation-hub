@@ -265,11 +265,18 @@ export default function BrandHub({ slug }) {
             </div>
             <p className="hub__tagline">{hub.tagline}</p>
           </Reveal>
-          {/* right-side art slot — e.g. the software on a monitor (asset TBD):
-              set heroArt on the hub in hubs.js and it renders here */}
-          {hub.heroArt && (
+          {/* right-side slot — the brand's showcase loop from robdyrdek.com,
+              in the rounded-rectangle panel treatment */}
+          {hub.theme.heroVideo && (
             <Reveal delay={80} className="hub__hero-art">
-              <img src={hub.heroArt} alt="" />
+              <video
+                src={asset(hub.theme.heroVideo)}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
             </Reveal>
           )}
         </div>
