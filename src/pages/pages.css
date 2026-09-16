@@ -883,9 +883,10 @@ body.film-end .nav--film {
   animation: crossGlowDrift 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
-/* the Universe card mixes the Sunrise palette into its blooms:
+/* the Universe card + the film's shared cards mix the Sunrise palette:
    Mind teals top-left, Dawn blues right, Energy orange-to-gold below */
-.hub__cross-photo--flat::before {
+.hub__cross-photo--flat::before,
+.film__shared-btn::before {
   background:
     radial-gradient(45% 55% at 14% 10%, rgba(36, 158, 161, 0.24), transparent 62%),
     radial-gradient(48% 58% at 88% 24%, rgba(47, 111, 208, 0.18), transparent 65%),
