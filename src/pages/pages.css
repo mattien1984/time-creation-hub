@@ -623,7 +623,16 @@ body.film-end .nav--film {
   text-align: right;
 }
 .foot__credit {
-  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 14px;
+}
+.foot__credit .eyebrow {
+  margin: 0 0 10px;
+}
+.foot__creator-name {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--fg);
+  margin: 0;
 }
 
 /* ---------- glossary page ---------- */

@@ -12,7 +12,10 @@ export default function Footer() {
         <div className="foot__bottom">
           <span>Unified Brand System · Internal use only</span>
           <div className="foot__right">
-            <span className="foot__credit">Created by {CREATOR.name}</span>
+            <div className="foot__credit">
+              <p className="eyebrow">Created by</p>
+              <p className="foot__creator-name">{CREATOR.name}</p>
+            </div>
             <span>Existence · Time Creationist · Time Creation Project</span>
           </div>
         </div>
