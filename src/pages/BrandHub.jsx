@@ -1,11 +1,12 @@
-// The brand hub template — Charlie's outline (Sep 15):
-// What It Is · What It Believes (TC carries the 5–10 core-belief list; the
-// others carry belief copy) · Who It Comes From / It's For / We Serve ·
-// How It Sounds · How It Looks · and, at the bottom, Its Role in the
-// Universe — the Layers of Time with this brand's plane lit, per "show how
-// each entity configures into the whole at the bottom of each section."
+// The brand hub template — Charlie's outline as a clean accordion:
+// every section collapses to a ruled row (number · title · circled +) and
+// expands on click; nav-dropdown deep links auto-expand their section.
+// What It Is · What It Believes (TC carries the 5–10 core-belief list) ·
+// Who It Comes From / It's For / We Serve · How It Sounds · How It Looks ·
+// Its Role in the Universe (the Layers of Time, this brand's plane lit).
 
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Footer from '../sections/Footer';
 import { HUBS, HUB_ORDER } from '../data/hubs';
@@ -13,14 +14,23 @@ import { glossaryForBrand, slugifyTerm } from '../data/glossary';
 import { DOWNLOADS, POSTERS } from '../data/brand';
 import { asset } from '../lib/asset';
 
-function Section({ id, kicker, title, children }) {
+const SECTION_IDS = ['what-it-is', 'beliefs', 'who', 'sounds', 'looks', 'universe'];
+
+function AccordionSection({ id, num, title, open, onToggle, children }) {
   return (
-    <section className="hub__section wrap" id={id}>
-      <Reveal>
-        <p className="eyebrow eyebrow--accent">{kicker}</p>
-        {title && <h2 className="hub__h2">{title}</h2>}
-      </Reveal>
-      {children}
+    <section className={`acc${open ? ' is-open' : ''}`} id={id}>
+      <button type="button" className="acc__head" onClick={onToggle} aria-expanded={open}>
+        <span className="acc__num">{num}</span>
+        <h2 className="acc__title">{title}</h2>
+        <span className="acc__toggle" aria-hidden="true">
+          <span className="acc__plus" />
+        </span>
+      </button>
+      <div className="acc__body">
+        <div className="acc__clip">
+          <div className="acc__content">{children}</div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -28,9 +38,9 @@ function Section({ id, kicker, title, children }) {
 // The Layers of Time with this brand's plane lit — how the entity
 // configures into the whole.
 const PLANES = [
-  { id: 'existence', src: '/assets/grids/arch-block.svg', label: 'the Existence Grid' },
-  { id: 'time-creationism', src: '/assets/grids/arch-fabric.svg', label: 'the Fabric of Time' },
-  { id: 'time-creation-project', src: '/assets/grids/arch-foundation.svg', label: 'the Foundation of Time' },
+  { id: 'existence', src: '/assets/grids/arch-block.svg' },
+  { id: 'time-creationism', src: '/assets/grids/arch-fabric.svg' },
+  { id: 'time-creation-project', src: '/assets/grids/arch-foundation.svg' },
 ];
 function HubLayers({ activeId }) {
   return (
@@ -59,61 +69,70 @@ export default function BrandHub({ slug }) {
     posters: (POSTERS[v.id] || []).slice(0, 4),
   };
 
-  return (
-    <main className="hub" style={{ '--hub-accent': hub.accent }}>
-      {/* Hero — the hub wears its own skin */}
-      <header className="hub__hero" style={{ '--hub-grid': `url(${v.grid})` }}>
-        <div className="wrap">
-          <Reveal>
-            <p className="hub__role">{hub.roleLabel}</p>
-            <div className="hub__logo">
-              <img src={v.logo} alt={`${v.name} logo`} style={{ '--logo-scale': v.logoScale }} />
-            </div>
-            <p className="hub__tagline">{hub.tagline}</p>
-          </Reveal>
-        </div>
-      </header>
+  const [openIds, setOpenIds] = useState(() => new Set());
+  const toggle = (id) =>
+    setOpenIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
-      {/* 01 — What It Is */}
-      <Section id="what-it-is" kicker="01 · What It Is" title={hub.whatItIs.headline}>
-        {hub.whatItIs.paragraphs.map((p, i) => (
-          <Reveal key={i} delay={i * 40}><p className="body hub__statement">{p}</p></Reveal>
-        ))}
-        <Reveal>
+  // A #section deep link (e.g. from the nav dropdowns) expands its section.
+  const { hash } = useLocation();
+  useEffect(() => {
+    const id = hash.slice(1);
+    if (SECTION_IDS.includes(id)) {
+      setOpenIds((prev) => new Set(prev).add(id));
+    }
+  }, [hash]);
+
+  const sections = [
+    {
+      id: 'what-it-is',
+      title: 'What It Is',
+      body: (
+        <>
+          <p className="acc__lead">{hub.whatItIs.headline}</p>
+          {hub.whatItIs.paragraphs.map((p, i) => (
+            <p key={i} className="body hub__statement">{p}</p>
+          ))}
           <p className="hub__oneliner">{hub.positioning.oneLiner}</p>
           <p className="body">{hub.positioning.boilerplate}</p>
-        </Reveal>
-      </Section>
-
-      {/* 02 — What It Believes */}
-      <Section id="beliefs" kicker="02 · What It Believes">
-        {hub.beliefs.list ? (
-          <Reveal>
-            <ol className="hub__beliefs">
-              {hub.beliefs.list.map((b) => (
-                <li key={b.text}>
-                  {b.text}
-                  {b.sacred && <span className="hub__belief-mark" title="Rob Dyrdek — verbatim">◆</span>}
-                </li>
-              ))}
-            </ol>
-            <p className="hub__syslink">◆ = Rob Dyrdek’s own words, verbatim. Draft curation — pending his sign-off.</p>
-          </Reveal>
-        ) : (
-          hub.beliefs.copy.map((p, i) => (
-            <Reveal key={i} delay={i * 40}><p className="body hub__statement">{p}</p></Reveal>
-          ))
-        )}
-      </Section>
-
-      {/* 03 — Who */}
-      <Section id="who" kicker={`03 · ${hub.who.label}`}>
-        <Reveal><p className="body">{hub.who.body}</p></Reveal>
-      </Section>
-
-      {/* 04 — How It Sounds */}
-      <Section id="sounds" kicker="04 · How It Sounds">
-        <Reveal>
+        </>
+      ),
+    },
+    {
+      id: 'beliefs',
+      title: 'What It Believes',
+      body: hub.beliefs.list ? (
+        <>
+          <ol className="hub__beliefs">
+            {hub.beliefs.list.map((b) => (
+              <li key={b.text}>
+                {b.text}
+                {b.sacred && <span className="hub__belief-mark" title="Rob Dyrdek — verbatim">◆</span>}
+              </li>
+            ))}
+          </ol>
+          <p className="hub__syslink">◆ = Rob Dyrdek’s own words, verbatim. Draft curation — pending his sign-off.</p>
+        </>
+      ) : (
+        hub.beliefs.copy.map((p, i) => (
+          <p key={i} className="body hub__statement">{p}</p>
+        ))
+      ),
+    },
+    {
+      id: 'who',
+      title: hub.who.label,
+      body: <p className="body hub__statement">{hub.who.body}</p>,
+    },
+    {
+      id: 'sounds',
+      title: 'How It Sounds',
+      body: (
+        <>
           <ul className="hub__voice">
             {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
           </ul>
@@ -122,39 +141,42 @@ export default function BrandHub({ slug }) {
               {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}
             </div>
           )}
-        </Reveal>
-        {terms.length > 0 && (
-          <Reveal>
-            <h3 className="hub__h3">The vocabulary</h3>
-            <dl className="hub__glossary">
-              {terms.map((t) => (
-                <div key={t.term}>
-                  <dt id={slugifyTerm(t.term)}>{t.term}</dt>
-                  <dd>{t.definition}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="hub__syslink">
-              All terms across the universe live in <Link to="/glossary">the glossary</Link>.
-            </p>
-          </Reveal>
-        )}
-      </Section>
-
-      {/* 05 — How It Looks */}
-      <Section id="looks" kicker="05 · How It Looks" title={v.gridTitle}>
-        <div className="hub__identity">
-          <Reveal className="hub__identity-cell">
-            <img className="hub__grid-thumb" src={v.grid} alt={v.gridName} />
-            <p className="body">{v.gridBody}</p>
-          </Reveal>
-          <Reveal className="hub__identity-cell" delay={60}>
-            <img className="hub__shape" src={v.photo} alt={`${v.name} — ${v.shape}`} />
-            <p className="body">{v.shapeNote}</p>
-          </Reveal>
-        </div>
-        <Reveal><p className="body hub__colornote">{v.colorNote}</p></Reveal>
-        <Reveal>
+          {terms.length > 0 && (
+            <>
+              <h3 className="hub__h3">The vocabulary</h3>
+              <dl className="hub__glossary">
+                {terms.map((t) => (
+                  <div key={t.term}>
+                    <dt id={slugifyTerm(t.term)}>{t.term}</dt>
+                    <dd>{t.definition}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="hub__syslink">
+                All terms across the universe live in <Link to="/glossary">the glossary</Link>.
+              </p>
+            </>
+          )}
+        </>
+      ),
+    },
+    {
+      id: 'looks',
+      title: 'How It Looks',
+      body: (
+        <>
+          <p className="acc__lead">{v.gridTitle}</p>
+          <div className="hub__identity">
+            <div className="hub__identity-cell">
+              <img className="hub__grid-thumb" src={v.grid} alt={v.gridName} />
+              <p className="body">{v.gridBody}</p>
+            </div>
+            <div className="hub__identity-cell">
+              <img className="hub__shape" src={v.photo} alt={`${v.name} — ${v.shape}`} />
+              <p className="body">{v.shapeNote}</p>
+            </div>
+          </div>
+          <p className="body hub__colornote">{v.colorNote}</p>
           <div className="hub__assets">
             {[assets.logo, assets.grid].filter(Boolean).map((d) => (
               <a key={d.file} className="hub__asset" href={d.file} download>
@@ -173,14 +195,16 @@ export default function BrandHub({ slug }) {
             in <Link to="/system">the design system</Link>; everything downloadable is
             in <Link to="/library">the asset library</Link>.
           </p>
-        </Reveal>
-      </Section>
-
-      {/* 06 — Its Role in the Universe (bottom, per Charlie) */}
-      <Section id="universe" kicker="06 · Its Role in the Universe">
-        <Reveal><p className="body">{hub.universeRole}</p></Reveal>
-        <Reveal><HubLayers activeId={v.id} /></Reveal>
-        <Reveal>
+        </>
+      ),
+    },
+    {
+      id: 'universe',
+      title: 'Its Role in the Universe',
+      body: (
+        <>
+          <p className="body hub__statement">{hub.universeRole}</p>
+          <HubLayers activeId={v.id} />
           <div className="hub__locator" aria-label="Position in the Time Creation universe">
             {HUB_ORDER.map((s) => (
               <Link
@@ -195,8 +219,40 @@ export default function BrandHub({ slug }) {
               </Link>
             ))}
           </div>
-        </Reveal>
-      </Section>
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <main className="hub" style={{ '--hub-accent': hub.accent }}>
+      {/* Hero — the hub wears its own skin */}
+      <header className="hub__hero" style={{ '--hub-grid': `url(${v.grid})` }}>
+        <div className="wrap">
+          <Reveal>
+            <p className="hub__role">{hub.roleLabel}</p>
+            <div className="hub__logo">
+              <img src={v.logo} alt={`${v.name} logo`} style={{ '--logo-scale': v.logoScale }} />
+            </div>
+            <p className="hub__tagline">{hub.tagline}</p>
+          </Reveal>
+        </div>
+      </header>
+
+      <div className="wrap hub__accordion">
+        {sections.map((s, i) => (
+          <AccordionSection
+            key={s.id}
+            id={s.id}
+            num={String(i + 1).padStart(2, '0')}
+            title={s.title}
+            open={openIds.has(s.id)}
+            onToggle={() => toggle(s.id)}
+          >
+            {s.body}
+          </AccordionSection>
+        ))}
+      </div>
 
       {/* Cross-links */}
       <section className="hub__cross wrap">
@@ -206,7 +262,7 @@ export default function BrandHub({ slug }) {
             <span className="door__name">{HUBS[s].identity.name}</span>
           </Link>
         ))}
-        <Link to="/" className="hub__cross-card hub__cross-card--up">
+        <Link to="/#end" className="hub__cross-card hub__cross-card--up">
           <span className="door__role">Up</span>
           <span className="door__name">The Universe</span>
         </Link>
