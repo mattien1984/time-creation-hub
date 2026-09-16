@@ -19,8 +19,8 @@ export default function Nav() {
       )}
       <div className="nav__links">
         <NavLink to="/existence" className={link}>Existence</NavLink>
-        <NavLink to="/time-creationist" className={link}>Creationist</NavLink>
-        <NavLink to="/time-creation-project" className={link}>Project</NavLink>
+        <NavLink to="/time-creationist" className={link}>Time Creationist</NavLink>
+        <NavLink to="/time-creation-project" className={link}>Time Creation Project</NavLink>
         <span className="nav__sep" aria-hidden="true" />
         <NavLink to="/system" className={link}>System</NavLink>
         <NavLink to="/glossary" className={link}>Glossary</NavLink>
