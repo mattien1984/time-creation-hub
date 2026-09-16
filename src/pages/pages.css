@@ -617,18 +617,29 @@ body.film-end .nav--film {
 .hub__cross-card:hover { background: rgba(255, 255, 255, 0.05); }
 .hub__cross-card--up { border-top-color: transparent; opacity: 0.85; }
 
-/* ---------- footer creator credit ---------- */
+/* ---------- footer: mark left, credit right, tops + bottoms aligned ---------- */
 
-.foot__bottom { align-items: flex-end; }
-.foot__right {
+.foot__grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.foot__col {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+}
+.foot__col--right {
   align-items: flex-end;
-  gap: 8px;
   text-align: right;
 }
-.foot__credit {
-  margin-bottom: 14px;
+.foot__meta {
+  color: var(--faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
 }
 .foot__credit .eyebrow {
   margin: 0 0 10px;

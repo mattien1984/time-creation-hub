@@ -6,18 +6,18 @@ export default function Footer() {
   return (
     <footer className="foot">
       <div className="wrap">
-        <Reveal className="foot__top">
-          <LogoMark size={52} stroke={1.4} />
-        </Reveal>
-        <div className="foot__bottom">
-          <span>Unified Brand System · Internal use only</span>
-          <div className="foot__right">
+        <div className="foot__grid">
+          <Reveal className="foot__col">
+            <LogoMark size={52} stroke={1.4} />
+            <span className="foot__meta">Unified Brand System · Internal use only</span>
+          </Reveal>
+          <Reveal className="foot__col foot__col--right">
             <div className="foot__credit">
               <p className="eyebrow">Created by</p>
               <p className="foot__creator-name">{CREATOR.name}</p>
             </div>
-            <span>Existence · Time Creationist · Time Creation Project</span>
-          </div>
+            <span className="foot__meta">Existence · Time Creationist · Time Creation Project</span>
+          </Reveal>
         </div>
       </div>
     </footer>
