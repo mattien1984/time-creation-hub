@@ -28,7 +28,7 @@ export const HUBS = {
     // The black instrument: technical grid, mono details, gold live-rows;
     // hero photo affixed top at low opacity, fading out at the bottom.
     // heroArt (right of the logo — the software on a monitor) asset TBD.
-    theme: { mode: 'dark', heroPhoto: true, band: false, heroVideo: '/assets/video/existence-panel.mp4' },
+    theme: { mode: 'dark', heroPhoto: true, band: false },
     whatItIs: {
       headline: 'The instrument of time creation',
       paragraphs: [
@@ -85,7 +85,7 @@ export const HUBS = {
     // The belief in living color: wave wash hero (restored — it was the
     // BOTTOM band image that should go), fabric hairlines, serif italic,
     // Creation Color toggles. No photography band on this page.
-    theme: { mode: 'dark', wash: '/assets/photography/tc-wave.jpg', band: false, heroVideo: '/assets/video/time-creationist-panel.mp4' },
+    theme: { mode: 'dark', wash: '/assets/photography/tc-wave.jpg', band: false },
     whatItIs: {
       headline: 'A life is not spent or found, but made.',
       paragraphs: [
@@ -150,7 +150,7 @@ export const HUBS = {
     accent: '#008083',
     // Daylight follows the TC hero model: the TCP site's own hero photo
     // washed under the white veil; no bottom band.
-    theme: { mode: 'light', wash: '/assets/photography/tcp-hero.jpg', band: false, heroVideo: '/assets/video/tcp-panel.mp4' },
+    theme: { mode: 'light', wash: '/assets/photography/tcp-hero.jpg', band: false },
     // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
     whatItIs: {
       headline: 'The Time Creation Project exists to establish Time Creation as a foundational life skill.',
