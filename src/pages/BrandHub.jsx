@@ -16,11 +16,10 @@ import { asset } from '../lib/asset';
 
 const SECTION_IDS = ['what-it-is', 'beliefs', 'who', 'sounds', 'looks', 'universe'];
 
-function AccordionSection({ id, num, title, open, onToggle, children }) {
+function AccordionSection({ id, title, open, onToggle, children }) {
   return (
     <section className={`acc${open ? ' is-open' : ''}`} id={id}>
       <button type="button" className="acc__head" onClick={onToggle} aria-expanded={open}>
-        <span className="acc__num">{num}</span>
         <h2 className="acc__title">{title}</h2>
         <span className="acc__toggle" aria-hidden="true">
           <span className="acc__plus" />
@@ -240,11 +239,10 @@ export default function BrandHub({ slug }) {
       </header>
 
       <div className="wrap hub__accordion">
-        {sections.map((s, i) => (
+        {sections.map((s) => (
           <AccordionSection
             key={s.id}
             id={s.id}
-            num={String(i + 1).padStart(2, '0')}
             title={s.title}
             open={openIds.has(s.id)}
             onToggle={() => toggle(s.id)}
@@ -254,17 +252,25 @@ export default function BrandHub({ slug }) {
         ))}
       </div>
 
-      {/* Cross-links */}
+      {/* Cross-links — the sibling brands as photo cards (home-intro style),
+          plus a flat card back to the universe's end state */}
       <section className="hub__cross wrap">
-        {siblings.map((s) => (
-          <Link key={s} to={HUBS[s].route} className="hub__cross-card" style={{ '--door-accent': HUBS[s].accent }}>
-            <span className="door__role">{HUBS[s].roleLabel}</span>
-            <span className="door__name">{HUBS[s].identity.name}</span>
-          </Link>
-        ))}
-        <Link to="/#end" className="hub__cross-card hub__cross-card--up">
-          <span className="door__role">Up</span>
-          <span className="door__name">The Universe</span>
+        {siblings.map((s) => {
+          const sv = HUBS[s].identity;
+          return (
+            <Link key={s} to={HUBS[s].route} className="hub__cross-photo" aria-label={sv.name}>
+              <img className="hub__cross-bg" src={sv.photo} alt="" loading="lazy" />
+              <img
+                className="hub__cross-lockup"
+                src={sv.logo}
+                alt=""
+                style={{ '--logo-scale': sv.logoScale }}
+              />
+            </Link>
+          );
+        })}
+        <Link to="/#end" className="hub__cross-photo hub__cross-photo--flat">
+          The Universe
         </Link>
       </section>
 
