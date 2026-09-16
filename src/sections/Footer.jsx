@@ -16,7 +16,7 @@ export default function Footer() {
               <p className="eyebrow">Created by</p>
               <p className="foot__creator-name">{CREATOR.name}</p>
             </div>
-            <span className="foot__meta">Existence · Time Creationist · Time Creation Project</span>
+            <span className="foot__meta">© 2026</span>
           </Reveal>
         </div>
       </div>
