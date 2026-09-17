@@ -1262,3 +1262,255 @@ body.film-end .nav--film {
   .hub__cross { grid-template-columns: 1fr; }
   .hub__posters { grid-template-columns: repeat(2, 1fr); }
 }
+
+
+/* ==========================================================================
+   ACCORDION TYPE SYSTEM — two inks, five tiers, one reading column
+   Merged final spec (editorial sizes/leading/measure · systems token rigor).
+
+   The brand speaks in Season Mix at full ink (--fg); everything read at
+   length runs in Roobert at text ink (--hub-subcopy). No third gray.
+
+   T1 Title    serif  clamp(1.35rem, 2.6vw, 2rem)             lh 1.15  --fg
+   T2 Lead     serif  clamp(1.3rem, 1.1rem + 0.55vw, 1.5rem)  lh 1.4   --fg
+   T3 Body     sans   1.05rem (serif quotes 1.15rem)          lh 1.7/1.6  --hub-subcopy
+   T4 Subhead  serif  1.25rem                                 lh 1.3   --fg
+   T5 Meta     sans   0.85rem (micro-caps 0.7rem/0.2em/500)   lh 1.5   --hub-subcopy
+
+   Measure: one 62ch reading column inside the 76ch content well
+   (serif leads use 44ch of their own em — optically the same column).
+   Rhythm: 8 / 16 / 24 / 32 / 48.
+   Accent (--hub-accent / --node-accent) is UI only: hover, borders,
+   links, the ◆ glyph. Never words, never list numbers.
+
+   Order-safe: append verbatim to the end of pages.css, or replace the
+   superseded blocks at 153–161, 184–188 (background line), 196–212, 724,
+   732–763, 766–801, 820–834, 842, 860–871, 873–887, 1139.
+   ========================================================================== */
+
+/* ---------- token layer ---------- */
+/* Dark hubs now OWN the subcopy token (it was only a raw #b3b3b3 var()
+   fallback). The :not() guard means this can never out-cascade the existing
+   .hub--light { --hub-subcopy: #4c5a59 } override at pages.css:1122,
+   wherever this block sits. */
+.hub:not(.hub--light) { --hub-subcopy: #b3b3b3; }
+/* Light theme owns its accent as a token default; the inline per-hub
+   --hub-accent (BrandHub.jsx) still wins. Kills the #008083 literal. */
+.hub--light { --hub-accent: #008083; }
+
+/* ---------- T1 · accordion row title ---------- */
+.acc__title {
+  flex: 1;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  transition: color 0.2s ease;
+}
+.acc__head:hover .acc__title { color: var(--hub-accent); }
+/* was hard-coded #008083 at 1139 — the token resolves to teal on TCP */
+.hub--light .acc__head:hover .acc__title { color: var(--hub-accent); }
+
+/* ---------- content well ---------- */
+.acc__content {
+  padding: 4px 0 clamp(32px, 5vh, 52px);
+  max-width: 76ch; /* layout well; text blocks set the 62ch reading column */
+}
+
+/* ---------- T3 ink · single source of text-ink color ---------- */
+.acc__content .body,
+.acc__content .hub__glossary dd,
+.acc__content .hub__voice-examples blockquote,
+.acc__content li {
+  color: var(--hub-subcopy);
+  font-weight: 400; /* body element asks for an unloaded 300 — pin the real face */
+}
+
+/* ---------- T2 · serif leads & belief statements ---------- */
+.acc__lead {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 1.1rem + 0.55vw, 1.5rem);
+  line-height: 1.4;
+  color: var(--fg);
+  max-width: 44ch; /* own-em measure ≈ the 62ch body column */
+  margin: 0 0 24px;
+}
+.hub__oneliner {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 1.1rem + 0.55vw, 1.5rem); /* subordinate to T1 now */
+  line-height: 1.4;
+  color: var(--fg);
+  max-width: 44ch;
+  margin: 24px 0 16px;
+}
+.hub__beliefs {
+  margin: 16px 0 0;
+  padding-left: 26px;
+  max-width: 62ch;
+}
+.hub__beliefs li {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 1.1rem + 0.55vw, 1.5rem);
+  line-height: 1.4;
+  margin-bottom: 24px;
+}
+/* beliefs are primary voice — (0,2,1) outranks .acc__content li at any order */
+.acc__content .hub__beliefs li { color: var(--fg); }
+.hub__beliefs li::marker {
+  color: var(--fg); /* numbers ruled white */
+  font-family: var(--sans);
+  font-size: 0.8em;
+}
+.hub__belief-support {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1.05rem; /* T3 — hierarchy carried by the serif lead above it */
+  line-height: 1.6;
+  color: var(--hub-subcopy); /* explicit: parent li is now --fg */
+}
+.hub__belief-mark {
+  color: var(--hub-accent); /* a glyph, not a word — accent stays */
+  font-size: 0.55em;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* ---------- T3 · body (the reading tier) ---------- */
+.acc__content .body {
+  font-size: 1.05rem; /* ONE body size replaces 1.08/1.05/1.02/0.88-0.98 */
+  line-height: 1.7;
+  max-width: 62ch;
+  margin-bottom: 16px;
+}
+.hub__statement {
+  font-size: 1.05rem; /* stated on the class too — no reliance on .body co-class */
+  line-height: 1.7;
+  max-width: 62ch;
+}
+.hub__identity-cell .body { margin-top: 16px; }
+.hub__colornote { margin-top: 24px; max-width: 62ch; }
+.hub__voice {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  max-width: 62ch;
+}
+.hub__voice li {
+  font-size: 1.05rem;
+  line-height: 1.6; /* list leading — was default */
+  margin-bottom: 16px;
+  color: var(--hub-subcopy); /* same value as the broad rule: no order coin-flip */
+}
+.hub__voice-examples blockquote {
+  margin: 24px 0 0;
+  padding: 14px 20px;
+  border-left: 2px solid var(--hub-accent); /* accent lives in the rule, not the words */
+  font-family: var(--serif);
+  font-size: 1.15rem; /* Season Mix optical match to 1.05rem Roobert */
+  line-height: 1.6;
+  color: var(--hub-subcopy); /* cited voice — supersedes the dead var(--muted) at 826 */
+  max-width: 62ch;
+}
+.hub__glossary { max-width: 62ch; }
+.hub__glossary dd {
+  margin: 8px 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--hub-subcopy); /* supersedes the dead var(--muted) at 871 */
+}
+
+/* ---------- T4 · subheads & terms ---------- */
+.hub__h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--fg);
+  margin: 48px 0 8px;
+}
+.hub__glossary dt {
+  font-family: var(--serif);
+  font-size: 1.25rem; /* now matches the standalone glossary page */
+  line-height: 1.3;
+  color: var(--fg);
+  margin-top: 24px;
+  scroll-margin-top: 96px;
+}
+.hub__locator-node .n {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  /* color inherits the node's state: text ink at rest, --fg on hover/is-here */
+}
+
+/* ---------- T5 · meta ---------- */
+.hub__syslink {
+  margin-top: 32px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--hub-subcopy); /* was --muted — no dimmer third gray on dark */
+  max-width: 62ch;
+}
+.hub__syslink a { color: var(--hub-accent, var(--accent)); } /* links are UI */
+.hub__asset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 200px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--hub-subcopy);
+  font-size: 0.85rem; /* joins T5 — the 0.95 syslink / 0.85 asset split dies */
+  line-height: 1.5;
+}
+.hub__asset:hover { color: var(--fg); border-color: var(--hub-accent); }
+.hub__locator-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--hub-subcopy); /* rest state = text ink (was --muted) */
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.hub__locator-node:hover { color: var(--fg); }
+.hub__locator-node.is-here {
+  color: var(--fg);
+  border-color: var(--node-accent);
+  box-shadow: inset 0 3px 0 var(--node-accent); /* the accent that says "here" */
+}
+/* ONE micro-caps spec — .r and .here no longer disagree (was 0.7/0.2em
+   next to 0.66/0.14em). Weight 500 = the loaded Roobert medium face. */
+.hub__locator-node .r,
+.hub__locator-node .here {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.hub__locator-node .here {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  color: var(--fg); /* accent-colored words are banned — the card's
+                       border and inset rule already carry --node-accent */
+}
+
+/* ---------- non-type audit fix: tokenized open-toggle fill ---------- */
+/* was rgba(255,255,255,0.04) — invisible on #fafaf8. The Time Creationism
+   orange toggle variant (pages.css:1109) still overrides this. */
+.acc.is-open .acc__toggle {
+  transform: rotate(45deg); /* + → × */
+  border-color: var(--hub-accent);
+  background: var(--line-soft);
+}
