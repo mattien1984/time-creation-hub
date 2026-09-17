@@ -134,16 +134,36 @@ export default function BrandHub({ slug }) {
     {
       id: 'who',
       title: hub.who.label,
-      body: <p className="body hub__statement">{hub.who.body}</p>,
+      body: (
+        <>
+          {(hub.who.paragraphs || [hub.who.body]).map((p, i) => (
+            <p key={i} className="body hub__statement">{p}</p>
+          ))}
+          {hub.who.sub && (
+            <>
+              <h3 className="hub__h3">{hub.who.sub.title}</h3>
+              {hub.who.sub.paragraphs.map((p, i) => (
+                <p key={i} className="body hub__statement">{p}</p>
+              ))}
+            </>
+          )}
+        </>
+      ),
     },
     {
       id: 'sounds',
       title: 'How It Sounds',
       body: (
         <>
-          <ul className="hub__voice">
-            {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
-          </ul>
+          {hub.voice.persona &&
+            hub.voice.persona.map((p, i) => (
+              <p key={i} className="body hub__statement">{p}</p>
+            ))}
+          {hub.voice.principles && (
+            <ul className="hub__voice">
+              {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
+            </ul>
+          )}
           {hub.voice.examples.length > 0 && (
             <div className="hub__voice-examples">
               {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}

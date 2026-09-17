@@ -206,33 +206,54 @@ export const HUBS = {
     // Daylight follows the TC hero model: the TCP site's own hero photo
     // washed under the white veil; no bottom band.
     theme: { mode: 'light', wash: '/assets/photography/tcp-hero.jpg', band: false },
-    // Rob's sacred foundation copy — VERBATIM, em dashes and all. Never edit.
+    // Received copy (Sep 17, 2026) — verbatim. Lead = the Short's opening
+    // sentence; body = the Medium. The full Short is HELD unplaced (like
+    // TC's Long) pending a ruling on where compressed variants live.
     whatItIs: {
-      headline: 'The Time Creation Project exists to establish Time Creation as a foundational life skill.',
+      headline:
+        'The Time Creation Project is a nonprofit built on a simple truth: you are always creating time, and the time you create is always creating you.',
+      showPositioning: false,
       paragraphs: [
-        'The Time Creation Project serves as a catalyst for this transformation by developing frameworks, tools, education, research, and partnerships that make Time Creation accessible to all. Through collaboration with organizations already creating positive change, we aim to strengthen human development efforts and help individuals create greater alignment between who they want to become and how they spend their lives. Every person creates their life through the way they create their time.',
+        'We are always creating time, but most of us are never taught to recognize ourselves as the creator of it. We move through our lives without fully understanding that what we do, think, and feel in each present moment is continuously shaping who we become.',
+        'The Time Creation Project exists to change that. We teach Time Creation as a practical life skill: intentionally create the present, fully experience the time you create, learn from what that experience reveals, and use what you learn to shape who you become next. Through this continuous practice, people become more intentional about how they live and more capable of realizing their potential.',
+        'We bring Time Creation to people at critical turning points in their lives through workshops, curriculum, and partnerships with the trusted institutions already serving them.',
+        'Our mission is to make Time Creation a foundational life skill so every person can create their time with intention and continuously realize their limitless potential.',
       ],
     },
+    // Received copy (Sep 17, 2026) — five beliefs, verbatim.
     beliefs: {
-      copy: [
-        'We believe that nearly every challenge people face—and nearly every opportunity they pursue—is ultimately expressed through time. Health requires time. Learning requires time. Relationships require time. Personal growth requires time. Purpose requires time.',
-        'By teaching people how to create time intentionally, we help them create a better future intentionally. When people learn how to intentionally create their time, they gain a powerful ability to align their actions with their aspirations and transform possibility into progress.',
-        'Our mission is to advance the understanding, practice, and adoption of Time Creation. We integrate Time Creation into the existing work of charities, nonprofits, educational institutions, human development organizations, and community programs around the world. By embedding Time Creation into programs that improve health, education, workforce readiness, family stability, personal development, and community well-being, we believe we can amplify impact at scale and help millions of people build lives with greater intention, clarity, and fulfillment.',
+      list: [
+        { text: 'Time Creation is a skill, and like any skill, it can be learned.' },
+        { text: 'Living with intention changes how people experience their time and, through it, their lives.' },
+        { text: 'Only the individual can decide what matters and what a meaningful life looks like.' },
+        { text: 'Constraints are real, but so is the agency people hold within them.' },
+        { text: 'Time Creation belongs to everyone, not just those with the circumstances to make it easy.' },
       ],
     },
+    // Received copy (Sep 17, 2026) — Consumer + How We Reach Them, verbatim.
     who: {
       label: 'Who We Serve',
-      body: 'Primary: leaders of mission-driven organizations — charities, nonprofits, educational institutions, human development organizations, and community programs — working in health, education, workforce readiness, family stability, personal development, and community well-being, courted with "Partner with us." Secondary: funders and donors ("Support the work — fund frameworks, research, and education that reach more people"). Tertiary: individuals, deliberately handed off through the ecosystem dock. End beneficiary: millions of people building lives with greater intention, clarity, and fulfillment.',
+      paragraphs: [
+        'The Time Creation Project is for people at critical turning points in their lives, moments when greater intention with time can meaningfully shape what comes next. They may be preparing for adulthood, building something new, rebuilding after disruption, carrying significant responsibilities, or moving through a period of growth, transition, or opportunity. What connects them is not a demographic profile, but the potential for greater agency. They have not necessarily been given a framework for understanding where their time goes, deciding what deserves it, and intentionally creating the life they want their time to produce. The Project gives them practical language, tools, and practices for doing that.',
+      ],
+      sub: {
+        title: 'How We Reach Them',
+        paragraphs: [
+          'We work through the trusted institutions already in their lives. Nonprofits, schools, workforce-development programs, entrepreneurship organizations, reentry programs, and community-based organizations already understand the people they serve and the realities they are navigating. The Time Creation Project equips those institutions with learning experiences, curriculum, workbooks, facilitator resources, and training that allow Time Creation to become part of the work they are already doing.',
+        ],
+      },
     },
     universeRole:
       'The foundation beneath it all — the principles, language, and research that turn Time Creationist from a conviction into a system anyone can build on. In the Layers of Time it is the bottom plane, the Foundation of Time: proof and legitimacy for everything above it. It faces organizations and funders directly, and hands individuals off to Existence (practice) and Time Creationist (belief).',
+    // Received persona copy (Sep 17, 2026) — verbatim; replaces the mined
+    // style principles. (The note comparing it to the Existence persona was
+    // author commentary, not site copy — excluded.)
     voice: {
-      principles: [
-        'Declarative, institutional-yet-human mission language — conviction stated as fact, never hype. Periods, never exclamation points; "time" is often the final word of the argument.',
-        'Anaphora and mirrored constructions carry the argument: "Health requires time. Learning requires time. Relationships require time..." and "create time intentionally... create a better future intentionally."',
-        'Latinate verbs of scale — establish, advance, integrate, embed, amplify, catalyze — paired with aspiration-vs-action framing: "alignment between who they want to become and how they spend their lives."',
-        'Humility toward partners: TCP is a catalyst, not a competitor. "We don’t replace the work that’s changing lives. We amplify it."',
-        'Two registers, one voice: Rob’s sacred foundation copy for the story (verbatim only — even punctuation preserved); a plainspoken register for supporting surfaces ("We all live in time. Almost no one is taught to create it.").',
+      persona: [
+        'The Time Creation Project speaks with the wisdom of an intelligence that understands time at a level most people have never been taught to see, but here that intelligence chooses to come closer. It is warmer, more patient, and more human in its delivery. It does not overwhelm people with what it knows or tell them what their life should look like. It helps them see what is already there, understand what their time is revealing, and make more intentional choices for themselves.',
+        'It has a quiet confidence in human potential. It understands that people are living inside real constraints, responsibilities, and circumstances, so it does not demand perfection or control. It offers structure, perspective, and gentle direction. It nudges rather than commands. It teaches rather than declares. It makes the ideas of Time Creation feel possible, practical, and personal.',
+        'Its role is not to provide the answer.',
+        'Its role is to help people develop the awareness and agency to create their own.',
       ],
       examples: [
         'We believe that nearly every challenge people face—and nearly every opportunity they pursue—is ultimately expressed through time.',
