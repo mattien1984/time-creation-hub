@@ -1707,16 +1707,16 @@ body.film-end .nav--film {
   content: '';
   position: absolute;
   left: 50%;
-  top: -140px;
-  width: min(1080px, 100vw); /* viewport-safe: never causes x-scroll unclipped */
-  height: 640px;
+  top: 40px; /* settled down behind the portrait, not above the border */
+  width: min(1400px, 100vw); /* viewport-safe: never causes x-scroll unclipped */
+  height: 780px;
   transform: translateX(-50%);
   background:
-    radial-gradient(42% 55% at 40% 30%, rgba(36, 158, 161, 0.16), transparent 65%),
-    radial-gradient(46% 60% at 62% 36%, rgba(253, 89, 0, 0.12), transparent 68%),
-    radial-gradient(52% 66% at 50% 28%, rgba(250, 171, 53, 0.11), transparent 70%),
-    radial-gradient(62% 72% at 50% 32%, rgba(255, 255, 255, 0.05), transparent 74%);
-  filter: blur(30px);
+    radial-gradient(56% 62% at 36% 38%, rgba(36, 158, 161, 0.16), transparent 72%),
+    radial-gradient(60% 66% at 66% 44%, rgba(253, 89, 0, 0.12), transparent 74%),
+    radial-gradient(66% 72% at 50% 36%, rgba(250, 171, 53, 0.11), transparent 76%),
+    radial-gradient(76% 80% at 50% 40%, rgba(255, 255, 255, 0.05), transparent 80%);
+  filter: blur(42px);
   pointer-events: none;
 }
 .robbio__inner {
