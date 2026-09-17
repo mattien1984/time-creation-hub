@@ -12,7 +12,6 @@ import { LogoMark } from '../components/Logo';
 import GridField from '../components/GridField';
 import Footer from '../sections/Footer';
 import { HUBS, HUB_ORDER } from '../data/hubs';
-import { glossaryForBrand, slugifyTerm } from '../data/glossary';
 import { DOWNLOADS, POSTERS } from '../data/brand';
 import { asset } from '../lib/asset';
 
@@ -62,7 +61,6 @@ function HubLayers({ activeId }) {
 export default function BrandHub({ slug }) {
   const hub = HUBS[slug];
   const v = hub.identity;
-  const terms = glossaryForBrand(slug);
   const siblings = HUB_ORDER.filter((s) => s !== slug);
   const assets = {
     logo: DOWNLOADS.logos.find((d) => d.name.startsWith(v.name)),
@@ -190,22 +188,6 @@ export default function BrandHub({ slug }) {
             <div className="hub__voice-examples">
               {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}
             </div>
-          )}
-          {terms.length > 0 && (
-            <>
-              <h3 className="hub__h3">The vocabulary</h3>
-              <dl className="hub__glossary">
-                {terms.map((t) => (
-                  <div key={t.term}>
-                    <dt id={slugifyTerm(t.term)}>{t.term}</dt>
-                    <dd>{t.definition}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="hub__syslink">
-                All terms across the universe live in <Link to="/glossary">the glossary</Link>.
-              </p>
-            </>
           )}
         </>
       ),
