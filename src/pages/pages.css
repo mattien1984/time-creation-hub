@@ -781,7 +781,7 @@ body.film-end .nav--film {
   margin-bottom: 18px;
 }
 .hub__beliefs li::marker {
-  color: var(--hub-accent);
+  color: var(--fg);
   font-family: var(--sans);
   font-size: 0.8em;
 }
