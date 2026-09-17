@@ -60,7 +60,7 @@ export const VERTICALS = [
     accent: '#249EA1',
     shape: 'moon',
     photo: asset('/assets/photography/time-creationism-moon.jpg'),
-    logo: asset('/assets/logos/time-creationist.svg'),
+    logo: asset('/assets/logos/time-creationism.svg'),
     grid: asset('/assets/grids/fabric.svg'),
     gridKind: 'fabric',
     statement:

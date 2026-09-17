@@ -134,8 +134,8 @@ const RINGS = [
 // TCP's width normalizes to /155 too despite its taller 219u box).
 const LOCKUPS = {
   existence: { W: 832, H: 155, cx: 78.5, cy: 77, wu: 832 / 155 },
-  // the Time Creationism lockup (1135×155) — same mark path as the others
-  'time-creationism': { W: 1135, H: 155, cx: 78.5, cy: 77, wu: 1135 / 155 },
+  // the Time Creationism lockup (1201×155) — same mark path as the others
+  'time-creationism': { W: 1201, H: 155, cx: 78.5, cy: 77, wu: 1201 / 155 },
   'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, wu: 891 / 155 },
 };
 const LOCKUP_ROW = ['existence', 'time-creationism', 'time-creation-project'];
