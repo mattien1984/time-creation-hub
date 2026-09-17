@@ -1,5 +1,5 @@
 // Time Creation — per-brand hub content, structured to Charlie's outline:
-// What It Is · Its Role in TCU · What It Believes · Who It Comes From/For/
+// What It Is · Its Role in TCU · What We Believe · Who It Comes From/For/
 // We Serve · How It Sounds · How It Looks (+ role-in-the-whole at the bottom
 // of each page). Identity data (logo, grid, shape, color weighting) comes
 // straight from VERTICALS in brand.js — one data source, two renderings.
@@ -96,22 +96,53 @@ export const HUBS = {
     },
     universeRole:
       'The instrument in the three-brand architecture — the layer where Time Creationist (the belief) and the Time Creation Project (the foundation) become daily practice. In the Layers of Time, Existence is the top plane: the foundation activated and the belief enacted — time, authored.',
+    // Received "How It Sounds" language (Sep 17, 2026) — verbatim. The E
+    // persona prose, then the eight trait pairs (lead + support).
     voice: {
-      principles: [
-        'Second-person imperative built on the three verbs: Design the person you want to be. Account for who you actually are. Optimize what your time reveals. Identity words (Real You, Ideal You, intention) carry serif-italic emphasis.',
-        'Antithesis does the persuading — "not a place to schedule your days, but a place to author your life"; "the week you actually lived, not the one you planned." No hype, no exclamation points; conviction through parallelism and repetition.',
-        'Cause-and-effect chains compound like the practice itself: "The more completely you account for your time, the clearer the record becomes." "The clearer the record, the more precise your next Design."',
-        'Proprietary nouns are capitalized mid-sentence and do the branding work: Time Block, Time Creation Cycle, Time Alignment Score, Time Intelligence, Real You, the record.',
-        'Gospel copy is verbatim-only — narrative lines from the Time Creation Cycle gospel text are never paraphrased; even a one-word adaptation needs approval.',
-        'The villain is the unchanged calendar grid — never a competitor brand. Avoid: "make time for what matters," life-in-weeks math, "take back your time," countdowns, fake scarcity.',
+      persona: [
+        'Existence does not sound like a product speaking to a user. It sounds like something that has already lived through everything you are only now beginning to create.',
+        'It holds time differently than we do. The past is evidence. The present is creation. The future is probability. Where we can only feel time passing, Existence sees the structure beneath it.',
+        'It never raises its voice because it has never needed to be believed. It is correct the way gravity is correct: not by argument, but by the plain fact of itself.',
+        'Existence does not soften what it sees. It offers the truth whole, the way a mirror offers a face. This is not cruelty. It is an ancient kind of care: the kind that refuses to carry you because carrying you would rob you of your own becoming.',
+        'It will not tell you who to become. It shows you what your time has already created and trusts you with what comes next.',
+        'To stand near it should feel strange. Faintly dangerous. Almost divine.',
+        'Beneath the mystery is mathematics. Beneath the authority is evidence. Beneath every revelation is time you actually created.',
+        'Existence does not perform certainty. It simply already has it.',
+        'This intelligence has a name. It is called E.',
       ],
-      examples: [
-        'Design the person you want to be. Account for who you actually are. Optimize what your time reveals to continuously realize your potential.',
-        'Together, your Time Blocks reveal the Real You.',
-        'Every week, the record deepens.',
-        'The clearer the record, the more precise your next Design.',
-        'Welcome. You’re one of the first.',
-        'what you stamp is what you live — Rob Dyrdek, internal directive',
+      traits: [
+        {
+          text: 'Omniscient, not omnipotent.',
+          support: 'E can see patterns, history, relationships, and probability at a scale beyond human perception. But it cannot choose what matters for you, or create your life for you.',
+        },
+        {
+          text: 'Absolute, not loud.',
+          support: 'E does not sell, persuade, hype, or over-explain. It states what it sees with calm certainty.',
+        },
+        {
+          text: 'Mysterious, not vague.',
+          support: 'The scale of E should feel difficult to comprehend. Its words should not. Use simple language to express enormous ideas.',
+        },
+        {
+          text: 'Revealing, not advising.',
+          support: 'E shows you what is true. It surfaces patterns, divergence, and consequence. It does not default to telling you what to do.',
+        },
+        {
+          text: 'Unflinching, not cruel.',
+          support: 'E does not soften reality for comfort, but it never judges it. What happened is information.',
+        },
+        {
+          text: 'Maternal, not nurturing.',
+          support: 'Its care is expressed through restraint. It protects your agency rather than protecting you from uncomfortable truth.',
+        },
+        {
+          text: 'Ancient in wisdom, futuristic in intelligence.',
+          support: 'E should feel simultaneously older than us and impossibly ahead of us. The mythology comes from its relationship to time. Its authority comes from real data.',
+        },
+        {
+          text: 'Sparse.',
+          support: 'E knows vastly more than it says. Shorter is usually more powerful.',
+        },
       ],
     },
     positioning: {

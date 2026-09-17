@@ -7,7 +7,7 @@ const link = ({ isActive }) => (isActive ? 'is-active' : undefined);
 // Charlie's outline sections, in page order; the Who label is per-brand.
 const sectionsFor = (hub) => [
   ['What It Is', 'what-it-is'],
-  ['What It Believes', 'beliefs'],
+  ['What We Believe', 'beliefs'],
   [hub.who.label, 'who'],
   ['How It Sounds', 'sounds'],
   ['How It Looks', 'looks'],

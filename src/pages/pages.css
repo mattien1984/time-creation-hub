@@ -1514,3 +1514,29 @@ body.film-end .nav--film {
   border-color: var(--hub-accent);
   background: var(--line-soft);
 }
+
+/* ---------- belief / trait pairs (ruled Sep 17) ----------
+   Unnumbered: bold lead + regular sub, both at the T3 body size — the
+   lead's weight and full ink carry the hierarchy, not scale or numerals.
+   Used by Existence's What We Believe and the E voice traits. */
+.hub__pairs {
+  margin: 16px 0 0;
+  max-width: 62ch;
+}
+.hub__pair { margin-bottom: 24px; }
+.hub__pair-lead {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 500; /* the loaded Roobert medium face reads as the bold */
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.hub__pair-sub {
+  margin: 4px 0 0;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--hub-subcopy);
+}

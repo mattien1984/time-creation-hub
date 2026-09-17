@@ -1,7 +1,7 @@
 // The brand hub template — Charlie's outline as a clean accordion:
 // every section collapses to a ruled row (number · title · circled +) and
 // expands on click; nav-dropdown deep links auto-expand their section.
-// What It Is · What It Believes (TC carries the 5–10 core-belief list) ·
+// What It Is · What We Believe (TC carries the 5–10 core-belief list) ·
 // Who It Comes From / It's For / We Serve · How It Sounds · How It Looks ·
 // Its Role in the Universe (the Layers of Time, this brand's plane lit).
 
@@ -109,18 +109,30 @@ export default function BrandHub({ slug }) {
     },
     {
       id: 'beliefs',
-      title: 'What It Believes',
+      title: 'What We Believe',
       body: hub.beliefs.list ? (
         <>
-          <ol className="hub__beliefs">
-            {hub.beliefs.list.map((b) => (
-              <li key={b.text}>
-                {b.text}
-                {b.sacred && <span className="hub__belief-mark" title="Rob Dyrdek — verbatim">◆</span>}
-                {b.support && <span className="hub__belief-support">{b.support}</span>}
-              </li>
-            ))}
-          </ol>
+          {/* pairs (lead + support) render unnumbered: bold lead, regular
+              sub (ruled Sep 17); plain lists keep the numbered serif look */}
+          {hub.beliefs.list.some((b) => b.support) ? (
+            <div className="hub__pairs">
+              {hub.beliefs.list.map((b) => (
+                <div key={b.text} className="hub__pair">
+                  <p className="hub__pair-lead">{b.text}</p>
+                  {b.support && <p className="hub__pair-sub">{b.support}</p>}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ol className="hub__beliefs">
+              {hub.beliefs.list.map((b) => (
+                <li key={b.text}>
+                  {b.text}
+                  {b.sacred && <span className="hub__belief-mark" title="Rob Dyrdek — verbatim">◆</span>}
+                </li>
+              ))}
+            </ol>
+          )}
           {hub.beliefs.list.some((b) => b.sacred) && (
             <p className="hub__syslink">◆ = Rob Dyrdek’s own words, verbatim. Draft curation — pending his sign-off.</p>
           )}
@@ -159,12 +171,22 @@ export default function BrandHub({ slug }) {
             hub.voice.persona.map((p, i) => (
               <p key={i} className="body hub__statement">{p}</p>
             ))}
+          {hub.voice.traits && (
+            <div className="hub__pairs">
+              {hub.voice.traits.map((t) => (
+                <div key={t.text} className="hub__pair">
+                  <p className="hub__pair-lead">{t.text}</p>
+                  <p className="hub__pair-sub">{t.support}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {hub.voice.principles && (
             <ul className="hub__voice">
               {hub.voice.principles.map((p) => <li key={p}>{p}</li>)}
             </ul>
           )}
-          {hub.voice.examples.length > 0 && (
+          {hub.voice.examples && hub.voice.examples.length > 0 && (
             <div className="hub__voice-examples">
               {hub.voice.examples.map((e) => <blockquote key={e}>{e}</blockquote>)}
             </div>
