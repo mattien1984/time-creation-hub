@@ -20,7 +20,7 @@ export const HUBS = {
     route: '/existence',
     roleLabel: 'The Instrument',
     tagline:
-      'Existence is a Time Intelligence Platform that transforms your created time into the data of the Real You, making who you are actually creating visible and measurable so you can design your time with greater intention and continuously realize your limitless potential.',
+      'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
     identity: vertical('existence'),
     // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
     // per-brand accents read wrong as highlights (Existence's orange = red).
@@ -29,22 +29,70 @@ export const HUBS = {
     // hero photo affixed top at low opacity, fading out at the bottom.
     // heroArt (right of the logo — the software on a monitor) asset TBD.
     theme: { mode: 'dark', heroPhoto: true, band: false },
+    // Received copy (Sep 17, 2026) — verbatim. Do not paraphrase.
     whatItIs: {
       headline: 'The instrument of time creation',
+      showPositioning: false,
       paragraphs: [
-        "Existence is a Time Intelligence Platform that transforms your created time into the data of the Real You, making who you are actually creating visible and measurable so you can design your time with greater intention and continuously realize your limitless potential. It is not a place to schedule your days, but a place to author your life — it turns your intentions into something you can see and shape, then shows you whether the time you're actually living adds up to the life you mean to create.",
+        'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
+        'You are always creating time, and the time you create is continuously creating you. But most time goes unaccounted for.',
+        'A calendar can show what you planned. It cannot show the complete reality of how that time was actually created, how it was experienced, or what those patterns are creating in you. Without that visibility, the Real You, the person your time is actually creating, remains hidden. You cannot clearly see the distance between that reality and the Ideal You, the person you intended to create.',
+        'This is Time Disconnect.',
+        'Existence makes that disconnect visible.',
+        'It begins with Time Blocks, the foundational unit of Existence. A Time Block captures the time you intended to create, the time you actually created, and how that time was experienced. Objective data captures what you did, when, where, and with whom. Experience data captures how it felt and what it meant. Across days and weeks, Time Blocks transform created time into structured data that can be measured, compared, and understood.',
+        'Each week, you move through the Time Creation Cycle: Design, Account, Optimize.',
+        'You Design the time you intend to create, setting your intentions for the week ahead and defining how you want to distribute your time across Work, Life, Health, and Sleep. Then you build the week through Time Blocks. This is the Ideal You projected forward in time.',
+        'As the week unfolds, you Account for the time you actually created. You update your Time Blocks to reflect what actually happened and add how that time was experienced. This makes the Real You visible, the person your time actually created.',
+        'Then you Optimize what comes next based on what your time reveals.',
+        'Working beneath the cycle is Time Intelligence, the AI-powered system inside Existence. Time Blocks structure your created time as data. Time Intelligence processes that data into insights, patterns, and understanding, revealing relationships across your activities, people, places, energy, experience, and the connection between intention and reality.',
+        'The Time Alignment Score measures how closely the time you intended to create matches the time you actually created. Data Explorer shows how your time, energy, and alignment are taking shape. Insights analyzes the deeper patterns across your time. Existence AI allows you to engage directly with the intelligence built from your own time.',
+        'Together, these systems do something a calendar, tracker, or productivity tool cannot: who your time is creating.',
+        'The gap between the Ideal You and the Real You is no longer invisible. It becomes something you can see, understand, and intentionally shape. Small adjustments compound across weeks, months, and years, bringing the Real You and the Ideal You into greater alignment.',
+        'You begin using your time the way you actually want to. You show up to what matters the way you intended to. You are more present for the time you chose.',
+        'This is what it means to realize your potential: not a destination you arrive at, but a way of being you continuously create.',
       ],
     },
+    // Received copy (Sep 17, 2026) — eight beliefs, lead + support, verbatim.
     beliefs: {
-      copy: [
-        'At its heart is the Time Creation Cycle — a weekly practice built around your Time Blocks. Design the person you want to be. Account for who you actually are. Optimize what your time reveals to continuously realize your potential.',
-        'You design the week you intend to create: set your intention across Work, Life, Health, and Sleep, then build your week in Time Blocks, shaping each part of it before you live it. As the week unfolds, update each Time Block to reflect what actually happened. Together, your Time Blocks reveal the Real You.',
-        'Your Time Alignment Score shows how closely the time you lived matched the time you intended to create. Small adjustments, repeated weekly, create massive change. Every week, the record deepens. Over time, the Real You and Ideal You move into greater alignment.',
+      list: [
+        {
+          text: 'Everything you are exists in time.',
+          support: 'The clearest picture of who you are and who you are creating can be found in how you create your time.',
+        },
+        {
+          text: 'Most time goes unaccounted for.',
+          support: 'Without a complete record of how time was actually lived, the patterns shaping who you are creating remain invisible.',
+        },
+        {
+          text: 'What you cannot see, you cannot intentionally shape.',
+          support: 'When the patterns in your time become visible, it becomes possible to intentionally influence who you are creating.',
+        },
+        {
+          text: 'A life is built one week at a time.',
+          support: 'Each day is different. Each week is similar. The Ideal You is a projection of your current goals, obligations, priorities, and aspirations into the week ahead.',
+        },
+        {
+          text: 'Total time accountability.',
+          support: 'Without accounting for all of your time, parts of your life remain hidden. The more completely you account, the more completely you can understand, align, and intentionally create yourself.',
+        },
+        {
+          text: 'The Real You is revealed through lived experience.',
+          support: 'The Real You is not who you believe yourself to be. It is the person your time actually creates.',
+        },
+        {
+          text: 'The difference between intention and lived experience is information.',
+          support: 'Any divergence between the Ideal You and the Real You is an opportunity to learn, adjust, and create more intentionally.',
+        },
+        {
+          text: 'Intentional self-creation is a practice.',
+          support: 'There is no final version of yourself to arrive at. The practice continues. Week after week. Year after year.',
+        },
       ],
     },
+    // Received copy (Sep 17, 2026) — verbatim.
     who: {
       label: "Who It's For",
-      body: 'High-agency achievers, 30s–40s, who already plan and want their lived week to match their intended self. The demo persona "Alex" carries real career weight, protected family life, and a physical practice — the premium quantified-self buyer measured on alignment and meaning-per-block rather than biometrics. The aspirational unit is the person you set out to be. The launch cohort is Founding Members: invited early believers, many following Rob Dyrdek personally, welcomed intimately ("Welcome. You’re one of the first.") with honest scarcity.',
+      body: "Existence is built for the Actualized High Achiever: ambitious, high-earning, and already living what most people would call a successful life. They track their health, plan their weeks on purpose, invest in coaching, therapy, and the next book that might make them sharper, and they already believe in systems. They're not lost, and they're not starting from zero. What's changed is that success got more complicated the more of it they created: work expanded, family asked for more, health needed more intention, and energy turned into the one thing they never have enough of. They don't need to be convinced that growth matters. They need to know if the time they're creating is actually building the life they say they want, or just the appearance of one.",
     },
     universeRole:
       'The instrument in the three-brand architecture — the layer where Time Creationist (the belief) and the Time Creation Project (the foundation) become daily practice. In the Layers of Time, Existence is the top plane: the foundation activated and the belief enacted — time, authored.',
@@ -86,11 +134,18 @@ export const HUBS = {
     // BOTTOM band image that should go), fabric hairlines, serif italic,
     // Creation Color toggles. No photography band on this page.
     theme: { mode: 'dark', wash: '/assets/photography/tc-wave.jpg', band: false },
+    // Received copy (Sep 17, 2026) — Short as the lead, Medium as the body,
+    // verbatim. The Long version is held pending placement ruling.
     whatItIs: {
-      headline: 'A life is not spent or found, but made.',
+      headline:
+        'Time Creationism is the philosophy that you create time, and in creating time, you create yourself.',
+      showPositioning: false,
       paragraphs: [
-        'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation: you are the author of your hours, and every block you place is a deliberate act of making your life.',
-        'Its canvas is the Time Fabric — the subtle matrix of small squares representing the latent structure waiting to be activated by the individual. Each square is a potential moment, a unit of time not yet lived; when intention, energy, and thought are applied, they come alive.',
+        'Time Creationism is a philosophy built on one fundamental truth: you are not a passive observer of time. You create it through what you do, think, and feel in every present moment. And because those moments compound into the person you become, the time you create is continuously creating you.',
+        'The purpose of Time Creationism is to consciously use time to bring the Ideal You into existence. The Ideal You is not a perfect final version of yourself, but the complete potential of who you can become across every part of your life.',
+        'Time Creationism turns that idea into a continuous process: intentionally create your time around who you want to become, purposefully shape your evolution by learning from the reality you create, and perpetually actualize more of your potential as that learning compounds.',
+        'It is not simply about productivity, habits, goals, or achievement. It is about the conscious creation of an entire existence.',
+        'You create time. The time you create creates you. And by consciously creating your time, you can consciously shape who you become.',
       ],
     },
     // The 5–10 core beliefs — curated from verbatim source copy for Rob's

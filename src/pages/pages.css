@@ -225,7 +225,7 @@ body.film-end .nav--film {
 .film {
   position: relative;
   height: 780vh; /* ends on the entity cards + shared row */
-  height: 780svh; /* stable on iOS while the toolbar collapses */
+  height: 920svh; /* stable on iOS while the toolbar collapses; four intro beats need the extra run */
 }
 .film__end-anchor {
   position: absolute;
@@ -784,6 +784,14 @@ body.film-end .nav--film {
   color: var(--hub-accent);
   font-family: var(--sans);
   font-size: 0.8em;
+}
+.hub__belief-support {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-size: clamp(0.88rem, 1.1vw, 0.98rem);
+  line-height: 1.6;
+  color: var(--hub-subcopy, #b3b3b3);
 }
 .hub__belief-mark {
   color: var(--hub-accent);

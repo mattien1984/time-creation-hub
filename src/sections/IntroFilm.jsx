@@ -12,7 +12,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import GridField from '../components/GridField';
-import { BEATS } from '../data/story';
+import { BEATS, INTRO_LINES } from '../data/story';
 import { HUBS } from '../data/hubs';
 import { asset } from '../lib/asset';
 
@@ -55,7 +55,7 @@ function beatState(p, [a, b]) {
 }
 
 // ---- timeline (progress 0..1 over the film's scroll run) ----
-// Two decoder beats (the creator credit lives in the footer now).
+// Four decoder beats (received intro copy, Sep 17).
 // Separation act: the mark's rings break apart horizontally to ±S, then IN
 // PLACE each single ring splits into its brand's three-ring mark (shrinking
 // to lockup scale) and the wordmark fades in beside it — the full logos,
@@ -65,8 +65,10 @@ const T = {
   glow: [0.05, 0.11],
   video: [0.08, 0.16],
   beats: [
-    [0.14, 0.32],
-    [0.34, 0.52],
+    [0.12, 0.225],
+    [0.235, 0.34],
+    [0.35, 0.435],
+    [0.445, 0.53],
   ],
   markDrop: [0.53, 0.565], // mark settles to center before the universe line opens
   separate: [0.56, 0.68],
@@ -279,12 +281,8 @@ export default function IntroFilm() {
     };
   }, [reduced]);
 
-  const lines = [
-    // Beat 1 breaks between its two sentences.
-    BEATS[0].headline.replace('time. ', 'time.\n'),
-    BEATS[1].headline,
-    BEATS[2].headline, // the universe
-  ];
+  // Four intro beats (received copy, Sep 17) + the universe bridge line.
+  const lines = [...INTRO_LINES, BEATS[2].headline];
   // Constant props — never re-render the full-viewport pattern per frame.
   const gridField = useMemo(
     () => <GridField kind="fabric" color="rgba(255,255,255,0.4)" />,
@@ -561,7 +559,7 @@ export default function IntroFilm() {
         {/* 03 — the universe headline, above the brands */}
         {universeOp > 0.001 && (
           <p className="film__line film__line--universe" style={{ opacity: universeOp }}>
-            <ScrambleText text={lines[2]} lock={universeLock + (1 - universeLock) * idleE} />
+            <ScrambleText text={lines[4]} lock={universeLock + (1 - universeLock) * idleE} />
           </p>
         )}
 

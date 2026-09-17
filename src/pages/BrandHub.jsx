@@ -98,8 +98,12 @@ export default function BrandHub({ slug }) {
           {hub.whatItIs.paragraphs.map((p, i) => (
             <p key={i} className="body hub__statement">{p}</p>
           ))}
-          <p className="hub__oneliner">{hub.positioning.oneLiner}</p>
-          <p className="body">{hub.positioning.boilerplate}</p>
+          {hub.whatItIs.showPositioning !== false && (
+            <>
+              <p className="hub__oneliner">{hub.positioning.oneLiner}</p>
+              <p className="body">{hub.positioning.boilerplate}</p>
+            </>
+          )}
         </>
       ),
     },
@@ -113,10 +117,13 @@ export default function BrandHub({ slug }) {
               <li key={b.text}>
                 {b.text}
                 {b.sacred && <span className="hub__belief-mark" title="Rob Dyrdek — verbatim">◆</span>}
+                {b.support && <span className="hub__belief-support">{b.support}</span>}
               </li>
             ))}
           </ol>
-          <p className="hub__syslink">◆ = Rob Dyrdek’s own words, verbatim. Draft curation — pending his sign-off.</p>
+          {hub.beliefs.list.some((b) => b.sacred) && (
+            <p className="hub__syslink">◆ = Rob Dyrdek’s own words, verbatim. Draft curation — pending his sign-off.</p>
+          )}
         </>
       ) : (
         hub.beliefs.copy.map((p, i) => (

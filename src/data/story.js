@@ -8,6 +8,14 @@
 // - CREATOR (footer credit): verbatim from the robdyrdek.com About overlay
 // Sacred lines (Rob's own words) must never be paraphrased.
 
+// The film's four intro beats — received copy (Sep 17, 2026), verbatim.
+export const INTRO_LINES = [
+  'You create time.',
+  'In creating time, you are creating yourself.',
+  'Yet most of us are never taught to create our time with intention.',
+  'Our mission is to make Time Creation a foundational life skill.',
+];
+
 export const BEATS = [
   {
     num: '01',
