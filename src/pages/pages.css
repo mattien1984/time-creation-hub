@@ -1699,7 +1699,7 @@ body.film-end .nav--film {
   --hub-subcopy: #b3b3b3;
   padding-block: clamp(90px, 14vh, 170px) clamp(70px, 10vh, 130px);
   border-top: 1px solid var(--line-soft);
-  overflow: hidden;
+  /* no overflow clip — the bloom breathes past the section edges */
 }
 /* the sunrise bloom rising behind the portrait — the palette the
    portrait itself carries, blurred wide */
@@ -1707,9 +1707,9 @@ body.film-end .nav--film {
   content: '';
   position: absolute;
   left: 50%;
-  top: -60px;
-  width: min(980px, 130vw);
-  height: 520px;
+  top: -140px;
+  width: min(1080px, 100vw); /* viewport-safe: never causes x-scroll unclipped */
+  height: 640px;
   transform: translateX(-50%);
   background:
     radial-gradient(42% 55% at 40% 30%, rgba(36, 158, 161, 0.16), transparent 65%),
@@ -1721,8 +1721,8 @@ body.film-end .nav--film {
 }
 .robbio__inner {
   position: relative;
-  max-width: 76ch;
 }
+.robbio__eyebrow { margin-bottom: 28px; }
 .robbio__portrait img {
   width: clamp(112px, 14vw, 148px);
   height: clamp(112px, 14vw, 148px);
@@ -1739,14 +1739,12 @@ body.film-end .nav--film {
   font-size: clamp(1.5rem, 2.8vw, 2.2rem);
   line-height: 1.3;
   color: var(--fg);
-  max-width: 30ch;
 }
 .robbio__p {
   margin: 18px 0 0;
   font-size: 1.05rem;
   line-height: 1.7;
   color: var(--hub-subcopy);
-  max-width: 62ch;
 }
 .robbio__more {
   display: grid;

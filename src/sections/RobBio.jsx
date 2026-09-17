@@ -48,6 +48,9 @@ export default function RobBio() {
     <section className="robbio" id="creator">
       <div className="wrap robbio__inner">
         <Reveal>
+          <p className="eyebrow robbio__eyebrow">The Creator</p>
+        </Reveal>
+        <Reveal delay={40}>
           <div className="robbio__portrait">
             <img src={asset('/assets/photography/rob-portrait.jpg')} alt="Rob Dyrdek" />
           </div>
