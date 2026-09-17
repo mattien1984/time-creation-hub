@@ -1545,13 +1545,22 @@ body.film-end .nav--film {
    (ruled Sep 17) — the design page's 3D scene miniaturized: this brand's
    plane lit and legend-called-out, siblings placed but dimmed; beside it
    the three brand photo cards, the other two at 75% opacity. ---------- */
+/* the universe section breaks out of the reading well: the 3D grid and
+   its legend on the left, the brand imagery filling the room on the right */
+#universe .acc__content { max-width: none; }
+#universe .hub__statement { max-width: 62ch; }
 .hub__arch {
   display: flex;
-  flex-direction: column;
-  gap: clamp(26px, 4vh, 44px);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(28px, 4vw, 72px);
   margin-top: 30px;
 }
-.hub__arch-left { max-width: 560px; }
+.hub__arch-left {
+  flex: 1 1 360px;
+  min-width: 290px;
+  max-width: 560px;
+}
 .hub__arch-stage {
   position: relative;
   height: clamp(220px, 30vw, 320px);
@@ -1591,7 +1600,7 @@ body.film-end .nav--film {
 }
 .hub__arch-legend {
   list-style: none;
-  margin: 10px 0 0;
+  margin: 64px 0 0; /* clear air below the projected planes — no overlap */
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1628,10 +1637,12 @@ body.film-end .nav--film {
    opacity, siblings at 65%, a small designation under each (no "you are
    here" language: the state is visual) */
 .hub__arch-row {
+  flex: 1 1 420px;
+  min-width: 300px;
+  align-self: center;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(12px, 2vw, 22px);
-  width: 100%;
 }
 .hub__arch-tile {
   display: block;
