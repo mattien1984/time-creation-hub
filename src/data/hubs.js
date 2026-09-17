@@ -20,7 +20,7 @@ export const HUBS = {
     route: '/existence',
     roleLabel: 'The Instrument',
     tagline:
-      'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
+      'Existence is the technological expression of Time Creationist: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
     identity: vertical('existence'),
     // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
     // per-brand accents read wrong as highlights (Existence's orange = red).
@@ -34,7 +34,7 @@ export const HUBS = {
       headline: 'The instrument of time creation',
       showPositioning: false,
       paragraphs: [
-        'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
+        'Existence is the technological expression of Time Creationist: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
         'You are always creating time, and the time you create is continuously creating you. But most time goes unaccounted for.',
         'A calendar can show what you planned. It cannot show the complete reality of how that time was actually created, how it was experienced, or what those patterns are creating in you. Without that visibility, the Real You, the person your time is actually creating, remains hidden. You cannot clearly see the distance between that reality and the Ideal You, the person you intended to create.',
         'This is Time Disconnect.',
@@ -46,7 +46,7 @@ export const HUBS = {
         'Then you Optimize what comes next based on what your time reveals.',
         'Working beneath the cycle is Time Intelligence, the AI-powered system inside Existence. Time Blocks structure your created time as data. Time Intelligence processes that data into insights, patterns, and understanding, revealing relationships across your activities, people, places, energy, experience, and the connection between intention and reality.',
         'The Time Alignment Score measures how closely the time you intended to create matches the time you actually created. Data Explorer shows how your time, energy, and alignment are taking shape. Insights analyzes the deeper patterns across your time. Existence AI allows you to engage directly with the intelligence built from your own time.',
-        'Together, these systems do something a calendar, tracker, or productivity tool cannot: who your time is creating.',
+        'Together, these systems do something a calendar, tracker, or productivity tool cannot: show you who your time is creating.',
         'The gap between the Ideal You and the Real You is no longer invisible. It becomes something you can see, understand, and intentionally shape. Small adjustments compound across weeks, months, and years, bringing the Real You and the Ideal You into greater alignment.',
         'You begin using your time the way you actually want to. You show up to what matters the way you intended to. You are more present for the time you chose.',
         'This is what it means to realize your potential: not a destination you arrive at, but a way of being you continuously create.',
@@ -138,12 +138,12 @@ export const HUBS = {
     // verbatim. The Long version is held pending placement ruling.
     whatItIs: {
       headline:
-        'Time Creationism is the philosophy that you create time, and in creating time, you create yourself.',
+        'Time Creationist is the philosophy that you create time, and in creating time, you create yourself.',
       showPositioning: false,
       paragraphs: [
-        'Time Creationism is a philosophy built on one fundamental truth: you are not a passive observer of time. You create it through what you do, think, and feel in every present moment. And because those moments compound into the person you become, the time you create is continuously creating you.',
-        'The purpose of Time Creationism is to consciously use time to bring the Ideal You into existence. The Ideal You is not a perfect final version of yourself, but the complete potential of who you can become across every part of your life.',
-        'Time Creationism turns that idea into a continuous process: intentionally create your time around who you want to become, purposefully shape your evolution by learning from the reality you create, and perpetually actualize more of your potential as that learning compounds.',
+        'Time Creationist is a philosophy built on one fundamental truth: you are not a passive observer of time. You create it through what you do, think, and feel in every present moment. And because those moments compound into the person you become, the time you create is continuously creating you.',
+        'The purpose of Time Creationist is to consciously use time to bring the Ideal You into existence. The Ideal You is not a perfect final version of yourself, but the complete potential of who you can become across every part of your life.',
+        'Time Creationist turns that idea into a continuous process: intentionally create your time around who you want to become, purposefully shape your evolution by learning from the reality you create, and perpetually actualize more of your potential as that learning compounds.',
         'It is not simply about productivity, habits, goals, or achievement. It is about the conscious creation of an entire existence.',
         'You create time. The time you create creates you. And by consciously creating your time, you can consciously shape who you become.',
       ],
