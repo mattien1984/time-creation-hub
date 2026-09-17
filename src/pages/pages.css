@@ -1540,3 +1540,132 @@ body.film-end .nav--film {
   line-height: 1.6;
   color: var(--hub-subcopy);
 }
+
+/* ---------- Its Role in the Universe: mini exploded Layers + brand cards
+   (ruled Sep 17) — the design page's 3D scene miniaturized: this brand's
+   plane lit and legend-called-out, siblings placed but dimmed; beside it
+   the three brand photo cards, the other two at 75% opacity. ---------- */
+.hub__arch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+  margin-top: 30px;
+}
+.hub__arch-left {
+  flex: 1 1 340px;
+  min-width: 270px;
+}
+.hub__arch-stage {
+  position: relative;
+  height: clamp(220px, 30vw, 320px);
+  perspective: 1100px;
+  perspective-origin: 50% 40%;
+}
+.hub__arch-scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(45deg);
+}
+.hub__arch-plane {
+  position: absolute;
+  width: min(66%, 280px);
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+  opacity: 0.34; /* placed and legible, clearly subordinate to the lit plane */
+  transition: opacity 0.3s ease;
+}
+.hub__arch-plane img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+.hub__arch-plane.is-active {
+  opacity: 1;
+  filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.35));
+}
+.hub--light .hub__arch-plane img { filter: invert(1); }
+.hub--light .hub__arch-plane.is-active {
+  filter: drop-shadow(0 0 14px rgba(14, 23, 22, 0.18));
+}
+.hub__arch-legend {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hub__arch-legend li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--hub-subcopy);
+}
+.hub__arch-legend em {
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.hub__arch-tick {
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  flex: none;
+}
+.hub__arch-legend li.is-active { color: var(--fg); }
+.hub__arch-legend li.is-active .hub__arch-tick {
+  background: var(--hub-accent);
+  height: 2px;
+}
+.hub__arch-here {
+  margin-left: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.hub__arch-cards {
+  flex: 0 1 280px;
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hub__arch-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  opacity: 0.75; /* the other two brands sit back */
+  transition: opacity 0.25s ease;
+}
+.hub__arch-card.is-current,
+.hub__arch-card:hover { opacity: 1; }
+.hub__arch-card-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hub__arch-card-lockup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 20%;
+  max-width: none;
+  transform: translate(-50%, -50%) scale(var(--logo-scale, 1));
+}

@@ -12,7 +12,7 @@ import { LogoMark } from '../components/Logo';
 import GridField from '../components/GridField';
 import Footer from '../sections/Footer';
 import { HUBS, HUB_ORDER } from '../data/hubs';
-import { DOWNLOADS, POSTERS } from '../data/brand';
+import { POSTERS } from '../data/brand';
 import { asset } from '../lib/asset';
 
 const SECTION_IDS = ['what-it-is', 'beliefs', 'who', 'sounds', 'looks', 'universe'];
@@ -35,36 +35,19 @@ function AccordionSection({ id, title, open, onToggle, children }) {
   );
 }
 
-// The Layers of Time with this brand's plane lit — how the entity
-// configures into the whole.
+// The Layers of Time planes, top to bottom — how the entity configures
+// into the whole (same vectors as the design page's exploded scene).
 const PLANES = [
   { id: 'existence', src: '/assets/grids/arch-block.svg' },
   { id: 'time-creationism', src: '/assets/grids/arch-fabric.svg' },
   { id: 'time-creation-project', src: '/assets/grids/arch-foundation.svg' },
 ];
-function HubLayers({ activeId }) {
-  return (
-    <div className="hub__layers" aria-hidden="true">
-      {PLANES.map((pl, i) => (
-        <img
-          key={pl.id}
-          src={asset(pl.src)}
-          alt=""
-          className={pl.id === activeId ? 'is-active' : ''}
-          style={{ '--i': i }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export default function BrandHub({ slug }) {
   const hub = HUBS[slug];
   const v = hub.identity;
   const siblings = HUB_ORDER.filter((s) => s !== slug);
   const assets = {
-    logo: DOWNLOADS.logos.find((d) => d.name.startsWith(v.name)),
-    grid: DOWNLOADS.grids.find((d) => d.note.startsWith(v.name)),
     posters: (POSTERS[v.id] || []).slice(0, 4),
   };
 
@@ -197,35 +180,16 @@ export default function BrandHub({ slug }) {
       title: 'How It Looks',
       body: (
         <>
-          <p className="acc__lead">{v.gridTitle}</p>
-          <div className="hub__identity">
-            <div className="hub__identity-cell">
-              <img className="hub__grid-thumb" src={v.grid} alt={v.gridName} />
-              <p className="body">{v.gridBody}</p>
-            </div>
-            <div className="hub__identity-cell">
-              <img className="hub__shape" src={v.photo} alt={`${v.name} — ${v.shape}`} />
-              <p className="body">{v.shapeNote}</p>
-            </div>
-          </div>
-          <p className="body hub__colornote">{v.colorNote}</p>
-          <div className="hub__assets">
-            {[assets.logo, assets.grid].filter(Boolean).map((d) => (
-              <a key={d.file} className="hub__asset" href={d.file} download>
-                <img src={d.file} alt={d.name} />
-                <span>{d.name} · {d.kind}</span>
-              </a>
-            ))}
-          </div>
+          {/* the brand's visual story in brief + the four poster cards;
+              the full identity breakdown lives on the design page */}
+          <p className="body hub__statement">{hub.visualStory}</p>
           {assets.posters.length > 0 && (
             <div className="hub__posters">
               {assets.posters.map((p) => <img key={p} src={p} alt="" loading="lazy" />)}
             </div>
           )}
           <p className="hub__syslink">
-            The comparative logic — how this identity sits beside its siblings — lives
-            in <Link to="/system">the design system</Link>; everything downloadable is
-            in <Link to="/library">the asset library</Link>.
+            <Link to="/system">See more →</Link>
           </p>
         </>
       ),
@@ -236,20 +200,56 @@ export default function BrandHub({ slug }) {
       body: (
         <>
           <p className="body hub__statement">{hub.universeRole}</p>
-          <HubLayers activeId={v.id} />
-          <div className="hub__locator" aria-label="Position in the Time Creation universe">
-            {HUB_ORDER.map((s) => (
-              <Link
-                key={s}
-                to={HUBS[s].route}
-                className={`hub__locator-node${s === slug ? ' is-here' : ''}`}
-                style={{ '--node-accent': HUBS[s].accent }}
-              >
-                <span className="n">{HUBS[s].identity.name}</span>
-                <span className="r">{HUBS[s].roleLabel}</span>
-                {s === slug && <span className="here">you are here</span>}
-              </Link>
-            ))}
+          {/* the design page's exploded Layers of Time, miniaturized: this
+              brand's plane lit and called out, the other two placed but
+              dimmed — beside the three brand cards, siblings at 75% */}
+          <div className="hub__arch">
+            <div className="hub__arch-left">
+              <div className="hub__arch-stage" aria-hidden="true">
+                <div className="hub__arch-scene">
+                  {PLANES.map((pl, i) => (
+                    <div
+                      key={pl.id}
+                      className={`hub__arch-plane${pl.id === v.id ? ' is-active' : ''}`}
+                      style={{ transform: `translateZ(${(1 - i) * 90}px)` }}
+                    >
+                      <img src={asset(pl.src)} alt="" draggable="false" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <ul className="hub__arch-legend">
+                {HUB_ORDER.map((s) => (
+                  <li key={s} className={s === slug ? 'is-active' : ''}>
+                    <span className="hub__arch-tick" aria-hidden="true" />
+                    <span>{HUBS[s].identity.name}</span>
+                    <em>{HUBS[s].roleLabel}</em>
+                    {s === slug && <strong className="hub__arch-here">you are here</strong>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="hub__arch-cards">
+              {HUB_ORDER.map((s) => {
+                const h = HUBS[s];
+                return (
+                  <Link
+                    key={s}
+                    to={h.route}
+                    className={`hub__arch-card${s === slug ? ' is-current' : ''}`}
+                    aria-label={h.identity.name}
+                  >
+                    <img className="hub__arch-card-bg" src={h.identity.photo} alt="" loading="lazy" />
+                    <img
+                      className="hub__arch-card-lockup"
+                      src={h.identity.logo}
+                      alt=""
+                      style={{ '--logo-scale': h.identity.logoScale }}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </>
       ),

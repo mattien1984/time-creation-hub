@@ -96,6 +96,9 @@ export const HUBS = {
     },
     universeRole:
       'The instrument in the three-brand architecture — the layer where Time Creationist (the belief) and the Time Creation Project (the foundation) become daily practice. In the Layers of Time, Existence is the top plane: the foundation activated and the belief enacted — time, authored.',
+    // How It Looks story — composed from the approved grid/shape/color copy.
+    visualStory:
+      'The visual world of Existence is the instrument rendered: the Grid of Time — a life in Time Blocks, moment by moment — set on pure black, the surface a life is authored on. Its shape is the clock, the most iconic symbol of time. The palette runs Orange to Gold highest, the sun\'s arc from the spark of sunrise to the glow of golden hour, with teal and white in support: thought held in the background, feeling carried to the front.',
     // Received "How It Sounds" language (Sep 17, 2026) — verbatim. The E
     // persona prose, then the eight trait pairs (lead + support).
     voice: {
@@ -199,6 +202,9 @@ export const HUBS = {
     },
     universeRole:
       'The parent philosophy of the Time Creation universe — the Belief, alongside Existence (the Instrument) and the Time Creation Project (the Foundation). In the Layers of Time it is the middle plane, the Fabric of Time: the foundation below is raw potential, Time Creationist gives it form, and the Existence Grid above enacts it.',
+    // How It Looks story — composed from the approved grid/shape/color copy.
+    visualStory:
+      'Time Creationist is the belief made visible: the Fabric of Time — a subtle matrix of potential moments, receptive rather than rigid, the canvas on which you imprint meaning. Its shape is the moon, cycling through phases and emotional tides. As the parent philosophy it carries the whole Sunrise palette at equal weight, no phase favored, with white and black held back as the neutral ground that lets the living colors speak.',
     voice: {
       principles: [
         'Antithesis is the engine. Every core idea turns on the "not A, but B" construction: "not spent or found, but made"; "not rigid, it is receptive"; "not measured, but made."',
@@ -276,6 +282,9 @@ export const HUBS = {
     },
     universeRole:
       'The foundation beneath it all — the principles, language, and research that turn Time Creationist from a conviction into a system anyone can build on. In the Layers of Time it is the bottom plane, the Foundation of Time: proof and legitimacy for everything above it. It faces organizations and funders directly, and hands individuals off to Existence (practice) and Time Creationist (belief).',
+    // How It Looks story — composed from the approved grid/shape/color copy.
+    visualStory:
+      'The Time Creation Project looks like the foundation: the Foundation of Time — a dense field of small marks, each a fragment of the thinking, together the ground a life can stand on — set in daylight, ink on white. Its shape is the sun, governing the daily arc. The palette runs cool and clear: Teal to Deep Green leads with white rising, the open page where principles are set down, while Orange, Gold, and black are kept in reserve.',
     // Received persona copy (Sep 17, 2026) — verbatim; replaces the mined
     // style principles. (The note comparing it to the Existence persona was
     // author commentary, not site copy — excluded.)
