@@ -4,7 +4,7 @@ import PosterMarquee from '../components/PosterMarquee';
 import { DESIGN_SYSTEM, VERTICALS, POSTERS, GRAPHIC } from '../data/brand';
 import { asset } from '../lib/asset';
 
-// One row per brand, in order: Existence · Time Creationist · Time Creation Project
+// One row per brand, in order: Existence · Time Creationism · Time Creation Project
 const ROWS = [
   POSTERS['existence'],
   POSTERS['time-creationism'],

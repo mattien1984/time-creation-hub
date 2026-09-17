@@ -5,14 +5,16 @@ import { HUBS, HUB_ORDER } from '../data/hubs';
 const link = ({ isActive }) => (isActive ? 'is-active' : undefined);
 
 // Charlie's outline sections, in page order; the Who label is per-brand.
-const sectionsFor = (hub) => [
-  ['What It Is', 'what-it-is'],
-  ['What We Believe', 'beliefs'],
-  [hub.who.label, 'who'],
-  ['How It Sounds', 'sounds'],
-  ['How It Looks', 'looks'],
-  ['Its Role in the Universe', 'universe'],
-];
+// A hub may carry a subset (hub.sections) — the dropdown mirrors it.
+const sectionsFor = (hub) =>
+  [
+    ['What It Is', 'what-it-is'],
+    ['What We Believe', 'beliefs'],
+    [hub.who.label, 'who'],
+    ['How It Sounds', 'sounds'],
+    ['How It Looks', 'looks'],
+    ['Its Role in the Universe', 'universe'],
+  ].filter(([, id]) => !hub.sections || hub.sections.includes(id));
 
 export default function Nav() {
   // The homepage plays the film chromeless; the nav bar (links only, upper

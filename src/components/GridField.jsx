@@ -1,6 +1,6 @@
 // The signature motif: the time grid rendered procedurally at three densities.
 // block = sparse cells with anchor-crosses (Existence)
-// fabric = medium uniform grid (Time Creationist)
+// fabric = medium uniform grid (Time Creationism)
 // foundation = dense field of small squares (Time Creation Project)
 
 const CONFIG = {

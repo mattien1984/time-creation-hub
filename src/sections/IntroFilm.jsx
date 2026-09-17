@@ -121,7 +121,7 @@ const MARK_SIZE = 164;
 const UNIT = MARK_SIZE / 41.4;
 const RINGS = [
   // ring index → converged offset (px) and brand when separated.
-  // Separated order (left → right): existence, Time Creationist, TCP.
+  // Separated order (left → right): existence, Time Creationism, TCP.
   { dx: 0, dy: (18.39 - 20.92) * UNIT, brand: 'existence', spread: -1 },
   { dx: (18.39 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creationism', spread: 0 },
   { dx: (23.01 - 20.7) * UNIT, dy: (22.19 - 20.92) * UNIT, brand: 'time-creation-project', spread: 1 },
@@ -134,7 +134,7 @@ const RINGS = [
 // TCP's width normalizes to /155 too despite its taller 219u box).
 const LOCKUPS = {
   existence: { W: 832, H: 155, cx: 78.5, cy: 77, wu: 832 / 155 },
-  // the Time Creationist lockup (1135×155) — same mark path as the others
+  // the Time Creationism lockup (1135×155) — same mark path as the others
   'time-creationism': { W: 1135, H: 155, cx: 78.5, cy: 77, wu: 1135 / 155 },
   'time-creation-project': { W: 891, H: 219, cx: 78.5, cy: 88, wu: 891 / 155 },
 };

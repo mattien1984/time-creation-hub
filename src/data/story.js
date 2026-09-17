@@ -36,17 +36,17 @@ export const BEATS = [
     id: 'universe',
     title: 'The Universe',
     headline: 'One principle expressed three ways — a tool, a philosophy, and a foundation.',
-    body: 'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
+    body: 'Time Creationism is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. Existence is the instrument of time creation — not a place to schedule your days, but a place to author your life. The Time Creation Project exists to establish Time Creation as a foundational life skill.',
   },
   {
     num: '04',
     id: 'together',
     title: 'Coming Together',
     headline: 'Same coordinates, same palette, same mark.',
-    body: 'Each layer is registered to the others, each carrying its own weight of the idea that time is not spent or found, but made. The belief gives the instrument its form; the instrument turns conviction into a weekly practice; the foundation turns Time Creationist from a conviction into a system anyone can build on — and what it studies feeds back into the belief. One ring mark, one Sunrise palette, one grid at three densities: the Time Block, the Time Fabric, the Foundation of Time.',
+    body: 'Each layer is registered to the others, each carrying its own weight of the idea that time is not spent or found, but made. The belief gives the instrument its form; the instrument turns conviction into a weekly practice; the foundation turns Time Creationism from a conviction into a system anyone can build on — and what it studies feeds back into the belief. One ring mark, one Sunrise palette, one grid at three densities: the Time Block, the Time Fabric, the Foundation of Time.',
     flywheel: {
       steps: [
-        'The belief shapes the instrument — Time Creationist gives Existence its form: the conviction that time is not spent or found, but made.',
+        'The belief shapes the instrument — Time Creationism gives Existence its form: the conviction that time is not spent or found, but made.',
         'The instrument turns belief into daily practice — Existence renders the philosophy as a weekly cycle: Design. Account. Optimize.',
         'The foundation researches and legitimizes — the Time Creation Project turns conviction into frameworks, tools, education, research, and partnerships anyone can build on.',
         'The proof feeds back into the belief — every studied week deepens the philosophy, and the cycle turns again.',
@@ -60,8 +60,31 @@ export const BEATS = [
 // Verbatim from the About overlay shipped on robdyrdek.com.
 export const CREATOR = {
   name: 'Rob Dyrdek',
-  headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationist.',
-  body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationist.",
+  headline: 'Serial entrepreneur, media magnate, CEO of Existence and Founder of Time Creationism.',
+  body: "Over the past decade, Rob Dyrdek has redefined what it means to build meaningful ventures, blending storytelling, systems thinking, and relentless execution. Through his venture studio Dyrdek Machine, he built 18 brands, with six exits totaling over $550M. Now he's focused on bringing to market his category-defining software called Existence and changing the way the world views time with his philosophy Time Creationism.",
+};
+
+// The full Rob Dyrdek bio — received Sep 17, 2026, verbatim from the
+// robdyrdek.com About overlay. The homepage bio section under the film's
+// end state; first paragraph shows collapsed, Read More reveals the rest.
+export const ROB_BIO = {
+  headline:
+    'Rob Dyrdek is a serial entrepreneur, media magnate, CEO of Existence, and founder of Time Creationism.',
+  paragraphs: [
+    'For more than two decades, Rob has dedicated himself to mastering one of the most fundamental resources of human existence: time. Through entrepreneurship, media creation, and the intentional design of his own life, he has explored how to create more, experience more, and build more with the time he has.',
+    'That pursuit has shaped his career. In television, Rob built a production system for Ridiculousness that allowed him to shoot an unprecedented 336 episodes a year while requiring only 4% of his time. Through his venture studio, Dyrdek Machine, he built 18 brands and six exits totaling more than $550 million in less than five years.',
+    'Over time, Rob became less interested in simply achieving more with his time and more interested in understanding what time actually is and what it is creating. In 2015, he created the Rhythm of Existence, a personal operating system that mapped his time across Work, Life, Health, and Sleep. It gave him a way to see his life as something he was continuously creating, while pursuing his ambitions alongside the balance, health, relationships, and experiences that make life fulfilling.',
+    'That led to a simple realization: you are continuously creating time, and the time you create is continuously creating you. This became the foundation of Time Creationism, a philosophy centered on the idea that time is the medium through which we create our existence.',
+    'Today, Rob is building Time Creation into a foundational life skill through three connected pillars: philosophy, technology, and philanthropy. Through his book series and Time Creationist, a 100-part podcast series, he is codifying the philosophy. The Time Creation Project extends it through nonprofit and community partnerships. And Existence, the technological expression of Time Creationism, is a time intelligence platform that transforms the time you create into the data of the Real You, making the patterns of your life visible so you can intentionally design your time and continuously realize your potential.',
+    'Together, these three pillars represent the convergence of what Rob has learned through building companies, creating media, and designing his own existence — as well as his passion for helping others realize their potential while creating a life that is balanced, meaningful, and fulfilling.',
+  ],
+  socials: [
+    { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/robdyrdek' },
+    { id: 'x', label: 'X', href: 'https://x.com/robdyrdek' },
+    { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@robdyrdek' },
+    { id: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@robdyrdek' },
+    { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/robdyrdek' },
+  ],
 };
 
 // Rob's sacred closer — now the footer's opening line, above the creator

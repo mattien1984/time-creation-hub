@@ -7,7 +7,7 @@ import { asset } from '../lib/asset';
 // Exact top-down vectors exported from the Illustrator grid-language file.
 const PLANES = [
   { key: 'top', src: asset('/assets/grids/arch-block.svg'), z: 150, vert: VERTICALS[0], layer: ARCHITECTURE.layers[0], word: 'existence' },
-  { key: 'mid', src: asset('/assets/grids/arch-fabric.svg'), z: 0, vert: VERTICALS[1], layer: ARCHITECTURE.layers[1], word: 'Time Creationist' },
+  { key: 'mid', src: asset('/assets/grids/arch-fabric.svg'), z: 0, vert: VERTICALS[1], layer: ARCHITECTURE.layers[1], word: 'Time Creationism' },
   { key: 'bot', src: asset('/assets/grids/arch-foundation.svg'), z: -150, vert: VERTICALS[2], layer: ARCHITECTURE.layers[2], word: 'Time Creation Project' },
 ];
 

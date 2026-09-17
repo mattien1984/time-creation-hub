@@ -1,6 +1,6 @@
 // Time Creation — unified brand system data
 // Copy sourced from the Figma file and corrected to be vertical-specific
-// (the source had copy-pasted "Time Creationist" references in the Existence
+// (the source had copy-pasted "Time Creationism" references in the Existence
 // and Project columns, plus XX placeholders).
 
 import { asset } from '../lib/asset';
@@ -55,7 +55,7 @@ export const VERTICALS = [
   },
   {
     id: 'time-creationism',
-    name: 'Time Creationist',
+    name: 'Time Creationism',
     role: 'The Belief',
     accent: '#249EA1',
     shape: 'moon',
@@ -64,7 +64,7 @@ export const VERTICALS = [
     grid: asset('/assets/grids/fabric.svg'),
     gridKind: 'fabric',
     statement:
-      'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation: you are the author of your hours, and every block you place is a deliberate act of making your life.',
+      'Time Creationism is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation: you are the author of your hours, and every block you place is a deliberate act of making your life.',
     gridTitle: 'Time Fabric',
     gridName: 'The Fabric of Time',
     gridBody:
@@ -72,7 +72,7 @@ export const VERTICALS = [
     shapeNote:
       'The moon cycles through phases, marking months and emotional tides.',
     colorNote:
-      'As the parent philosophy, Time Creationist carries the whole palette at equal weight — no phase favored, Mind and Energy held in balance across the full cycle of time. White and black appear less often: the neutral ground that lets the living colors speak. This is time as a living system — not measured, but made.',
+      'As the parent philosophy, Time Creationism carries the whole palette at equal weight — no phase favored, Mind and Energy held in balance across the full cycle of time. White and black appear less often: the neutral ground that lets the living colors speak. This is time as a living system — not measured, but made.',
     // eight living colors equal/full, white & black low
     weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.35, 0.35],
     logoScale: 1,
@@ -88,7 +88,7 @@ export const VERTICALS = [
     grid: asset('/assets/grids/foundation.svg'),
     gridKind: 'foundation',
     statement:
-      'The Time Creation Project is the foundation beneath it all — the principles, language, and research that turn Time Creationist from a conviction into a system anyone can build on. It exists so the practice of creating time can be studied, taught, and carried forward: the bedrock that gives Existence its meaning and the movement its ground.',
+      'The Time Creation Project is the foundation beneath it all — the principles, language, and research that turn Time Creationism from a conviction into a system anyone can build on. It exists so the practice of creating time can be studied, taught, and carried forward: the bedrock that gives Existence its meaning and the movement its ground.',
     gridTitle: "Time's Foundation",
     gridName: 'The Foundation of Time',
     gridBody:
@@ -118,10 +118,10 @@ export const ARCHITECTURE = {
       body: 'The frame and its anchor-crosses: where intention, energy, and thought are imprinted and made visible. The crosses are alignment marks — they show whether the time you\'re living adds up to the life you mean to create. This is the foundation activated and the belief enacted: time, authored.',
     },
     {
-      vertical: 'Time Creationist',
+      vertical: 'Time Creationism',
       label: 'the Fabric of Time',
       position: 'middle',
-      body: 'The organizing belief. Where the foundation is raw potential, Time Creationist gives it form — the conviction that time is not spent or found but authored, the grid of agency along which moments can be arranged, measured, and made.',
+      body: 'The organizing belief. Where the foundation is raw potential, Time Creationism gives it form — the conviction that time is not spent or found but authored, the grid of agency along which moments can be arranged, measured, and made.',
     },
     {
       vertical: 'Time Creation Project',
@@ -158,7 +158,7 @@ export const GRAPHIC = {
   'time-creationism': {
     element: 'Creation Color',
     kind: 'creation-color',
-    lede: "Time Creationist's signature graphic element — selective orange that activates meaning.",
+    lede: "Time Creationism's signature graphic element — selective orange that activates meaning.",
     body:
       "Creationism Orange is used selectively to highlight focal points, activate meaning, or signal energetic presence. It appears only on solid, filled circles — marking key nodes and events. These orange moments are not uniform: full-opacity, crisp dots denote clarity and intentional force; semi-transparent or blurred forms suggest potential, memory, or unresolved energy. When a moment matters, it's illuminated; when its status shifts, so does its intensity.",
   },

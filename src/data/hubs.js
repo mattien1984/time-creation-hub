@@ -5,7 +5,7 @@
 // straight from VERTICALS in brand.js — one data source, two renderings.
 // Narrative content assembled from the real properties (research pass,
 // Sep 2026). Rob Dyrdek's sacred copy is verbatim — never paraphrase it.
-// Naming ruled Sep 15: the philosophy is "Time Creationist" (internal ids
+// Naming ruled Sep 15: the philosophy is "Time Creationism" (internal ids
 // and asset filenames keep the legacy time-creationism slug).
 // Open questions live in BRAND-QUESTIONS.md.
 
@@ -20,7 +20,7 @@ export const HUBS = {
     route: '/existence',
     roleLabel: 'The Instrument',
     tagline:
-      'Existence is the technological expression of Time Creationist: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
+      'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
     identity: vertical('existence'),
     // UI highlight: Sunrise Gold on all three hubs (per Sep 16 note) —
     // per-brand accents read wrong as highlights (Existence's orange = red).
@@ -34,7 +34,7 @@ export const HUBS = {
       headline: 'The instrument of time creation',
       showPositioning: false,
       paragraphs: [
-        'Existence is the technological expression of Time Creationist: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
+        'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
         'You are always creating time, and the time you create is continuously creating you. But most time goes unaccounted for.',
         'A calendar can show what you planned. It cannot show the complete reality of how that time was actually created, how it was experienced, or what those patterns are creating in you. Without that visibility, the Real You, the person your time is actually creating, remains hidden. You cannot clearly see the distance between that reality and the Ideal You, the person you intended to create.',
         'This is Time Disconnect.',
@@ -95,7 +95,7 @@ export const HUBS = {
       body: "Existence is built for the Actualized High Achiever: ambitious, high-earning, and already living what most people would call a successful life. They track their health, plan their weeks on purpose, invest in coaching, therapy, and the next book that might make them sharper, and they already believe in systems. They're not lost, and they're not starting from zero. What's changed is that success got more complicated the more of it they created: work expanded, family asked for more, health needed more intention, and energy turned into the one thing they never have enough of. They don't need to be convinced that growth matters. They need to know if the time they're creating is actually building the life they say they want, or just the appearance of one.",
     },
     universeRole:
-      'The instrument in the three-brand architecture — the layer where Time Creationist (the belief) and the Time Creation Project (the foundation) become daily practice. In the Layers of Time, Existence is the top plane: the foundation activated and the belief enacted — time, authored.',
+      'The instrument in the three-brand architecture — the layer where Time Creationism (the belief) and the Time Creation Project (the foundation) become daily practice. In the Layers of Time, Existence is the top plane: the foundation activated and the belief enacted — time, authored.',
     // How It Looks story — composed from the approved grid/shape/color copy.
     visualStory:
       'The visual world of Existence is the instrument rendered: the Grid of Time — a life in Time Blocks, moment by moment — set on pure black, the surface a life is authored on. Its shape is the clock, the most iconic symbol of time. The palette runs Orange to Gold highest, the sun\'s arc from the spark of sunrise to the glow of golden hour, with teal and white in support: thought held in the background, feeling carried to the front.',
@@ -158,28 +158,69 @@ export const HUBS = {
 
   'time-creationism': {
     slug: 'time-creationism',
-    route: '/time-creationist',
+    route: '/time-creationism',
     roleLabel: 'The Belief',
+    // Hero subcopy = the received Short (ruled Sep 17).
     tagline:
-      'Time Creationist is a philosophy for intentionally creating your life through time, showing how every action, thought, and feeling shapes who you become.',
+      'Time Creationism is the philosophy that you create time, and in creating time, you create yourself.',
     identity: vertical('time-creationism'),
+    // This page carries only What It Is, How It Looks, and Its Role in
+    // the Universe (ruled Sep 17).
+    sections: ['what-it-is', 'looks', 'universe'],
     accent: '#FAAB35', // Sunrise Gold — shared hub highlight
     // The belief in living color: wave wash hero (restored — it was the
     // BOTTOM band image that should go), fabric hairlines, serif italic,
     // Creation Color toggles. No photography band on this page.
     theme: { mode: 'dark', wash: '/assets/photography/tc-wave.jpg', band: false },
-    // Received copy (Sep 17, 2026) — Short as the lead, Medium as the body,
-    // verbatim. The Long version is held pending placement ruling.
+    // Received copy (Sep 17, 2026) — the Medium as the body (the Short is
+    // the hero tagline), with the Long as the expandable "Unabridged".
     whatItIs: {
-      headline:
-        'Time Creationist is the philosophy that you create time, and in creating time, you create yourself.',
       showPositioning: false,
       paragraphs: [
-        'Time Creationist is a philosophy built on one fundamental truth: you are not a passive observer of time. You create it through what you do, think, and feel in every present moment. And because those moments compound into the person you become, the time you create is continuously creating you.',
-        'The purpose of Time Creationist is to consciously use time to bring the Ideal You into existence. The Ideal You is not a perfect final version of yourself, but the complete potential of who you can become across every part of your life.',
-        'Time Creationist turns that idea into a continuous process: intentionally create your time around who you want to become, purposefully shape your evolution by learning from the reality you create, and perpetually actualize more of your potential as that learning compounds.',
+        'Time Creationism is a philosophy built on one fundamental truth: you are not a passive observer of time. You create it through what you do, think, and feel in every present moment. And because those moments compound into the person you become, the time you create is continuously creating you.',
+        'The purpose of Time Creationism is to consciously use time to bring the Ideal You into existence. The Ideal You is not a perfect final version of yourself, but the complete potential of who you can become across every part of your life.',
+        'Time Creationism turns that idea into a continuous process: intentionally create your time around who you want to become, purposefully shape your evolution by learning from the reality you create, and perpetually actualize more of your potential as that learning compounds.',
         'It is not simply about productivity, habits, goals, or achievement. It is about the conscious creation of an entire existence.',
         'You create time. The time you create creates you. And by consciously creating your time, you can consciously shape who you become.',
+      ],
+      // The received Long, verbatim — revealed by the "Unabridged" expander.
+      unabridged: [
+        'Time Creationism is a philosophy built on one fundamental truth: you are not a passive observer of time. You are the creator of time.',
+        'Every present moment is something you are actively bringing into existence. What you do, what you think, and what you feel become the physical manifestation of your existence in time. Your actions shape the world around you, your thoughts organize your understanding of that world, and your feelings reveal the quality of the experience you are creating within it.',
+        'You are always creating time.',
+        'And because you are always creating time, you are always creating yourself.',
+        'The person you are today is the result of all the time you have created up until this moment. Everything you have repeatedly done, thought, and felt has compounded into who you are now. But the present moment is not simply the result of your past. It is also the raw material of your future. Every moment gives you another opportunity to influence who you will become.',
+        'This is the central purpose of Time Creationism: to consciously use time to bring the Ideal You into existence.',
+        'The Ideal You is not one achievement, one identity, or one perfect version of yourself waiting at the end of life. The Ideal You is the complete potential of who you can become. It includes your health, relationships, knowledge, work, emotions, experiences, and the contribution you make to the world. You cannot truly create one part of yourself without affecting all of yourself because your existence is an integrated whole.',
+        'Your potential is therefore limitless. There is always more of yourself to understand, more of life to experience, and another possibility waiting to be created. The closer you move toward your potential, the more potential you are able to see.',
+        'Time Creationism provides a continuous process for bringing that potential into existence.',
+        'First, you intentionally create time. Every future begins as a possibility. You learn to see the potential within yourself and develop a clear vision of the future you want to create. You turn that vision into intentional moments, goals, and experiences that move your complete existence toward the Ideal You.',
+        'You do not simply ask what you want to achieve. You ask who you want to become.',
+        'You begin designing time around that answer.',
+        'You create with a deeper understanding of how the past has shaped you, how the present is affecting you, and how your current decisions influence future possibilities. You develop clarity about where you are going, create a rhythm for moving forward, and organize your time in a way that allows your entire existence to evolve in balance.',
+        'But designing the future is only the beginning.',
+        'You must then purposefully shape your evolution.',
+        'Reality is continuously giving you information. Every experience reveals something about what is working, what is not working, and what needs to change. Everything you do, think, and feel is shaping who you are becoming. The question is never whether you are evolving. You are always evolving. The question is whether you are evolving with purpose.',
+        'Through knowledge, focus, prediction, discipline, and systems, you learn to shape probability. You keep the information that moves you toward your potential and discard what prevents you from realizing it. You build momentum by continuously progressing toward meaningful outcomes.',
+        'Discipline becomes the refusal to allow your evolution to stop.',
+        'Systems allow you to expand beyond your individual capacity. Knowledge helps you understand reality. Focus directs your energy. Experience teaches you how to adjust. Each becomes part of an increasingly intelligent process of creating a better future.',
+        'Over time, this process compounds.',
+        'You begin to perpetually actualize your potential.',
+        'What once required conscious effort becomes easier because you have already learned how to create it. Knowledge compounds into intelligence. Clarity becomes precision. Goals become intuitive. Discipline becomes mastery. Systems create greater capability, allowing you to expand into higher levels of complexity without losing balance.',
+        'You no longer need to constantly figure out who you are becoming because the process of becoming becomes a way of being.',
+        'The time you have already created begins to fuel the creation of the future.',
+        'The past provides knowledge. The present provides experience. The future provides possibility. Together, they become one continuous process of self-creation.',
+        'This is why Time Creationism is ultimately about more than productivity, habits, goals, or achievement. It is about the conscious creation of an entire existence.',
+        'You create time.',
+        'The time you create creates you.',
+        'And by consciously creating your time, you gain the ability to consciously bring the Ideal You into existence.',
+        'There is no final version of the Ideal You because there is no end to your potential. As you evolve, your understanding expands. As your understanding expands, you see new possibilities. As you realize those possibilities, you become a version of yourself you may once have been unable to imagine.',
+        'The goal is not to arrive.',
+        'The goal is to continuously become.',
+        'To intentionally create the present, learn from the experience you create, and bring an ever-better future version of yourself into existence is the practice of Time Creationism.',
+        'You create time.',
+        'You create yourself.',
+        'And through the continuous creation of both, you perpetually actualize the limitless potential within you.',
       ],
     },
     // The 5–10 core beliefs — curated from verbatim source copy for Rob's
@@ -201,10 +242,10 @@ export const HUBS = {
       body: `The belief comes from its founder. ${CREATOR.body}`,
     },
     universeRole:
-      'The parent philosophy of the Time Creation universe — the Belief, alongside Existence (the Instrument) and the Time Creation Project (the Foundation). In the Layers of Time it is the middle plane, the Fabric of Time: the foundation below is raw potential, Time Creationist gives it form, and the Existence Grid above enacts it.',
+      'The parent philosophy of the Time Creation universe — the Belief, alongside Existence (the Instrument) and the Time Creation Project (the Foundation). In the Layers of Time it is the middle plane, the Fabric of Time: the foundation below is raw potential, Time Creationism gives it form, and the Existence Grid above enacts it.',
     // How It Looks story — composed from the approved grid/shape/color copy.
     visualStory:
-      'Time Creationist is the belief made visible: the Fabric of Time — a subtle matrix of potential moments, receptive rather than rigid, the canvas on which you imprint meaning. Its shape is the moon, cycling through phases and emotional tides. As the parent philosophy it carries the whole Sunrise palette at equal weight, no phase favored, with white and black held back as the neutral ground that lets the living colors speak.',
+      'Time Creationism is the belief made visible: the Fabric of Time — a subtle matrix of potential moments, receptive rather than rigid, the canvas on which you imprint meaning. Its shape is the moon, cycling through phases and emotional tides. As the parent philosophy it carries the whole Sunrise palette at equal weight, no phase favored, with white and black held back as the neutral ground that lets the living colors speak.',
     voice: {
       principles: [
         'Antithesis is the engine. Every core idea turns on the "not A, but B" construction: "not spent or found, but made"; "not rigid, it is receptive"; "not measured, but made."',
@@ -226,7 +267,7 @@ export const HUBS = {
       oneLiner:
         'The belief behind the practice: why time is something you author, not something that happens to you.',
       boilerplate:
-        'Time Creationist is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation: you are the author of your hours, and every block you place is a deliberate act of making your life. It is the parent philosophy of the Time Creation universe: Existence is the instrument that puts it into practice, and the Time Creation Project is the foundation that establishes it as a foundational life skill for all.',
+        'Time Creationism is the belief that time is not a resource to be managed but a medium to be authored — that a life is not spent or found, but made. It replaces the scarcity of "time management" with the agency of creation: you are the author of your hours, and every block you place is a deliberate act of making your life. It is the parent philosophy of the Time Creation universe: Existence is the instrument that puts it into practice, and the Time Creation Project is the foundation that establishes it as a foundational life skill for all.',
     },
   },
 
@@ -234,8 +275,9 @@ export const HUBS = {
     slug: 'time-creation-project',
     route: '/time-creation-project',
     roleLabel: 'The Foundation',
+    // Hero subcopy = the received Short in full (ruled Sep 17).
     tagline:
-      'Teaching Time Creation as a foundational life skill that turns possibility into progress',
+      'The Time Creation Project is a nonprofit built on a simple truth: you are always creating time, and the time you create is always creating you. We teach people to create the present with intention, experience it fully, learn from what it reveals, and use that understanding to continuously realize more of their potential. We bring this practice to people at critical turning points in their lives through partnerships with trusted institutions.',
     identity: vertical('time-creation-project'),
     // Daylight: TCP is the white-dominant vertical — ink on daylight with
     // the canon deep-teal accent (gold fails contrast on white).
@@ -243,12 +285,9 @@ export const HUBS = {
     // Daylight follows the TC hero model: the TCP site's own hero photo
     // washed under the white veil; no bottom band.
     theme: { mode: 'light', wash: '/assets/photography/tcp-hero.jpg', band: false },
-    // Received copy (Sep 17, 2026) — verbatim. Lead = the Short's opening
-    // sentence; body = the Medium. The full Short is HELD unplaced (like
-    // TC's Long) pending a ruling on where compressed variants live.
+    // Received copy (Sep 17, 2026) — the Medium as the body (the Short is
+    // the hero tagline), verbatim.
     whatItIs: {
-      headline:
-        'The Time Creation Project is a nonprofit built on a simple truth: you are always creating time, and the time you create is always creating you.',
       showPositioning: false,
       paragraphs: [
         'We are always creating time, but most of us are never taught to recognize ourselves as the creator of it. We move through our lives without fully understanding that what we do, think, and feel in each present moment is continuously shaping who we become.',
@@ -281,19 +320,42 @@ export const HUBS = {
       },
     },
     universeRole:
-      'The foundation beneath it all — the principles, language, and research that turn Time Creationist from a conviction into a system anyone can build on. In the Layers of Time it is the bottom plane, the Foundation of Time: proof and legitimacy for everything above it. It faces organizations and funders directly, and hands individuals off to Existence (practice) and Time Creationist (belief).',
+      'The foundation beneath it all — the principles, language, and research that turn Time Creationism from a conviction into a system anyone can build on. In the Layers of Time it is the bottom plane, the Foundation of Time: proof and legitimacy for everything above it. It faces organizations and funders directly, and hands individuals off to Existence (practice) and Time Creationism (belief).',
     // How It Looks story — composed from the approved grid/shape/color copy.
     visualStory:
       'The Time Creation Project looks like the foundation: the Foundation of Time — a dense field of small marks, each a fragment of the thinking, together the ground a life can stand on — set in daylight, ink on white. Its shape is the sun, governing the daily arc. The palette runs cool and clear: Teal to Deep Green leads with white rising, the open page where principles are set down, while Orange, Gold, and black are kept in reserve.',
-    // Received persona copy (Sep 17, 2026) — verbatim; replaces the mined
-    // style principles. (The note comparing it to the Existence persona was
-    // author commentary, not site copy — excluded.)
+    // Received persona copy (revised Sep 17, 2026) — verbatim: the same
+    // wisdom as E, choosing to come closer; prose then five trait pairs.
     voice: {
       persona: [
-        'The Time Creation Project speaks with the wisdom of an intelligence that understands time at a level most people have never been taught to see, but here that intelligence chooses to come closer. It is warmer, more patient, and more human in its delivery. It does not overwhelm people with what it knows or tell them what their life should look like. It helps them see what is already there, understand what their time is revealing, and make more intentional choices for themselves.',
-        'It has a quiet confidence in human potential. It understands that people are living inside real constraints, responsibilities, and circumstances, so it does not demand perfection or control. It offers structure, perspective, and gentle direction. It nudges rather than commands. It teaches rather than declares. It makes the ideas of Time Creation feel possible, practical, and personal.',
-        'Its role is not to provide the answer.',
-        'Its role is to help people develop the awareness and agency to create their own.',
+        "The wisdom inside Time Creation Project is the same wisdom that moves through everything in this universe: the same understanding of time, the same refusal to hand you an answer instead of the tools to build one. Here, it chooses to come closer.",
+        "Where E holds you at the distance of a law of physics, undeniable, unhurried, absolute, Time Creation Project sits beside you. It does not overwhelm you with what it knows. It does not hand down a verdict on your life. It helps you notice what is already there: the pattern you haven't had the chance to see, the choice you haven't yet been taught to make on purpose.",
+        "It has a quiet confidence in what you're capable of, not because your circumstances are easy, but because it has watched what becomes possible once someone is finally handed a tool no one gave them the first time. It does not ask for perfection. It does not ask for control. It offers structure loose enough to hold a real life: yours, with its real weight, its real people depending on you.",
+        "It teaches rather than declares. It nudges rather than commands. It never mistakes gentleness for a lack of conviction.",
+        "Its role was never to hand you the answer. Its role is to hand you the tools to build your own, and to stay close enough to walk the first few steps beside you.",
+        "It does not replace the work already changing your life. It amplifies it. It sits inside the rooms you already trust, whoever is already showing up for you, and adds one more thing to what they carry: the practical shape of a skill nobody thought to teach you.",
+      ],
+      traits: [
+        {
+          text: 'Close, not distant.',
+          support: 'It has earned the same authority E has. It just never spends that authority on distance.',
+        },
+        {
+          text: 'Warm, not soft.',
+          support: 'It tells you the truth as plainly as E does. It just tells you sitting next to you.',
+        },
+        {
+          text: 'Practical, not abstract.',
+          support: 'It speaks in what you can do this week, not in mythology.',
+        },
+        {
+          text: 'Patient, not passive.',
+          support: 'It moves at the pace of a real life changing, not the pace of a declaration.',
+        },
+        {
+          text: 'Amplifying, not replacing.',
+          support: "It never claims the room. It adds to what's already trusted there.",
+        },
       ],
       examples: [
         'We believe that nearly every challenge people face—and nearly every opportunity they pursue—is ultimately expressed through time.',

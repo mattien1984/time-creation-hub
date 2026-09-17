@@ -35,6 +35,37 @@ function AccordionSection({ id, title, open, onToggle, children }) {
   );
 }
 
+// Nested "Unabridged" expander inside What It Is — the full-length
+// received text, revealed in place (same grid-rows animation as the
+// accordion, one visual tier down).
+function Unabridged({ paragraphs }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`unabridged${open ? ' is-open' : ''}`}>
+      <button
+        type="button"
+        className="unabridged__head"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+      >
+        <span>Unabridged</span>
+        <span className="acc__toggle" aria-hidden="true">
+          <span className="acc__plus" />
+        </span>
+      </button>
+      <div className="acc__body">
+        <div className="acc__clip">
+          <div className="unabridged__content">
+            {paragraphs.map((p, i) => (
+              <p key={i} className="body hub__statement">{p}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // The Layers of Time planes, top to bottom — how the entity configures
 // into the whole (same vectors as the design page's exploded scene).
 const PLANES = [
@@ -75,7 +106,7 @@ export default function BrandHub({ slug }) {
       title: 'What It Is',
       body: (
         <>
-          <p className="acc__lead">{hub.whatItIs.headline}</p>
+          {hub.whatItIs.headline && <p className="acc__lead">{hub.whatItIs.headline}</p>}
           {hub.whatItIs.paragraphs.map((p, i) => (
             <p key={i} className="body hub__statement">{p}</p>
           ))}
@@ -85,6 +116,7 @@ export default function BrandHub({ slug }) {
               <p className="body">{hub.positioning.boilerplate}</p>
             </>
           )}
+          {hub.whatItIs.unabridged && <Unabridged paragraphs={hub.whatItIs.unabridged} />}
         </>
       ),
     },
@@ -202,7 +234,8 @@ export default function BrandHub({ slug }) {
           <p className="body hub__statement">{hub.universeRole}</p>
           {/* the design page's exploded Layers of Time, miniaturized: this
               brand's plane lit and called out, the other two placed but
-              dimmed — beside the three brand cards, siblings at 75% */}
+              dimmed — then one design image per brand, side by side, the
+              current brand at full opacity with the siblings at 65% */}
           <div className="hub__arch">
             <div className="hub__arch-left">
               <div className="hub__arch-stage" aria-hidden="true">
@@ -224,37 +257,38 @@ export default function BrandHub({ slug }) {
                     <span className="hub__arch-tick" aria-hidden="true" />
                     <span>{HUBS[s].identity.name}</span>
                     <em>{HUBS[s].roleLabel}</em>
-                    {s === slug && <strong className="hub__arch-here">you are here</strong>}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="hub__arch-cards">
+            <div className="hub__arch-row">
               {HUB_ORDER.map((s) => {
                 const h = HUBS[s];
                 return (
                   <Link
                     key={s}
                     to={h.route}
-                    className={`hub__arch-card${s === slug ? ' is-current' : ''}`}
-                    aria-label={h.identity.name}
+                    className={`hub__arch-tile${s === slug ? ' is-current' : ''}`}
                   >
-                    <img className="hub__arch-card-bg" src={h.identity.photo} alt="" loading="lazy" />
-                    <img
-                      className="hub__arch-card-lockup"
-                      src={h.identity.logo}
-                      alt=""
-                      style={{ '--logo-scale': h.identity.logoScale }}
-                    />
+                    <img src={(POSTERS[h.identity.id] || [])[0]} alt="" loading="lazy" />
+                    <span className="hub__arch-tile-label">
+                      {h.identity.name} · {h.roleLabel}
+                    </span>
                   </Link>
                 );
               })}
             </div>
           </div>
+          <p className="hub__syslink">
+            <Link to="/system">See more →</Link>
+          </p>
         </>
       ),
     },
   ];
+  const visibleSections = hub.sections
+    ? sections.filter((s) => hub.sections.includes(s.id))
+    : sections;
 
   const light = hub.theme.mode === 'light';
 
@@ -300,7 +334,7 @@ export default function BrandHub({ slug }) {
       </header>
 
       <div className="wrap hub__accordion">
-        {sections.map((s) => (
+        {visibleSections.map((s) => (
           <AccordionSection
             key={s.id}
             id={s.id}
