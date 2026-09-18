@@ -486,7 +486,7 @@ body.film-end .nav--film {
    viewports keep clearance under the nav, capped so tall viewports don't
    let it drift toward the separated rings. */
 .film__line--universe {
-  top: clamp(140px, 26vh, 300px);
+  top: clamp(110px, 20vh, 240px); /* clear air above the separated rings */
   transform: translate(-50%, 0);
   font-size: clamp(1.15rem, 2.3vw, 1.9rem);
   color: rgba(255, 255, 255, 0.92);
