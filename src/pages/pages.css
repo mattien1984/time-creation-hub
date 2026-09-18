@@ -1564,6 +1564,7 @@ body.film-end .nav--film {
 }
 .hub__arch-stage {
   position: relative;
+  margin-top: 56px; /* the projected planes need clear air below the copy */
   height: clamp(220px, 30vw, 320px);
   perspective: 1100px;
   perspective-origin: 50% 40%;
@@ -1648,7 +1649,7 @@ body.film-end .nav--film {
 .hub__arch-tile {
   display: block;
   text-decoration: none;
-  opacity: 0.65;
+  opacity: 0.25; /* non-active brands recede hard */
   transition: opacity 0.25s ease;
 }
 .hub__arch-tile.is-current,
