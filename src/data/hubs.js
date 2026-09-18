@@ -31,7 +31,7 @@ export const HUBS = {
     theme: { mode: 'dark', heroPhoto: true, band: false },
     // Received copy (Sep 17, 2026) — verbatim. Do not paraphrase.
     whatItIs: {
-      headline: 'The instrument of time creation',
+      headline: 'The Instrument of Time Creation',
       showPositioning: false,
       paragraphs: [
         'Existence is the technological expression of Time Creationism: a Time Intelligence Platform that transforms the time you create into the data of the Real You, making who you are actually creating visible and measurable, so you can design your time with greater intention and continuously realize more of your potential.',
