@@ -1650,23 +1650,15 @@ body.film-end .nav--film {
   height: 100%;
   user-select: none;
 }
+/* the live plane stays white and GLOWS white — a tight bright halo plus
+   a wide soft one, so the highlighted layer is obvious without color */
 .hub__arch-plane.is-active {
   opacity: 1;
-  filter: drop-shadow(0 0 16px rgba(250, 171, 53, 0.3));
-}
-/* the active plane carries the accent — strokes recolored to Sunrise Gold
-   #FAAB35 (chain solved empirically by canvas sampling: renders 255,170,46) */
-.hub__arch-plane.is-active img {
-  filter: brightness(0) saturate(100%) invert(68%) sepia(66%) saturate(800%) hue-rotate(336deg) brightness(106%);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 34px rgba(255, 255, 255, 0.3));
 }
 .hub--light .hub__arch-plane img { filter: invert(1); }
-/* daylight: the accent is the canon teal (gold fails on white) */
 .hub--light .hub__arch-plane.is-active {
-  filter: drop-shadow(0 0 14px rgba(0, 128, 131, 0.22));
-}
-/* strokes to the canon teal #008083 (solved chain renders 0,132,129) */
-.hub--light .hub__arch-plane.is-active img {
-  filter: brightness(0) saturate(100%) invert(28%) sepia(60%) saturate(2200%) hue-rotate(155deg) brightness(100%);
+  filter: drop-shadow(0 0 10px rgba(14, 23, 22, 0.3)) drop-shadow(0 0 30px rgba(14, 23, 22, 0.16));
 }
 .hub__arch-legend {
   list-style: none;
