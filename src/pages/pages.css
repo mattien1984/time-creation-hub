@@ -1013,6 +1013,7 @@ body.film-end .nav--film {
   filter: blur(52px);
   pointer-events: none;
 }
+.foot--noglow::before { content: none; }
 .foot > .wrap {
   position: relative;
   z-index: 1;

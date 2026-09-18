@@ -11,7 +11,7 @@ export default function Story() {
     <main>
       <IntroFilm />
       <RobBio />
-      <Footer />
+      <Footer glow={false} />
     </main>
   );
 }

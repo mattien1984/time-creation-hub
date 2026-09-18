@@ -5,10 +5,11 @@ import { CREATOR } from '../data/story';
 
 // gridKind: the brand's grid language rises from the footer's bottom edge —
 // hub pages pass theirs (block/fabric/foundation); default is the umbrella
-// fabric.
-export default function Footer({ gridKind = 'fabric' }) {
+// fabric. glow=false drops the Sunrise gradient (the homepage footer sits
+// under the bio's own bloom — no second color wash).
+export default function Footer({ gridKind = 'fabric', glow = true }) {
   return (
-    <footer className="foot">
+    <footer className={`foot${glow ? '' : ' foot--noglow'}`}>
       <div className="foot__gridfield" aria-hidden="true">
         <GridField kind={gridKind} color="rgba(255,255,255,0.4)" />
       </div>
