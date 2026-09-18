@@ -1684,17 +1684,16 @@ body.film-end .nav--film {
   text-transform: uppercase;
   opacity: 0.75;
 }
+/* the tag marks the LIVE brand only — white bar; other rows carry none
+   (the slot keeps its width so the names stay column-aligned) */
 .hub__arch-tick {
   width: 18px;
-  height: 1px;
-  background: currentColor;
+  height: 2px;
+  background: transparent;
   flex: none;
 }
 .hub__arch-legend li.is-active { color: var(--fg); }
-.hub__arch-legend li.is-active .hub__arch-tick {
-  background: var(--hub-accent);
-  height: 2px;
-}
+.hub__arch-legend li.is-active .hub__arch-tick { background: var(--fg); }
 /* one design image per brand, side by side — the current brand at full
    opacity, siblings at 65%, a small designation under each (no "you are
    here" language: the state is visual) */
