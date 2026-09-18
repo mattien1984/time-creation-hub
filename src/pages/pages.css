@@ -944,7 +944,13 @@ body.film-end .nav--film {
 .hub__asset img { height: 84px; object-fit: contain; filter: none; }
 .hub__asset:hover { color: var(--fg); border-color: var(--hub-accent); }
 .hub__posters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
-.hub__posters img { width: 100%; border-radius: 8px; }
+.hub__posters img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5; /* one card size — mixed source ratios crop to cover */
+  object-fit: cover;
+  border-radius: 8px;
+}
 
 .hub__cross {
   display: grid;
