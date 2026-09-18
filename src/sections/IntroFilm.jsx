@@ -21,37 +21,197 @@ const seg = (p, a, b) => clamp01((p - a) / (b - a));
 const ease = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
 // ---- decoder text ----
-// Classic decode: locked prefix, a small churning window of ~6 characters at
-// the lock point, and the untyped remainder held invisible (real characters at
-// opacity 0) so the line never reflows while it decodes.
-// Digits, not letters — it's time the lines resolve out of.
+// Slot-based decode: layout is owned by the TARGET characters —
+// every glyph renders in the serif from frame one (opacity-toggled inside a
+// fixed-advance slot), so the centered, balanced wrap is computed once per
+// text and the line never moves a subpixel while it decodes. The churn is
+// dim Roobert Semi Mono digits drawn as out-of-flow overlays in the next ≤3
+// unresolved slots of the CURRENT word: the decode edge never crosses a
+// space, and a word's last two characters resolve together so a stem never
+// shows a single welded digit. Each slot rerolls on its own 70–115ms
+// time-quantized clock through a per-slot shuffled digit sequence (never the
+// same glyph twice in a row, identical on every visit), resolves at its own
+// staggered threshold through a two-layer micro-crossfade, and a 340ms floor
+// settles any slot a slow continuous scroll would otherwise hold churning
+// forever — scrubbing backward still un-resolves. Digits, not letters —
+// it's time the lines resolve out of.
 const CHARS = '0123456789:';
-const SCRAMBLE_WINDOW = 6;
-function ScrambleText({ text, lock }) {
-  const n = text.length;
-  const locked = Math.round(lock * n);
-  const windowEnd = Math.min(locked + SCRAMBLE_WINDOW, n);
-  let churn = '';
-  for (let i = locked; i < windowEnd; i += 1) {
-    const ch = text[i];
-    churn += ch === ' ' || ch === '\n' ? ch : CHARS[(Math.random() * CHARS.length) | 0];
+const CHURN_WINDOW = 3; // the decode front is an edge, not a field
+const CHURN_LIFE = 340; // ms a slot may churn on screen before it settles
+
+// Deterministic per-slot randomness (mulberry32) — no Math.random in render;
+// the film decodes identically on every visit.
+const mulberry32 = (seed) => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+const hashText = (s) => {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i += 1) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return h >>> 0;
+};
+
+// The line's static skeleton: words (atomic, wrap as units) of fixed-advance
+// character slots, whitespace passed through between them. Built once per
+// text via useMemo.
+function buildPlan(text) {
+  const seedBase = hashText(text);
+  const tokens = [];
+  let idx = 0;
+  for (const part of text.split(/(\s+)/)) {
+    if (!part) continue;
+    if (/\s/.test(part[0])) {
+      tokens.push({ sep: part, key: `s${idx}` });
+      idx += part.length;
+      continue;
+    }
+    const slots = [];
+    for (const ch of part) {
+      const rand = mulberry32(seedBase ^ Math.imul(idx + 1, 0x9e3779b9));
+      const jitter = rand();
+      // shuffled digit sequence — 11 distinct glyphs, so consecutive
+      // rerolls can never show the same digit twice
+      const seq = CHARS.split('');
+      for (let a = seq.length - 1; a > 0; a -= 1) {
+        const b = (rand() * (a + 1)) | 0;
+        [seq[a], seq[b]] = [seq[b], seq[a]];
+      }
+      slots.push({
+        ch,
+        idx,
+        // Staggered thresholds: monotonic L→R (index gap 1 > jitter spread
+        // 0.65), max n−0.3 so lock=1 always fully resolves, min 0.05 so
+        // lock=0 shows a clean unresolved cluster.
+        threshold: idx + 0.05 + 0.65 * jitter,
+        settle: Math.round(20 + 55 * jitter), // per-slot resolve delay (ms)
+        period: 70 + Math.round(45 * rand()), // per-slot reroll clock (ms)
+        phase: Math.round(1000 * rand()),
+        seq: seq.join(''),
+        last: '', // frozen final digit — dissolves under the arriving serif
+        pair: null,
+      });
+      idx += 1;
+    }
+    // Word-tail pairing: a resolved stem never strands a single digit —
+    // the final two characters of a word land as one event.
+    if (slots.length >= 2) {
+      const a2 = slots[slots.length - 2];
+      const b2 = slots[slots.length - 1];
+      b2.threshold = a2.threshold + 0.001;
+      b2.settle = a2.settle + 30;
+      a2.pair = b2;
+    }
+    tokens.push({ slots, key: `w${slots[0].idx}` });
   }
+  return { tokens, n: text.length };
+}
+
+function ScrambleText({ text, lock }) {
+  const plan = useMemo(() => buildPlan(text), [text]);
+  // Render-phase bookkeeping for the time floor — safe here: renders are
+  // driven by the parent's rAF loop, every mutation is idempotent per
+  // timestamp (StrictMode double-render produces identical results), and
+  // the refs reset with the component when a beat unmounts.
+  const stampsRef = useRef(new Map()); // slot idx → first time it churned
+  const forcedRef = useRef(new Set()); // slots resolved by the time floor
+  const prevFRef = useRef(0);
+
+  const now = performance.now();
+  const F = clamp01(lock) * plan.n; // decode front, in slots
+  const stamps = stampsRef.current;
+  const forced = forcedRef.current;
+
+  // Scrubbing backward hands characters back to the churn.
+  if (F < prevFRef.current - 0.5) {
+    forced.forEach((i) => { if (i >= F) forced.delete(i); });
+    stamps.forEach((_, i) => { if (i >= F) stamps.delete(i); });
+  }
+  prevFRef.current = F;
+
+  const isResolved = (s) => s.threshold <= F || forced.has(s.idx);
+
+  // The churn window: the next ≤3 unresolved slots of the current word —
+  // the decode edge never crosses a space, and the window shrinks with the
+  // word's remainder.
+  let churn = null;
+  if (F < plan.n) {
+    for (const tok of plan.tokens) {
+      if (!tok.slots) continue;
+      const open = tok.slots.filter((s) => !isResolved(s));
+      if (open.length) {
+        churn = open.slice(0, CHURN_WINDOW);
+        break;
+      }
+    }
+  }
+  // Time floor: a slot that has churned on screen ≥ CHURN_LIFE settles even
+  // under a slow continuous scroll (the case the idle settle never catches,
+  // because any drift keeps `moved` true) — no half-decoded purgatory. The
+  // scrub and the idle settle still drive the front; this only caps how
+  // long any one slot may flicker.
+  if (churn) {
+    for (const s of churn) {
+      if (!stamps.has(s.idx)) stamps.set(s.idx, now);
+      else if (now - stamps.get(s.idx) > CHURN_LIFE) {
+        forced.add(s.idx);
+        if (s.pair) forced.add(s.pair.idx); // keep word tails paired
+      }
+    }
+    churn = churn.filter((s) => !forced.has(s.idx));
+  }
+  const churnSet = churn && churn.length ? new Set(churn.map((s) => s.idx)) : null;
+
   return (
     <>
-      {text.slice(0, locked)}
-      <span className="film__churn">{churn}</span>
-      <span style={{ opacity: 0 }}>{text.slice(windowEnd)}</span>
+      {plan.tokens.map((tok) => {
+        if (tok.sep != null) return <span key={tok.key}>{tok.sep}</span>;
+        return (
+          <span key={tok.key} className="film__word">
+            {tok.slots.map((s) => {
+              const res = isResolved(s);
+              const on = !res && churnSet != null && churnSet.has(s.idx);
+              if (on) {
+                // Per-slot quantized clock: the digit advances every
+                // `period` ms no matter how often React renders — 60–120Hz
+                // scrub renders between beats diff to zero DOM writes.
+                const tick = Math.floor((now + s.phase) / s.period);
+                s.last = s.seq[tick % s.seq.length];
+              }
+              return (
+                <span
+                  key={s.idx}
+                  className={`film__slot${res ? ' is-resolved' : on ? ' is-churn' : ''}`}
+                  style={{ '--settle': `${s.settle}ms` }}
+                >
+                  <span className="film__char">{s.ch}</span>
+                  <span className="film__churn" aria-hidden="true">{s.last}</span>
+                </span>
+              );
+            })}
+          </span>
+        );
+      })}
     </>
   );
 }
 
-// lock/opacity curve for one decoder beat: quick decode → long clean hold → fade
+// One lock curve for every decode in the film — fast off the line, easing
+// into stillness.
+const lockEase = (t) => 1 - (1 - t) * (1 - t) * (1 - t);
+
+// lock/opacity for one decoder beat: entrance first (opacity completes at
+// u = 0.045), decode second (lock runs u = 0.05 → 0.30, eased out) → long
+// clean hold → fade. The line's first frame is a dim mono digit cluster,
+// fully present, THEN the front moves — a clean downbeat instead of
+// decoding mid-fade-in.
 function beatState(p, [a, b]) {
   const u = seg(p, a, b);
   if (u <= 0 || u >= 1) return { on: false, lock: 0, opacity: 0 };
-  const lock = u < 0.28 ? u / 0.28 : 1;
-  const opacity = clamp01(Math.min(u / 0.05, (1 - u) / 0.08, 1));
-  return { on: true, lock: clamp01(lock), opacity, scrambling: lock < 1 };
+  const lock = lockEase(seg(u, 0.05, 0.3));
+  const opacity = clamp01(Math.min(u / 0.045, (1 - u) / 0.08, 1));
+  return { on: true, lock, opacity, scrambling: lock < 1 };
 }
 
 // ---- timeline (progress 0..1 over the film's scroll run) ----
@@ -321,7 +481,7 @@ export default function IntroFilm() {
   const video = videoOpacityAt(p);
   // The universe line hands off to the nav copy for the final act.
   const universeOp = seg(p, ...T.universeIn) * (1 - seg(p, ...T.universeOut));
-  const universeLock = ease(seg(p, ...T.universeLock));
+  const universeLock = lockEase(seg(p, ...T.universeLock));
   const entT = ease(seg(p, ...T.entities));
   const btnOp = seg(p, ...T.buttons);
   const live = wordT > 0.9; // the formed logos are clickable from formation on

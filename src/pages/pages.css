@@ -311,7 +311,6 @@ body.film-end .nav--film {
 }
 .film__ring { transition: scale 0.6s ease; }
 .film__ring--pulse { animation: filmRingPulse 3.4s ease-in-out infinite; }
-.film__churn { opacity: 0.65; }
 .film__logo-link {
   position: absolute;
   left: 50%;
@@ -469,6 +468,8 @@ body.film-end .nav--film {
 .film__line {
   position: absolute;
   left: 50%;
+  /* 58% = the mark's −14vh ride plus clearance below it; the four beats'
+     resolved resting position is unchanged. */
   top: 58%;
   transform: translate(-50%, -50%);
   width: min(88vw, 920px);
@@ -480,12 +481,69 @@ body.film-end .nav--film {
   white-space: pre-line;
   text-wrap: balance;
 }
+/* The universe headline comes down the stage (was a hard top: 20vh):
+   generous top margin that scales with viewport height, floored so short
+   viewports keep clearance under the nav, capped so tall viewports don't
+   let it drift toward the separated rings. */
 .film__line--universe {
-  top: 20vh;
+  top: clamp(140px, 26vh, 300px);
   transform: translate(-50%, 0);
   font-size: clamp(1.15rem, 2.3vw, 1.9rem);
   color: rgba(255, 255, 255, 0.92);
 }
+/* --- decode slots ------------------------------------------------------ */
+/* Layout belongs to the TARGET text: every character renders in the serif
+   from frame one (opacity-toggled), so slot advances — and the line's
+   balanced wrap — are fixed before the first reroll. Words are atomic:
+   inline-block + nowrap, because consecutive inline-block slots are
+   otherwise legal soft-wrap points; line breaks live only on the real
+   spaces between words. */
+.film__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.film__slot {
+  position: relative;
+  display: inline-block;
+}
+.film__char {
+  opacity: 0;
+  transition: opacity 0.05s ease-out; /* snap off when scrubbed backward */
+}
+.film__slot.is-resolved .film__char {
+  opacity: 1;
+  /* per-slot settle: each character arrives on its own ~170ms fade, offset
+     by its --settle stagger, so clumped resolves (the parked idle settle's
+     45ms ticks) ripple left→right instead of popping as one block */
+  transition: opacity 0.17s cubic-bezier(0.2, 0.7, 0.3, 1);
+  transition-delay: var(--settle, 0ms);
+}
+/* Machine state under the language: dim, optically smaller, mono — the
+   serif is reserved for what has resolved. Absolutely positioned: out of
+   flow, it can never move the line. */
+.film__churn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roobert Semi Mono', ui-monospace, 'SF Mono', monospace;
+  font-size: 0.75em;
+  line-height: 1;
+  font-weight: 400; /* the face ships 400 only — block synthetic bold/italic */
+  font-style: normal;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease-out;
+}
+.film__slot.is-churn .film__churn { opacity: 0.38; }
+/* On resolve, is-churn drops and the overlay's frozen final digit dissolves
+   (0.12s) under the arriving serif character (0.17s + stagger) — the lock
+   edge is a two-layer crossfade inside a fixed box, never a hard cut. The
+   same 0.12s fade softens the window's leading edge as slots enter it. */
+
 .film__line--quiet {
   top: calc(50% + 132px);
   transform: translate(-50%, 0);
