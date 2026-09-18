@@ -53,8 +53,10 @@ function Unabridged({ paragraphs }) {
           <span className="acc__plus" />
         </span>
       </button>
-      <div className="acc__body">
-        <div className="acc__clip">
+      {/* own body classes — the parent section's `.acc.is-open .acc__body`
+          descendant rule must never pin this nested expander open */}
+      <div className="unabridged__body">
+        <div className="unabridged__clip">
           <div className="unabridged__content">
             {paragraphs.map((p, i) => (
               <p key={i} className="body hub__statement">{p}</p>

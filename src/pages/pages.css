@@ -1762,8 +1762,33 @@ body.film-end .nav--film {
   border-color: var(--hub-accent);
   background: var(--line-soft);
 }
-.unabridged.is-open .acc__body { grid-template-rows: 1fr; }
+.unabridged__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.unabridged.is-open .unabridged__body { grid-template-rows: 1fr; }
+.unabridged__clip { overflow: hidden; }
 .unabridged__content { padding-bottom: 10px; }
+/* The parent section's open-state must not leak onto the nested toggle:
+   while the Unabridged is closed it shows a resting + in the resting ring,
+   whatever the section around it is doing. */
+.acc.is-open .unabridged:not(.is-open) .acc__toggle {
+  transform: none;
+  border-color: var(--line);
+  background: none;
+}
+.acc.is-open .unabridged:not(.is-open) .acc__plus { color: var(--muted); }
+.hub--time-creationism .acc.is-open .unabridged:not(.is-open) .acc__toggle {
+  border-color: rgba(250, 171, 53, 0.35);
+  background: none;
+}
+.hub--time-creationism .acc.is-open .unabridged:not(.is-open) .acc__plus { color: var(--muted); }
+.hub--time-creationism .acc.is-open .unabridged.is-open .acc__toggle {
+  background: #faab35;
+  border-color: #faab35;
+}
+.hub--time-creationism .acc.is-open .unabridged.is-open .acc__plus { color: #0a0a0a; }
 
 /* ---------- the creator bio — under the film's end state ---------- */
 .robbio {
